@@ -6,12 +6,11 @@ import TextWindow from "./TextWindow";
 const Key = React.memo(({keyName, isActive}) => {
 	const keyRef = useRef(null);
 	const glow = "glow";
+
 	useEffect(() => {
-		if (keyRef.current && isActive) {
-			keyRef.current.classList.add(glow);
-			setTimeout(() => {
-				keyRef.current.classList.remove(glow);
-			}, 125);
+		if (keyRef.current) {
+			if (isActive) keyRef.current.classList.add(glow);
+			else setTimeout(() => keyRef.current.classList.remove(glow), 100);
 		}
 	}, [isActive]);
 	return (
@@ -24,18 +23,9 @@ const Key = React.memo(({keyName, isActive}) => {
 const Row = ({keys, className, activeKey}) => {
 	return (
 		<div className={`${className} row`}>
-			{keys.map((key) => {
-				return <Key key={key} keyName={key} isActive={key == activeKey} />;
+			{keys.map((key, i) => {
+				return <Key key={i} keyName={key} isActive={key == activeKey} />;
 			})}
-		</div>
-	);
-};
-
-const LastRow = ({className, activeKey}) => {
-	const space = " ";
-	return (
-		<div className={`${className} row`}>
-			<Key key={space} keyName={"space"} isActive={space == activeKey} />
 		</div>
 	);
 };
@@ -45,31 +35,47 @@ const Keyboard = () => {
 	const [activeKey, setActiveKey] = useState("");
 	const [inputText, setInputText] = useState("");
 	const [isTyping, setIsTyping] = useState(true);
+	const [shifted, setShifted] = useState(false);
 	const handleInput = function (key) {
 		if (!isTyping) setIsTyping(true);
 		else inputText += key;
 		// todo update text window to show key has been typed
 	};
+	const convertToKey = (e) => {
+		if (e.key == " ") return "space";
+		if (e.shiftKey) return e.key.toLowerCase();
+		return e.key;
+	};
+
 	useEffect(() => {
 		const handleKeyDown = (e) => {
-			setActiveKey(e.key);
-			console.log(e.key, e);
-			setTimeout(() => setActiveKey(""), 50); // Reset after 500ms for feedback
-			handleInput(e.key);
+			setActiveKey(convertToKey(e));
+			setShifted(e.shiftKey);
+			console.log(e.key, e.shiftKey, activeKey);
+			if (!e.repeat) setTimeout(() => setActiveKey(""), 100);
+		};
+
+		const handleKeyUp = (e) => {
+			setActiveKey("");
+			if (e.key == "Shift") setShifted(false);
 		};
 
 		window.addEventListener("keydown", handleKeyDown);
+		window.addEventListener("keyup", handleKeyUp);
 
 		return () => {
 			window.removeEventListener("keydown", handleKeyDown);
+			window.removeEventListener("keyup", handleKeyUp);
 		};
 	}, []);
 
-	const row1 = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]"];
-	const row2 = ["a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "\\"];
-	const row3 = ["Shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/"];
-	const row4 = [" "];
-	const keys = [row1, row2, row3, row4];
+	const keyArray = [
+		["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]"],
+		["a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "\\"],
+		["z", "x", "c", "v", "b", "n", "m", ",", ".", "/"],
+		["space"],
+	];
+
 	const text =
 		"Lorem ipsum consectetur adipisicing dolorum ad ratione nulla obcaecati explicabo eligendi. Possimus adipisci assumenda fugit harum iure qui neque obcaecati";
 
@@ -77,11 +83,11 @@ const Keyboard = () => {
 		<section className="main">
 			<TextWindow text={text}></TextWindow>
 
-			<div className="keyboard">
-				<Row keys={row1} className={`row-1`} activeKey={activeKey} />
-				<Row keys={row2} className={`row-2`} activeKey={activeKey} />
-				<Row keys={row3} className={`row-3`} activeKey={activeKey} />
-				<LastRow className={`row-4`} activeKey={activeKey} />
+			<div className={`keyboard ${shifted ? "shifted" : ""}`}>
+				<Row keys={keyArray[0]} className={`row-1`} activeKey={activeKey} />
+				<Row keys={keyArray[1]} className={`row-2`} activeKey={activeKey} />
+				<Row keys={keyArray[2]} className={`row-3`} activeKey={activeKey} />
+				<Row keys={keyArray[3]} className={`row-4`} activeKey={activeKey} />
 			</div>
 		</section>
 	);
