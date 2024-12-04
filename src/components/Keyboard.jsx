@@ -10,6 +10,8 @@ const Keyboard = () => {
 
 	const [activeKey, setActiveKey] = useState("");
 	const [inputText, setInputText] = useState("");
+	const [isWrongWord, setIsWrongWord] = useState(false);
+
 	const [nextInputIndex, setNextInputIndex] = useState(0);
 	const [isTyping, setIsTyping] = useState(true);
 	const [shifted, setShifted] = useState(false);
@@ -17,16 +19,32 @@ const Keyboard = () => {
 	const handleInput = function (key) {
 		console.log("begin", key, text[nextInputIndex], nextInputIndex, inputText);
 		if (!isTyping) return setIsTyping(true);
-		if (key == "Backspace") {
-			setNextInputIndex(nextInputIndex - 1);
-			setInputText(inputText.slice(0, -1));
-		}
 		if (key == text[nextInputIndex]) {
 			setNextInputIndex((prev) => prev + 1);
 			setInputText((prev) => prev.concat(key));
 			console.log("end", nextInputIndex, key, inputText);
+		} else {
+			setIsWrongWord(true);
 		}
 	};
+	const handleDelete = function (e) {
+		if (nextInputIndex <= 0 || inputText.length == 0) return;
+		if (e.ctrlKey && e.key == "Backspace") deleteOneWord();
+		else deleteOneLetter;
+	};
+
+	const deleteOneWord = function () {
+		let newInputText = inputText.split(" ").slice(0, -1).join(" ");
+		setInputText(newInputText);
+		setNextInputIndex(newInputText.length);
+		console.log(inputText, newInputText);
+	};
+
+	const deleteOneLetter = function () {
+		setInputText(inputText.slice(0, -1));
+		setNextInputIndex(nextInputIndex - 1);
+	};
+
 	const convertToKey = (e) => {
 		if (e.key == " ") return "space";
 		if (e.shiftKey) return e.key.toLowerCase();
@@ -37,9 +55,9 @@ const Keyboard = () => {
 		const handleKeyDown = (e) => {
 			setActiveKey(convertToKey(e));
 			setShifted(e.shiftKey);
-			console.log(e.key, e.repeat, activeKey, convertToKey(e));
-
-			handleInput(e.key);
+			// console.log(e.key, e.repeat, activeKey, convertToKey(e));
+			if (e.key == "Backspace") handleDelete(e);
+			else handleInput(e.key);
 		};
 
 		const handleKeyUp = (e) => {

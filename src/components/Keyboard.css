@@ -72,21 +72,23 @@ span.done {
 }
 .text-window {
 	width: clamp(600px, 70vw, 800px);
+	overflow: clip;
+	position: relative;
 	font-size: 1.8em;
+	height: calc(3 * 1.8em);
+}
+.textView {
+	width: 100%;
 	/* border: 1px solid rgb(38, 255, 136); */
 	display: flex;
 	flex-wrap: wrap;
 	align-items: stretch;
 	justify-content: space-around;
-	height: calc(3 * 1.8em);
-	overflow: clip;
-	position: relative;
 }
 .word {
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
-
 	height: 1.8em;
 }
 .letter {
