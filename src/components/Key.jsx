@@ -1,17 +1,23 @@
-import React from 'react';
+import React, {useRef, useEffect} from "react";
+const Key = ({keyName, isActive}) => {
+	const keyRef = useRef(null);
 
-function Key({ keyVal, bigKey, disabled, handleKeyPress }) {
-  const keyClass = bigKey ? 'key big' : 'key';
+	useEffect(() => {
+		if (keyRef.current) {
+			if (isActive) {
+				keyRef.current.style.backgroundColor = `rgba(85,250,173,0.7)`;
+				keyRef.current.style.transitionDuration = `0s`;
+			} else {
+				keyRef.current.style.backgroundColor = `rgba(100,100,100,0.1)`;
+				keyRef.current.style.transitionDuration = `500ms`;
+			}
+		}
+	}, [isActive]);
+	return (
+		<div ref={keyRef} className="key">
+			{keyName}
+		</div>
+	);
+};
 
-  return (
-    <button 
-      className={keyClass}
-      onClick={() => handleKeyPress(keyVal)} 
-      disabled={disabled}
-    >
-      {keyVal}
-    </button>
-  );
-}
-
-export default Key;
+export default React.memo(Key);
