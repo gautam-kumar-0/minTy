@@ -25,12 +25,14 @@ function TextWindow({text, nextInputIndex}) {
 
 	useEffect(() => {
 		if (textWindowRef.current && cursorRef.current) {
+			cursorRef.current.classList.remove("blink");
 			const {x, y} = textWindowRef.current.getBoundingClientRect();
 			const {top, left} = textWindowRef.current
 				.querySelector(".current")
 				.getBoundingClientRect();
 			cursorRef.current.style.top = `${top - y}px`;
 			cursorRef.current.style.left = `${left - x}px`;
+			cursorRef.current.classList.add("blink");
 			console.log(top, left);
 		}
 	}, [nextInputIndex]);

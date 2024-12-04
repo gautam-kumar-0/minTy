@@ -17,6 +17,10 @@ const Keyboard = () => {
 	const handleInput = function (key) {
 		console.log("begin", key, text[nextInputIndex], nextInputIndex, inputText);
 		if (!isTyping) return setIsTyping(true);
+		if (key == "Backspace") {
+			setNextInputIndex(nextInputIndex - 1);
+			setInputText(inputText.slice(0, -1));
+		}
 		if (key == text[nextInputIndex]) {
 			setNextInputIndex((prev) => prev + 1);
 			setInputText((prev) => prev.concat(key));

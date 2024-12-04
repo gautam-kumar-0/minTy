@@ -62,16 +62,18 @@
 	place-items: center;
 }
 span.pending {
-	color: rgb(109, 109, 109);
+	opacity: 0.3;
 }
-
+span.current {
+	opacity: 0.6;
+}
 span.done {
-	color: rgb(235, 235, 235);
+	opacity: 1;
 }
 .text-window {
 	width: clamp(600px, 70vw, 800px);
 	font-size: 1.8em;
-	border: 1px solid rgb(38, 255, 136);
+	/* border: 1px solid rgb(38, 255, 136); */
 	display: flex;
 	flex-wrap: wrap;
 	align-items: stretch;
@@ -88,7 +90,7 @@ span.done {
 	height: 1.8em;
 }
 .letter {
-	color: rgb(147, 255, 126);
+	color: rgb(255, 255, 255);
 	letter-spacing: 0.1em;
 	min-width: 2px;
 	min-height: 1.8em;
@@ -98,9 +100,26 @@ span.done {
 	position: absolute;
 	width: 0.1em;
 	height: 1.2em;
-	background-color: #ffffff;
+	color: rgb(65, 255, 144);
+	background-color: currentColor;
 	top: 0.2em;
 	left: 0;
-	border-radius: 1em;
-	transition: all 200ms ease;
+	transition: all 100ms ease;
+	translate: -0.08em 0.1em;
+}
+.blink {
+	animation: blink 1000ms ease-in infinite;
+	animation-delay: 2s;
+}
+@keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
 }
