@@ -8,6 +8,7 @@ const Keyboard = () => {
 	const text =
 		"Lorem ipsum consectetur adipisicing dolorum ad ratione nulla obcaecati explicabo eligendi. Possimus adipisci assumenda fugit harum iure qui neque obcaecati";
 
+	// todo i can use a array or object for muliple keys later
 	const [activeKey, setActiveKey] = useState("");
 	const [inputText, setInputText] = useState("");
 	const [isWrongWord, setIsWrongWord] = useState(false);
@@ -18,11 +19,12 @@ const Keyboard = () => {
 
 	const handleInput = function (key) {
 		console.log("begin", key, text[nextInputIndex], nextInputIndex, inputText);
+		// * should be using focus to handle this type of things
 		if (!isTyping) return setIsTyping(true);
 		if (key == text[nextInputIndex]) {
 			setNextInputIndex((prev) => prev + 1);
 			setInputText((prev) => prev.concat(key));
-			console.log("end", nextInputIndex, key, inputText);
+			// console.log("end", nextInputIndex, key, inputText);
 		} else {
 			setIsWrongWord(true);
 		}
@@ -30,14 +32,14 @@ const Keyboard = () => {
 	const handleDelete = function (e) {
 		if (nextInputIndex <= 0 || inputText.length == 0) return;
 		if (e.ctrlKey && e.key == "Backspace") deleteOneWord();
-		else deleteOneLetter;
+		else deleteOneLetter();
 	};
 
 	const deleteOneWord = function () {
 		let newInputText = inputText.split(" ").slice(0, -1).join(" ");
 		setInputText(newInputText);
 		setNextInputIndex(newInputText.length);
-		console.log(inputText, newInputText);
+		// console.log(inputText, newInputText);
 	};
 
 	const deleteOneLetter = function () {
