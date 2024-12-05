@@ -21,7 +21,11 @@ function TextWindow({text, nextInputIndex, isWrongWord}) {
 		return (
 			<Word key={i}>
 				{word.split("").map(renderLetter)}
-				<Space key={index++} className={getClass()} />
+				{index < text.length ? (
+					<Space key={index++} className={getClass()} />
+				) : (
+					""
+				)}
 			</Word>
 		);
 	};
@@ -48,16 +52,17 @@ function TextWindow({text, nextInputIndex, isWrongWord}) {
 			const cursorX = currentX - viewX;
 			const cursorY = currentY - viewY;
 
-			if (currentY - top > currentH * 2 - 2) {
-				// todo adjust it so that cursor remains in middle
-				// todo when delete it does not revert back to starting
+			// updates the textView position
+			const tolerance = 2;
+			const distance = currentY - top;
+			if (
+				distance > currentH * 2 - tolerance ||
+				distance < currentH + tolerance
+			) {
 				const offsetH = viewY - currentY + currentH;
 				textViewRef.current.style.translate = `0 ${offsetH}px`;
 			}
-			//else {
-			// 	textViewRef.current.style.translate = `0 0`;
-			// }
-
+			// update cursor position
 			cursorRef.current.style.top = `${cursorY}px`;
 			cursorRef.current.style.left = `${cursorX}px`;
 
