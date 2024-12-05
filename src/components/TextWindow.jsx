@@ -45,18 +45,24 @@ function TextWindow({text, nextInputIndex, isWrongWord}) {
 			const cursorX = currentX - viewX;
 			const cursorY = currentY - viewY;
 
-			if (currentY - top > currentH * 3) {
+			if (currentY - top > currentH * 2 - 2) {
 				// todo adjust it so that cursor remains in middle
-				const offsetH = viewY - currentY;
+				const offsetH = viewY - currentY + currentH;
 				textViewRef.current.style.translate = `0 ${offsetH}px`;
 			}
 
 			cursorRef.current.style.top = `${cursorY}px`;
 			cursorRef.current.style.left = `${cursorX}px`;
-			console.log("Window", top, left);
-			console.log("View", viewY, viewX);
-			console.log("current", currentY, currentX);
-			console.log("cursor", cursorY, cursorX);
+
+			console.table([
+				{name: "Window", x: left, y: top},
+				{name: "View", x: viewX, y: viewY},
+				{name: "Current", x: viewX, y: viewY},
+				{name: "Cursor", x: cursorX, y: cursorY},
+			]);
+			console.log("CurrentY - top", currentY - top);
+			console.log("currentH * 2", currentH, currentH * 2);
+
 			cursorRef.current.classList.add("blink");
 		}
 	}, [nextInputIndex]);
