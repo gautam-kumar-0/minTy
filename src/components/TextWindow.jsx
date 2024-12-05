@@ -1,6 +1,7 @@
 import {useEffect, useRef} from "react";
 import Letter from "./Letter";
 import Word from "./Word";
+import Space from "./Space";
 function TextWindow({text, nextInputIndex, isWrongWord}) {
 	const textWindowRef = useRef(null);
 	const cursorRef = useRef(null);
@@ -17,8 +18,12 @@ function TextWindow({text, nextInputIndex, isWrongWord}) {
 	};
 
 	const renderWord = (word, i) => {
-		word += " ";
-		return <Word key={i}>{word.split("").map(renderLetter)}</Word>;
+		return (
+			<Word key={i}>
+				{word.split("").map(renderLetter)}
+				<Space key={index++} className={getClass()} />
+			</Word>
+		);
 	};
 
 	const renderLetter = (char) => (
@@ -28,6 +33,7 @@ function TextWindow({text, nextInputIndex, isWrongWord}) {
 	useEffect(() => {
 		if (textWindowRef.current && cursorRef.current) {
 			cursorRef.current.classList.remove("blink");
+			// todo replace getBounding rect with some better way to get height and x , y
 
 			const current = textWindowRef.current.querySelector(".current");
 
@@ -35,11 +41,9 @@ function TextWindow({text, nextInputIndex, isWrongWord}) {
 
 			const {x: viewX, y: viewY} = textViewRef.current.getBoundingClientRect();
 
-			const {
-				x: currentX,
-				y: currentY,
-				height: currentH,
-			} = current.getBoundingClientRect();
+			const {x: currentX, y: currentY} = current.getBoundingClientRect();
+
+			const {height: currentH} = current.parentElement.getBoundingClientRect();
 
 			const cursorX = currentX - viewX;
 			const cursorY = currentY - viewY;
@@ -50,6 +54,9 @@ function TextWindow({text, nextInputIndex, isWrongWord}) {
 				const offsetH = viewY - currentY + currentH;
 				textViewRef.current.style.translate = `0 ${offsetH}px`;
 			}
+			//else {
+			// 	textViewRef.current.style.translate = `0 0`;
+			// }
 
 			cursorRef.current.style.top = `${cursorY}px`;
 			cursorRef.current.style.left = `${cursorX}px`;
