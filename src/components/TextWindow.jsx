@@ -1,30 +1,29 @@
 import {useEffect, useRef} from "react";
 import Letter from "./Letter";
-
+import Word from "./Word";
 function TextWindow({text, nextInputIndex, isWrongWord}) {
 	const textWindowRef = useRef(null);
 	const cursorRef = useRef(null);
 	const textViewRef = useRef(null);
-	const renderText = (text) => {
-		let index = 0;
-		return text.split(" ").map((word, i) => {
-			word += " ";
-			return (
-				<div className="word" key={i}>
-					{word.split("").map((char, c) => {
-						let className = "pending";
-						if (index == nextInputIndex) {
-							className = "current";
-							if (isWrongWord) className += " wrong";
-						} else if (index < nextInputIndex) className = "done";
-						return (
-							<Letter key={index++} character={char} className={className} />
-						);
-					})}
-				</div>
-			);
-		});
+	let index = 0;
+
+	const renderText = (text) => text.split(" ").map(renderWord);
+
+	const getClass = () => {
+		if (index < nextInputIndex) return "done";
+		if (index == nextInputIndex)
+			return isWrongWord ? "wrong current" : "current";
+		return "pending";
 	};
+
+	const renderWord = (word, i) => {
+		word += " ";
+		return <Word key={i}>{word.split("").map(renderLetter)}</Word>;
+	};
+
+	const renderLetter = (char) => (
+		<Letter key={index++} character={char} className={getClass()} />
+	);
 
 	useEffect(() => {
 		if (textWindowRef.current && cursorRef.current) {
@@ -47,6 +46,7 @@ function TextWindow({text, nextInputIndex, isWrongWord}) {
 
 			if (currentY - top > currentH * 2 - 2) {
 				// todo adjust it so that cursor remains in middle
+				// todo when delete it does not revert back to starting
 				const offsetH = viewY - currentY + currentH;
 				textViewRef.current.style.translate = `0 ${offsetH}px`;
 			}
@@ -54,14 +54,14 @@ function TextWindow({text, nextInputIndex, isWrongWord}) {
 			cursorRef.current.style.top = `${cursorY}px`;
 			cursorRef.current.style.left = `${cursorX}px`;
 
-			console.table([
-				{name: "Window", x: left, y: top},
-				{name: "View", x: viewX, y: viewY},
-				{name: "Current", x: viewX, y: viewY},
-				{name: "Cursor", x: cursorX, y: cursorY},
-			]);
-			console.log("CurrentY - top", currentY - top);
-			console.log("currentH * 2", currentH, currentH * 2);
+			// console.table([
+			// 	{name: "Window", x: left, y: top},
+			// 	{name: "View", x: viewX, y: viewY},
+			// 	{name: "Current", x: viewX, y: viewY},
+			// 	{name: "Cursor", x: cursorX, y: cursorY},
+			// ]);
+			// console.log("CurrentY - top", currentY - top);
+			// console.log("currentH * 2", currentH, currentH * 2);
 
 			cursorRef.current.classList.add("blink");
 		}

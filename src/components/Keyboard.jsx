@@ -17,18 +17,16 @@ const Keyboard = () => {
 	const [shifted, setShifted] = useState(false);
 
 	const handleInput = function (key) {
-		setIsWrongWord(false);
-		console.log("begin", key, text[nextInputIndex], nextInputIndex, inputText);
 		// * should be using focus to handle this type of things
 		// * currently for wrong word i am only going to implement cursor stop
 		// * wrong insertion can be implemented using a copy of original text, or using inputText as display;
 
+		if (isWrongWord) setIsWrongWord(false);
 		if (!isTyping) return setIsTyping(true);
 
 		if (key == text[nextInputIndex]) {
 			setNextInputIndex((prev) => prev + 1);
 			setInputText((prev) => prev.concat(key));
-			// console.log("end", nextInputIndex, key, inputText);
 		} else setIsWrongWord(true);
 	};
 
@@ -42,7 +40,6 @@ const Keyboard = () => {
 		let newInputText = inputText.split(" ").slice(0, -1).join(" ");
 		setInputText(newInputText);
 		setNextInputIndex(newInputText.length);
-		// console.log(inputText, newInputText);
 	};
 
 	const deleteLetter = function () {
@@ -60,9 +57,9 @@ const Keyboard = () => {
 		const handleKeyDown = (e) => {
 			setActiveKey(convertToKey(e));
 			setShifted(e.shiftKey);
-			// console.log(e.key, e.repeat, activeKey, convertToKey(e));
-			if (e.key == "Backspace") handleDelete(e);
-			else handleInput(e.key);
+			if (e.key == "Backspace") {
+				isWrongWord ? setIsWrongWord(false) : handleDelete(e);
+			} else handleInput(e.key);
 		};
 
 		const handleKeyUp = (e) => {
@@ -77,7 +74,7 @@ const Keyboard = () => {
 			window.removeEventListener("keydown", handleKeyDown);
 			window.removeEventListener("keyup", handleKeyUp);
 		};
-	}, [nextInputIndex]);
+	}, [nextInputIndex, isWrongWord]);
 
 	const keyArray = [
 		["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]"],
