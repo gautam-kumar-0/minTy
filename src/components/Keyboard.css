@@ -70,6 +70,9 @@ span.current {
 span.done {
 	opacity: 1;
 }
+span.current.wrong {
+	color: rgb(255, 119, 119);
+}
 .text-window {
 	width: clamp(600px, 70vw, 800px);
 	overflow: clip;

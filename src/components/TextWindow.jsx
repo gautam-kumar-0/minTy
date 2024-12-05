@@ -1,7 +1,7 @@
 import {useEffect, useRef} from "react";
 import Letter from "./Letter";
 
-function TextWindow({text, nextInputIndex}) {
+function TextWindow({text, nextInputIndex, isWrongWord}) {
 	const textWindowRef = useRef(null);
 	const cursorRef = useRef(null);
 	const textViewRef = useRef(null);
@@ -13,8 +13,10 @@ function TextWindow({text, nextInputIndex}) {
 				<div className="word" key={i}>
 					{word.split("").map((char, c) => {
 						let className = "pending";
-						if (index == nextInputIndex) className = "current";
-						else if (index < nextInputIndex) className = "done";
+						if (index == nextInputIndex) {
+							className = "current";
+							if (isWrongWord) className += " wrong";
+						} else if (index < nextInputIndex) className = "done";
 						return (
 							<Letter key={index++} character={char} className={className} />
 						);

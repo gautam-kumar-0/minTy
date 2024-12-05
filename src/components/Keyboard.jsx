@@ -1,9 +1,8 @@
 import {useState, useEffect} from "react";
-// Key Component
 import "./Keyboard.css";
 import TextWindow from "./TextWindow";
 import Row from "./Row";
-// parent component
+
 const Keyboard = () => {
 	const text =
 		"Lorem ipsum consectetur adipisicing dolorum ad ratione nulla obcaecati explicabo eligendi. Possimus adipisci assumenda fugit harum iure qui neque obcaecati";
@@ -18,31 +17,35 @@ const Keyboard = () => {
 	const [shifted, setShifted] = useState(false);
 
 	const handleInput = function (key) {
+		setIsWrongWord(false);
 		console.log("begin", key, text[nextInputIndex], nextInputIndex, inputText);
 		// * should be using focus to handle this type of things
+		// * currently for wrong word i am only going to implement cursor stop
+		// * wrong insertion can be implemented using a copy of original text, or using inputText as display;
+
 		if (!isTyping) return setIsTyping(true);
+
 		if (key == text[nextInputIndex]) {
 			setNextInputIndex((prev) => prev + 1);
 			setInputText((prev) => prev.concat(key));
 			// console.log("end", nextInputIndex, key, inputText);
-		} else {
-			setIsWrongWord(true);
-		}
-	};
-	const handleDelete = function (e) {
-		if (nextInputIndex <= 0 || inputText.length == 0) return;
-		if (e.ctrlKey && e.key == "Backspace") deleteOneWord();
-		else deleteOneLetter();
+		} else setIsWrongWord(true);
 	};
 
-	const deleteOneWord = function () {
+	const handleDelete = function (e) {
+		if (nextInputIndex <= 0 || inputText.length == 0) return;
+		if (e.ctrlKey && e.key == "Backspace") deleteWord();
+		else deleteLetter();
+	};
+
+	const deleteWord = function () {
 		let newInputText = inputText.split(" ").slice(0, -1).join(" ");
 		setInputText(newInputText);
 		setNextInputIndex(newInputText.length);
 		// console.log(inputText, newInputText);
 	};
 
-	const deleteOneLetter = function () {
+	const deleteLetter = function () {
 		setInputText(inputText.slice(0, -1));
 		setNextInputIndex(nextInputIndex - 1);
 	};
@@ -85,7 +88,11 @@ const Keyboard = () => {
 
 	return (
 		<section className="main">
-			<TextWindow text={text} nextInputIndex={nextInputIndex} />
+			<TextWindow
+				text={text}
+				nextInputIndex={nextInputIndex}
+				isWrongWord={isWrongWord}
+			/>
 			<div className={`keyboard ${shifted ? "shifted" : ""}`}>
 				<Row keys={keyArray[0]} className={`row-1`} activeKey={activeKey} />
 				<Row keys={keyArray[1]} className={`row-2`} activeKey={activeKey} />
