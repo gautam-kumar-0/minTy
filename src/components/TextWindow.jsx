@@ -2,20 +2,50 @@ import {useEffect, useRef} from "react";
 import Letter from "./Letter";
 import Word from "./Word";
 import Space from "./Space";
-function TextWindow({text, nextInputIndex, isWrongWord}) {
+import "./TextWindow.css";
+function TextWindow({text, inputText, insert}) {
 	const textWindowRef = useRef(null);
 	const cursorRef = useRef(null);
 	const textViewRef = useRef(null);
 	let index = 0;
+	let visualText;
+	let indexStopMatch;
+	if (insert) {
+		indexStopMatch = [...text].findIndex((c, i) => inputText[i] !== c);
+		if (indexStopMatch == -1) {
+			indexStopMatch = 0;
+		}
+		visualText = inputText + text.slice(indexStopMatch, text.length - 1);
+	} else {
+		indexStopMatch = inputText.length;
+		visualText = text;
+	}
 
 	const renderText = (text) => text.split(" ").map(renderWord);
 
-	const getClass = () => {
-		if (index < nextInputIndex) return "done";
-		if (index == nextInputIndex)
-			return isWrongWord ? "wrong current" : "current";
-		return "pending";
+	// const getClassSkip = () => {
+	// 	let className = "pending";
+	// 	if (index < inputText.length) {
+	// 		if (inputText[index] == visualText[index]) {
+	// 			className = "done";
+	// 		} else {
+	// 			className = "wrong";
+	// 		}
+	// 	} else if (index == indexStopMatch) {
+	// 		className = "current";
+	// 	}
+	// 	return className;
+	// };
+
+	const getClassInsert = () => {
+		let className = "pending";
+		if (index < indexStopMatch) className = "done";
+		else if (index < inputText.length) className = "wrong";
+		if (index == indexStopMatch) className += " current";
+		return className;
 	};
+
+	let getClass = getClassInsert;
 
 	const renderWord = (word, i) => {
 		return (
@@ -35,12 +65,12 @@ function TextWindow({text, nextInputIndex, isWrongWord}) {
 	);
 
 	useEffect(() => {
-		if (textWindowRef.current && cursorRef.current) {
+		if (textWindowRef.current && cursorRef.current && textViewRef.current) {
 			cursorRef.current.classList.remove("blink");
-			// todo replace getBounding rect with some better way to get height and x , y
+			// todo replace getBoundingRect with some better way to get height and x , y
 
 			const current = textWindowRef.current.querySelector(".current");
-
+			if (current == null) return;
 			const {top, left} = textWindowRef.current.getBoundingClientRect();
 
 			const {x: viewX, y: viewY} = textViewRef.current.getBoundingClientRect();
@@ -77,13 +107,13 @@ function TextWindow({text, nextInputIndex, isWrongWord}) {
 
 			cursorRef.current.classList.add("blink");
 		}
-	}, [nextInputIndex]);
+	}, [inputText]);
 
 	return (
 		<div className="text-window" ref={textWindowRef}>
 			<div className="textView" ref={textViewRef}>
 				<span className="cursor" ref={cursorRef}></span>
-				{renderText(text)}
+				{renderText(visualText)}
 			</div>
 		</div>
 	);

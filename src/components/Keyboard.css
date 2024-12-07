@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oxygen+Mono&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 .key {
 	background-color: rgba(100, 100, 100, 0.1);
 	color: rgba(255, 255, 255, 0.571);
@@ -9,7 +9,7 @@
 	aspect-ratio: 1/1;
 	width: clamp(2em, 4vw, 3em);
 	border-radius: 0.8em;
-	font-family: "Roboto Mono";
+	font-family: "Oxygen Mono", monospace;
 	/* text-transform: uppercase; */
 	transition: background-color cubic-bezier(0.25, 0.1, 0.25, 1);
 	box-shadow: inset -2px -2px 10px #252525, inset 2px 2px 10px #333333;
@@ -60,81 +60,5 @@
 	display: grid;
 	place-content: center;
 	place-items: center;
-}
-
-.text-window {
-	width: clamp(600px, 70vw, 800px);
-	overflow: clip;
-	position: relative;
-	font-size: 1.8em;
-	height: calc(3 * 1.8em);
-}
-.textView {
-	width: 100%;
-	/* border: 1px solid rgb(38, 255, 136); */
-	display: flex;
-	flex-wrap: wrap;
-	align-items: stretch;
-	justify-content: flex-start;
-	position: relative;
-	/* border: 1px solid red; */
-}
-.word {
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	height: 1.8em;
-}
-.letter {
-	color: rgb(255, 255, 255);
-	letter-spacing: auto;
-	line-height: 100%;
-	min-height: 1lh;
-	/* border: 0.5px solid red; */
-}
-.letter.space {
-	min-width: 1ch;
-}
-
-.letter.pending {
-	opacity: 0.3;
-}
-.letter.current {
-	opacity: 0.6;
-}
-.letter.done {
-	opacity: 1;
-}
-.letter.current.wrong {
-	color: rgb(255, 119, 119);
-}
-.letter.space.current.wrong {
-	background-color: rgb(239, 165, 165);
-}
-.cursor {
-	position: absolute;
-	width: 0.1em;
-	height: 1.2em;
-	color: rgb(65, 255, 144);
-	background-color: currentColor;
-	top: 0;
-	left: 0;
-	transition: all 100ms ease;
-	translate: -0.08em -0.1em;
-}
-.blink {
-	animation: blink 1000ms ease-in infinite;
-	animation-delay: 2s;
-}
-@keyframes blink {
-	0% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0;
-	}
-
-	100% {
-		opacity: 1;
-	}
+	font-family: "Oxygen Mono";
 }
