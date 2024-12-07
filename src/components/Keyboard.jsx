@@ -11,7 +11,7 @@ const Keyboard = () => {
 	const [activeKey, setActiveKey] = useState("");
 	const [inputText, setInputText] = useState("");
 	const [isWrong, setIsWrong] = useState(false);
-	const {stop, insert} = {stop: true, insert: true};
+	const {stop, insert} = {stop: true, insert: false};
 	const [shifted, setShifted] = useState(false);
 
 	const handleInput = function (key) {

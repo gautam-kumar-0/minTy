@@ -23,19 +23,19 @@ function TextWindow({text, inputText, insert}) {
 
 	const renderText = (text) => text.split(" ").map(renderWord);
 
-	// const getClassSkip = () => {
-	// 	let className = "pending";
-	// 	if (index < inputText.length) {
-	// 		if (inputText[index] == visualText[index]) {
-	// 			className = "done";
-	// 		} else {
-	// 			className = "wrong";
-	// 		}
-	// 	} else if (index == indexStopMatch) {
-	// 		className = "current";
-	// 	}
-	// 	return className;
-	// };
+	const getClassSkip = () => {
+		let className = "pending";
+		if (index < inputText.length) {
+			if (inputText[index] == visualText[index]) {
+				className = "done";
+			} else {
+				className = "wrong";
+			}
+		} else if (index == indexStopMatch) {
+			className = "current";
+		}
+		return className;
+	};
 
 	const getClassInsert = () => {
 		let className = "pending";
@@ -45,7 +45,7 @@ function TextWindow({text, inputText, insert}) {
 		return className;
 	};
 
-	let getClass = getClassInsert;
+	let getClass = insert ? getClassInsert : getClassSkip;
 
 	const renderWord = (word, i) => {
 		return (
