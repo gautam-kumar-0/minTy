@@ -3,6 +3,7 @@ import Letter from "./Letter";
 import Word from "./Word";
 import Space from "./Space";
 import "./TextWindow.css";
+
 function TextWindow({text, inputText, insert}) {
 	const textWindowRef = useRef(null);
 	const cursorRef = useRef(null);

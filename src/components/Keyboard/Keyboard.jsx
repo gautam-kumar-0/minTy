@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import "./Keyboard.css";
 import Row from "./Row";
-
+import {convertToKey} from "../utils/keys";
 const keyArray = [
 	["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]"],
 	["a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "\\"],
@@ -14,48 +14,10 @@ const Keyboard = ({text, inputText, setInputText, insert, stop}) => {
 
 	const [shifted, setShifted] = useState(false);
 
-	// const handleInput = function (key) {
-	// 	if (
-	// 		!stop ||
-	// 		text[inputText.length - 1] == inputText[inputText.length - 1]
-	// 	) {
-	// 		setInputText((prev) => prev.concat(key));
-	// 	}
-	// };
-
-	// const handleDelete = function (e) {
-	// 	if (inputText.length == 0) return;
-	// 	if (e.ctrlKey && e.key == "Backspace") deleteWord();
-	// 	else deleteLetter();
-	// };
-
-	// const deleteWord = function () {
-	// 	let newInputText = inputText.split(" ").slice(0, -1).join(" ");
-	// 	setInputText(newInputText);
-	// };
-
-	// const deleteLetter = function () {
-	// 	setInputText(inputText.slice(0, -1));
-	// };
-
-	const convertToKey = (e) => {
-		if (e.key == " ") return "space";
-		if (e.shiftKey) return e.key.toLowerCase();
-		return e.key;
-	};
-
 	useEffect(() => {
 		const handleKeyDown = (e) => {
-			// todo should be using inputElement for this type of things
 			setActiveKey(convertToKey(e));
 			setShifted(e.shiftKey);
-			// todo handle shortcut and other behaviour here
-			// 	if (e.key == "Enter" || e.key == "Tab") {
-			// 		return;
-			// 	}
-			// 	if (e.key == "Backspace") {
-			// 		handleDelete(e);
-			// 	} else if (e.key !== "Shift" && e.key !== "Control") handleInput(e.key);
 		};
 
 		const handleKeyUp = (e) => {
