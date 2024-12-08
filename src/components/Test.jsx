@@ -1,6 +1,6 @@
 import React from "react";
 import TextWindow from "./TextWindow";
-import Keyboard from "./Keyboard";
+import Keyboard from "./Keyboard/Keyboard";
 import {useState} from "react";
 const Test = () => {
 	const {stop, insert} = {stop: false, insert: true};
@@ -9,6 +9,11 @@ const Test = () => {
 	const [inputText, setInputText] = useState("");
 	return (
 		<div className="test">
+			<input
+				type="text"
+				onChange={(e) => setInputText(e.target.value)}
+				value={inputText}
+			/>
 			<TextWindow text={text} inputText={inputText} insert={insert} />
 			<Keyboard
 				text={text}

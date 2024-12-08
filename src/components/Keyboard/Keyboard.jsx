@@ -1,6 +1,5 @@
 import {useState, useEffect} from "react";
 import "./Keyboard.css";
-import TextWindow from "./TextWindow";
 import Row from "./Row";
 
 const keyArray = [
@@ -15,29 +14,29 @@ const Keyboard = ({text, inputText, setInputText, insert, stop}) => {
 
 	const [shifted, setShifted] = useState(false);
 
-	const handleInput = function (key) {
-		if (
-			!stop ||
-			text[inputText.length - 1] == inputText[inputText.length - 1]
-		) {
-			setInputText((prev) => prev.concat(key));
-		}
-	};
+	// const handleInput = function (key) {
+	// 	if (
+	// 		!stop ||
+	// 		text[inputText.length - 1] == inputText[inputText.length - 1]
+	// 	) {
+	// 		setInputText((prev) => prev.concat(key));
+	// 	}
+	// };
 
-	const handleDelete = function (e) {
-		if (inputText.length == 0) return;
-		if (e.ctrlKey && e.key == "Backspace") deleteWord();
-		else deleteLetter();
-	};
+	// const handleDelete = function (e) {
+	// 	if (inputText.length == 0) return;
+	// 	if (e.ctrlKey && e.key == "Backspace") deleteWord();
+	// 	else deleteLetter();
+	// };
 
-	const deleteWord = function () {
-		let newInputText = inputText.split(" ").slice(0, -1).join(" ");
-		setInputText(newInputText);
-	};
+	// const deleteWord = function () {
+	// 	let newInputText = inputText.split(" ").slice(0, -1).join(" ");
+	// 	setInputText(newInputText);
+	// };
 
-	const deleteLetter = function () {
-		setInputText(inputText.slice(0, -1));
-	};
+	// const deleteLetter = function () {
+	// 	setInputText(inputText.slice(0, -1));
+	// };
 
 	const convertToKey = (e) => {
 		if (e.key == " ") return "space";
@@ -50,12 +49,13 @@ const Keyboard = ({text, inputText, setInputText, insert, stop}) => {
 			// todo should be using inputElement for this type of things
 			setActiveKey(convertToKey(e));
 			setShifted(e.shiftKey);
-			if (e.key == "Enter" || e.key == "Tab") {
-				return;
-			}
-			if (e.key == "Backspace") {
-				handleDelete(e);
-			} else if (e.key !== "Shift" && e.key !== "Control") handleInput(e.key);
+			// todo handle shortcut and other behaviour here
+			// 	if (e.key == "Enter" || e.key == "Tab") {
+			// 		return;
+			// 	}
+			// 	if (e.key == "Backspace") {
+			// 		handleDelete(e);
+			// 	} else if (e.key !== "Shift" && e.key !== "Control") handleInput(e.key);
 		};
 
 		const handleKeyUp = (e) => {
