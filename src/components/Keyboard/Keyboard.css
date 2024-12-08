@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Oxygen+Mono&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+.key {
+	background-color: rgba(100, 100, 100, 0.1);
+	color: rgba(255, 255, 255, 0.571);
+	/* border: 0.5px solid rgba(83, 83, 83, 0.5); */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	aspect-ratio: 1/1;
+	width: clamp(2em, 4vw, 3em);
+	border-radius: 0.8em;
+	font-family: "Oxygen Mono", monospace;
+	/* text-transform: uppercase; */
+	transition: background-color cubic-bezier(0.25, 0.1, 0.25, 1);
+	box-shadow: inset -2px -2px 10px #252525, inset 2px 2px 10px #333333;
+}
+
+.keyboard {
+	border-radius: 0.5em;
+	width: clamp(600px, 70vw, 750px);
+
+	margin-block: 2rem;
+	border: rgba(102, 242, 158, 0.5) 2px solid;
+	background-color: hsla(0, 0, 50, 1);
+	padding: 1.5rem 1rem 1rem 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: space-around;
+	gap: 0.75rem;
+}
+.keyboard.shifted {
+	text-transform: uppercase;
+}
+.row {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+.row-2 {
+	margin-inline: 1.2vw;
+}
+.row-3 {
+	margin-inline: 3vw;
+}
+
+.row-4 {
+	margin-inline: 4vw;
+}
+.row-4 > * {
+	height: 2.5rem;
+	width: auto;
+	aspect-ratio: 5/1;
+	letter-spacing: 3px;
+	color: rgba(255, 255, 255, 0.3);
+	text-transform: lowercase;
+}
+.main {
+	display: grid;
+	place-content: center;
+	place-items: center;
+	font-family: "Oxygen Mono";
+}
