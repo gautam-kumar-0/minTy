@@ -1,10 +1,10 @@
 import {useEffect, useRef} from "react";
 import Letter from "./Letter";
-import Word from "./Word";
+import Word from "../Word";
 import Space from "./Space";
 import "./TextWindow.css";
 
-function TextWindow({text, inputText, insert}) {
+function TextWindow({text, inputText, insert, inputRef}) {
 	const textWindowRef = useRef(null);
 	const cursorRef = useRef(null);
 	const textViewRef = useRef(null);
@@ -52,11 +52,7 @@ function TextWindow({text, inputText, insert}) {
 		return (
 			<Word key={i}>
 				{word.split("").map(renderLetter)}
-				{index < text.length ? (
-					<Space key={index++} className={getClass()} />
-				) : (
-					""
-				)}
+				<Space key={index++} className={getClass()} />
 			</Word>
 		);
 	};
@@ -68,6 +64,7 @@ function TextWindow({text, inputText, insert}) {
 	useEffect(() => {
 		if (textWindowRef.current && cursorRef.current && textViewRef.current) {
 			cursorRef.current.classList.remove("blink");
+
 			// todo replace getBoundingRect with some better way to get height and x , y
 
 			const current = textWindowRef.current.querySelector(".current");
@@ -94,18 +91,7 @@ function TextWindow({text, inputText, insert}) {
 				textViewRef.current.style.translate = `0 ${offsetH}px`;
 			}
 			// update cursor position
-			cursorRef.current.style.top = `${cursorY}px`;
-			cursorRef.current.style.left = `${cursorX}px`;
-
-			// console.table([
-			// 	{name: "Window", x: left, y: top},
-			// 	{name: "View", x: viewX, y: viewY},
-			// 	{name: "Current", x: viewX, y: viewY},
-			// 	{name: "Cursor", x: cursorX, y: cursorY},
-			// ]);
-			// console.log("CurrentY - top", currentY - top);
-			// console.log("currentH * 2", currentH, currentH * 2);
-
+			cursorRef.current.style.translate = `${cursorX}px ${cursorY}px`;
 			cursorRef.current.classList.add("blink");
 		}
 	}, [inputText]);

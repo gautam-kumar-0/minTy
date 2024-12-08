@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import "./Keyboard.css";
 import Row from "./Row";
-import {convertToKey} from "../utils/keys";
+import {convertToKey} from "../../utils/keys";
 const keyArray = [
 	["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]"],
 	["a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "\\"],

@@ -6,9 +6,11 @@ const Key = ({keyName, isActive}) => {
 		if (keyRef.current) {
 			if (isActive) {
 				keyRef.current.style.backgroundColor = `rgba(85,250,173,0.7)`;
+				keyRef.current.style.boxShadow = `0 0 1rem rgba(85,250,173,0.4)`;
 				keyRef.current.style.transitionDuration = `0s`;
 			} else {
 				keyRef.current.style.backgroundColor = `rgba(100,100,100,0.1)`;
+				keyRef.current.style.boxShadow = `0 0 0 transparent`;
 				keyRef.current.style.transitionDuration = `500ms`;
 			}
 		}
