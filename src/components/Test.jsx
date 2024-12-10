@@ -3,31 +3,45 @@ import TextWindow from "./TextWindow/TextWindow";
 import Keyboard from "./Keyboard/Keyboard";
 import {useState, useRef, useEffect} from "react";
 import "./Test.css";
+
 const Test = () => {
-	const {stop, insert} = {stop: false, insert: true};
+	const {stop, insert, freedom} = {stop: false, insert: true, freedom: true};
 	const text =
-		"Lorem ipsum consectetur adipisicing dolorum ad ratione nulla obcaecati explicabo eligendi. Possimus adipisci assumenda fugit harum iure qui neque obcaecati";
+		"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis labore magnam maxime rem! Velit aliquam doloribus quaerat accusamus recusandae dignissimos. Lorem ipsum consectetur adipisicing dolorum ad ratione nulla obcaecati explicabo eligendi. Possimus adipisci assumenda fugit harum iure qui neque obcaecati";
+
+	const originalTextArr = [...text];
 	const [inputText, setInputText] = useState("");
 	const inputRef = useRef(null);
+	const [wpm, setWpm] = useState(0);
+	const [timestamps, setTimestamps] = useState([]);
+	let indexStopMatch = 0;
 
 	useEffect(() => {
 		const handleKeyPress = (e) => {
 			if (document.activeElement !== inputRef.current) {
 				inputRef.current.focus();
 				e.preventDefault();
+				return;
 			}
-			const length = inputRef.current.value.length;
-			inputRef.current.setSelectionRange(length, length);
-			//make cursor at end and disable arrow keys;
+
 			if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
 				e.preventDefault();
+				return;
 			}
-			//better way to calculate is
-			let indexStopMatch = [...text].findIndex((c, i) => inputText[i] !== c);
+			// todo write code to handle The shortcut keys
+			// help stop too many wrong entry;
+			if (e.key !== "Backspace") {
+				indexStopMatch = originalTextArr.findIndex(
+					(c, i) => inputText[i] !== c
+				);
+				let i;
+				for (i = indexStopMatch; i > 0; i--) {
+					if (originalTextArr[i] === " ") break;
+				}
 
-			console.log(indexStopMatch, inputText.length);
-			if (inputText.length - indexStopMatch > 7 && e.key != "Backspace") {
-				e.preventDefault();
+				if (inputText.length - indexStopMatch > 7) {
+					e.preventDefault();
+				}
 			}
 		};
 
@@ -41,12 +55,33 @@ const Test = () => {
 		e.preventDefault();
 	}
 
+	function calculateWpm() {
+		const elapsed = timestamps[timestamps.length - 1] - timestamps[0];
+		const averageTime = elapsed / timestamps.length;
+		const averageWpm = Math.round(12000 / averageTime);
+		const live =
+			timestamps[timestamps.length - 1] - timestamps[timestamps.length - 2];
+		const liveWpm = Math.round(12000 / live);
+		console.log("timestamps", timestamps);
+		console.log("elapsed", elapsed);
+		console.log("averageTime", averageTime);
+		console.log("averageWpm", averageWpm);
+		console.log("liveWpm", liveWpm);
+		return {averageWpm, liveWpm};
+	}
+
+	function handleInput(e) {
+		setTimestamps([...timestamps, e.timeStamp]);
+		setInputText(e.currentTarget.value);
+		setWpm(calculateWpm().averageWpm);
+	}
+
 	return (
 		<div className="main">
 			<input
 				className="inputText"
 				type="text"
-				onChange={(e) => setInputText(e.target.value)}
+				onChange={handleInput}
 				value={inputText}
 				ref={inputRef}
 				onPasteCapture={handlePasteCapture}
@@ -64,6 +99,7 @@ const Test = () => {
 				insert={insert}
 				stop={stop}
 			/>
+			<div className="live-wpm">{wpm}</div>
 		</div>
 	);
 };

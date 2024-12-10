@@ -28,6 +28,8 @@
 	align-items: stretch;
 	justify-content: space-around;
 	gap: 0.75rem;
+	/* display: none; */
+	scale: 80%;
 }
 .keyboard.shifted {
 	text-transform: uppercase;
