@@ -12,7 +12,8 @@ const Test = () => {
 	const originalTextArr = [...text];
 	const [inputText, setInputText] = useState("");
 	const inputRef = useRef(null);
-	const [wpm, setWpm] = useState(0);
+	const [averageWpm, setAverageWpm] = useState(0);
+	const [liveWpm, setliveWpm] = useState(0);
 	const [timestamps, setTimestamps] = useState([]);
 	let indexStopMatch = 0;
 
@@ -56,24 +57,29 @@ const Test = () => {
 	}
 
 	function calculateWpm() {
-		const elapsed = timestamps[timestamps.length - 1] - timestamps[0];
-		const averageTime = elapsed / timestamps.length;
+		if (timestamps.length == 0) return;
+		const length = timestamps.length;
+		const elapsed = timestamps[length - 1] - timestamps[0];
+		const averageTime = elapsed / length;
 		const averageWpm = Math.round(12000 / averageTime);
-		const live =
-			timestamps[timestamps.length - 1] - timestamps[timestamps.length - 2];
-		const liveWpm = Math.round(12000 / live);
+
+		const before = Math.min(length, 5);
+		const live = timestamps[length - 1] - timestamps[length - before];
+		const liveWpm = Math.round(12000 / (live / (before - 1)));
 		console.log("timestamps", timestamps);
 		console.log("elapsed", elapsed);
 		console.log("averageTime", averageTime);
 		console.log("averageWpm", averageWpm);
 		console.log("liveWpm", liveWpm);
-		return {averageWpm, liveWpm};
+		setAverageWpm(averageWpm);
+		setliveWpm(liveWpm);
 	}
 
 	function handleInput(e) {
+		console.log("Event", e);
 		setTimestamps([...timestamps, e.timeStamp]);
 		setInputText(e.currentTarget.value);
-		setWpm(calculateWpm().averageWpm);
+		if (e.nativeEvent.data) calculateWpm();
 	}
 
 	return (
@@ -99,7 +105,9 @@ const Test = () => {
 				insert={insert}
 				stop={stop}
 			/>
-			<div className="live-wpm">{wpm}</div>
+			<div className="live-wpm">{liveWpm}</div>
+			<div className="accuracy"></div>
+			<div className="average-wpm">{averageWpm}</div>
 		</div>
 	);
 };
