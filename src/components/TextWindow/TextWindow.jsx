@@ -4,7 +4,7 @@ import Word from "./Word";
 import Space from "./Space";
 import "./TextWindow.css";
 
-function TextWindow({text, inputText, insert}) {
+function TextWindow({text, inputText, insert, inputRef}) {
 	const textWindowRef = useRef(null);
 	const cursorRef = useRef(null);
 	const textViewRef = useRef(null);
@@ -52,11 +52,7 @@ function TextWindow({text, inputText, insert}) {
 		return (
 			<Word key={i}>
 				{word.split("").map(renderLetter)}
-				{index < text.length ? (
-					<Space key={index++} className={getClass()} />
-				) : (
-					""
-				)}
+				<Space key={index++} className={getClass()} />
 			</Word>
 		);
 	};
@@ -68,44 +64,35 @@ function TextWindow({text, inputText, insert}) {
 	useEffect(() => {
 		if (textWindowRef.current && cursorRef.current && textViewRef.current) {
 			cursorRef.current.classList.remove("blink");
-			// todo replace getBoundingRect with some better way to get height and x , y
 
+			// todo replace getBoundingRect with some better way to get height and x , y
 			const current = textWindowRef.current.querySelector(".current");
 			if (current == null) return;
-			const {top, left} = textWindowRef.current.getBoundingClientRect();
 
-			const {x: viewX, y: viewY} = textViewRef.current.getBoundingClientRect();
-
-			const {x: currentX, y: currentY} = current.getBoundingClientRect();
-
-			const {height: currentH} = current.parentElement.getBoundingClientRect();
-
-			const cursorX = currentX - viewX;
-			const cursorY = currentY - viewY;
-
-			// updates the textView position
-			const tolerance = 2;
-			const distance = currentY - top;
-			if (
-				distance > currentH * 2 - tolerance ||
-				distance < currentH + tolerance
-			) {
-				const offsetH = viewY - currentY + currentH;
-				textViewRef.current.style.translate = `0 ${offsetH}px`;
+			const currentH = current.parentElement.offsetHeight;
+			const cursorX = current.offsetLeft;
+			const cursorY = current.offsetTop;
+			console.table([
+				["cursor", cursorX, cursorY, currentH],
+				[
+					"View",
+					textViewRef.current.offsetLeft,
+					textViewRef.current.offsetTop,
+					textViewRef.current.offsetHeight,
+				],
+				[
+					"Window",
+					textWindowRef.current.offsetLeft,
+					textWindowRef.current.offsetTop,
+					textWindowRef.current.offsetHeight,
+				],
+			]);
+			//make the logic of shifting line good and working
+			if (cursorY > currentH * 2 - 5 || cursorY < currentH) {
+				const difference = (cursorY - currentH) * -1;
+				textViewRef.current.style.translate = `0 ${difference}px`;
 			}
-			// update cursor position
-			cursorRef.current.style.top = `${cursorY}px`;
-			cursorRef.current.style.left = `${cursorX}px`;
-
-			// console.table([
-			// 	{name: "Window", x: left, y: top},
-			// 	{name: "View", x: viewX, y: viewY},
-			// 	{name: "Current", x: viewX, y: viewY},
-			// 	{name: "Cursor", x: cursorX, y: cursorY},
-			// ]);
-			// console.log("CurrentY - top", currentY - top);
-			// console.log("currentH * 2", currentH, currentH * 2);
-
+			cursorRef.current.style.translate = `${cursorX}px ${cursorY}px`;
 			cursorRef.current.classList.add("blink");
 		}
 	}, [inputText]);
