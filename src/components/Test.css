@@ -10,4 +10,34 @@
 	font-family: "Oxygen Mono";
 	-webkit-user-select: none;
 	user-select: none;
+	grid-template-columns: 1fr;
+	gap: 2rem;
+	padding: 2rem;
+}
+.stats-container {
+	display: flex;
+	border: 1px solid red;
+	flex-direction: row;
+	gap: 2rem;
+	justify-content: space-between;
+	width: clamp(400px, 60vw, 600px);
+}
+
+.wpm,
+.accuracy {
+	font-size: 3rem;
+}
+.name {
+	opacity: 0.7;
+}
+.total-accuracy,
+.average-wpm,
+.live-wpm {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	min-width: 15ch;
+}
+
+.live-wpm {
 }

@@ -2,16 +2,10 @@ import {useState, useEffect} from "react";
 import "./Keyboard.css";
 import Row from "./Row";
 import {convertToKey} from "../../utils/keys";
-const keyArray = [
-	["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]"],
-	["a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "\\"],
-	["z", "x", "c", "v", "b", "n", "m", ",", ".", "/"],
-	["space"],
-];
-const Keyboard = ({text, inputText, setInputText, insert, stop}) => {
-	// todo i can use a array or object for muliple keys later
-	const [activeKey, setActiveKey] = useState("");
+import {keyArray} from "./config";
 
+const Keyboard = () => {
+	const [activeKey, setActiveKey] = useState("");
 	const [shifted, setShifted] = useState(false);
 
 	useEffect(() => {
@@ -32,7 +26,7 @@ const Keyboard = ({text, inputText, setInputText, insert, stop}) => {
 			window.removeEventListener("keydown", handleKeyDown);
 			window.removeEventListener("keyup", handleKeyUp);
 		};
-	}, [inputText]);
+	}, []);
 
 	return (
 		<div className={`keyboard ${shifted ? "shifted" : ""}`}>

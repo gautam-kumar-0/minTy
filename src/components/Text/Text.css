@@ -1,0 +1,57 @@
+.testWindow {
+	font-size: 1.5rem;
+	max-height: calc(4lh + 3ch);
+	overflow: hidden;
+	border: 2px solid rgb(255, 255, 255);
+	position: relative;
+}
+.testText {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	position: relative;
+	/* translate: 0 calc(-1lh - 1ch); */
+	gap: 1ch;
+}
+.current {
+	color: cadetblue;
+}
+.cursor {
+	background-color: #2dff57;
+	position: absolute;
+	height: 1.1lh;
+	width: 3px;
+
+	transition: all 200ms;
+}
+.word {
+	display: flex;
+	flex-direction: column;
+	height: 1lh;
+	border: 1px solid red;
+}
+.word span {
+	display: flex;
+}
+.letter {
+	display: inline-block;
+	min-height: 1lh;
+}
+.space {
+	display: inline-block;
+
+	min-width: 1ch;
+}
+.typed {
+	font-size: 0.8rem;
+	position: absolute;
+}
+.valid {
+	color: whitesmoke;
+}
+.invalid {
+	color: rgb(255, 9, 9);
+}
+.unprocessed {
+	color: rgba(182, 182, 182, 0.479);
+}
