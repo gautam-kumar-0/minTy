@@ -8,6 +8,7 @@ const wordArray = testText.split(" ").map((w) => ({original: w, typed: ""}));
 
 const Text = ({}) => {
 	const [state, setState] = useState(wordArray);
+	const [completed, setCompleted] = useState(false);
 	const addToCurrentWord = (letter) => {
 		setState((prev) => {
 			let temp = prev[index.current];
@@ -16,6 +17,12 @@ const Text = ({}) => {
 					...prev[index.current],
 					typed: prev[index.current].typed + letter,
 				};
+			if (
+				index.current == wordArray.length - 1 &&
+				prev[index.current].original == prev[index.current].typed
+			) {
+				setCompleted(true);
+			}
 			return [...prev];
 		});
 	};
@@ -43,6 +50,7 @@ const Text = ({}) => {
 			return [...prev];
 		});
 	};
+
 	const index = useRef(0);
 	const renderWord = (word, i) => {
 		return (
@@ -66,7 +74,9 @@ const Text = ({}) => {
 					popFromCurrentWord();
 				}
 			} else if (e.key === " ") {
-				if (state[index.current].typed.length > 0) {
+				if (index.current == wordArray.length - 1) {
+					setCompleted(true);
+				} else if (state[index.current].typed.length > 0) {
 					index.current = index.current + 1;
 					setState((prev) => [...prev]);
 				}
@@ -79,32 +89,57 @@ const Text = ({}) => {
 		return () => window.removeEventListener("keydown", handleKeyPress);
 	}, [state]);
 
+	const offset = useRef(0);
+	const testWindow = useRef(null);
+	const testText = useRef(null);
+	const cursor = useRef(null);
+
 	useEffect(() => {
-		const current = document.querySelector(".current");
-		if (!current) {
+		const next = document.querySelector(".current");
+		if (!next) {
 			return;
 		}
-		const testWindow = document.querySelector(".testWindow");
-		const testText = document.querySelector(".testText");
-		const testH = testWindow.offsetHeight;
-		const cursor = document.querySelector(".cursor");
+		const testH = testWindow.current.offsetHeight;
+		// const data = [
+		// 	{property: "current.offsetTop", value: next.offsetTop},
+		// 	{property: "current.offsetHeight", value: next.offsetHeight},
+		// 	{property: "offset.current", value: offset.current},
+		// 	{
+		// 		property: "condition",
+		// 		value:
+		// 			Math.abs(next.offsetTop - offset.current) > next.offsetHeight - 5,
+		// 	},
+		// ];
 
-		if (current.offsetTop > testH / 2 - 10) {
-			testText.style.translate = `0 calc(-${
-				current.offsetTop - current.offsetHeight
-			}px - 1ch)`;
+		// console.table(data);
+
+		if (
+			next.offsetTop <
+				testText.current.offsetHeight - testH + 2 * next.offsetHeight &&
+			Math.abs(next.offsetTop - offset.current) > next.offsetHeight - 5
+		) {
+			offset.current += next.offsetTop - offset.current - next.offsetHeight;
+			// console.log("After update", offset.current);
 		}
-		const cursorX = current.offsetLeft;
-		const cursorY = current.offsetTop;
-		console.dir(current);
 
-		cursor.style.translate = `${cursorX}px ${cursorY}px`;
+		// console.log("No update");
+		testText.current.style.translate = ` 0 -${offset.current}px`;
+
+		const cursorX = next.offsetLeft;
+		const cursorY = next.offsetTop;
+		// console.dir(next);
+
+		cursor.current.style.translate = `${cursorX}px ${cursorY}px`;
 	}, [state]);
-	return (
-		<div className="testWindow">
-			<span className="cursor"></span>
-			<div className="testText">{state.map(renderWord)}</div>;
+	return !completed ? (
+		<div className="testWindow" ref={testWindow}>
+			<div className="testText" ref={testText}>
+				<span className="cursor" ref={cursor}></span>
+				{state.map(renderWord)}
+			</div>
 		</div>
+	) : (
+		<h1>Result</h1>
 	);
 };
 

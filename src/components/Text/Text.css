@@ -1,7 +1,7 @@
 .testWindow {
 	font-size: 1.5rem;
 	max-height: calc(4lh + 3ch);
-	overflow: hidden;
+	/* overflow: hidden; */
 	border: 2px solid rgb(255, 255, 255);
 	position: relative;
 }
@@ -11,7 +11,7 @@
 	align-items: stretch;
 	position: relative;
 	/* translate: 0 calc(-1lh - 1ch); */
-	gap: 1ch;
+	/* gap: 1ch; */
 }
 .current {
 	color: cadetblue;
@@ -28,7 +28,7 @@
 	display: flex;
 	flex-direction: column;
 	height: 1lh;
-	border: 1px solid red;
+	/* border: 1px solid red; */
 }
 .word span {
 	display: flex;
@@ -36,6 +36,7 @@
 .letter {
 	display: inline-block;
 	min-height: 1lh;
+	min-width: 1ch;
 }
 .space {
 	display: inline-block;
