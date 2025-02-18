@@ -1,8 +1,7 @@
 import {useState} from "react";
 import Test from "./components/Test";
 import "./App.css";
-import ResultContext from "./components/context/ResultContext.js";
-import TestResult from "./components/TestResult.jsx";
+import TestContextProvider from "./components/context/TestContextProvider.jsx";
 function App() {
 	const [status, setStatus] = useState("idle");
 	const text =
@@ -11,7 +10,9 @@ function App() {
 	return (
 		<>
 			<div className="starfall"></div>
-			<Test status={status} setStatus={setStatus} text={text} />
+			<TestContextProvider>
+				<Test status={status} setStatus={setStatus} text={text} />
+			</TestContextProvider>
 		</>
 	);
 }

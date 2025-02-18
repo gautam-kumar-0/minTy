@@ -1,57 +1,63 @@
 import React, {useContext} from "react";
 import Keyboard from "./Keyboard/Keyboard";
-import Text from "./Text/Text";
+import Text from "./Text/Text.jsx";
 import {useState, useRef, useEffect} from "react";
 import "./Test.css";
 import {printableCharacterPattern} from "./config";
+import useTestContext from "../hooks/useTestContext.js";
 const Test = ({status, setStatus, text}) => {
-	const [isFocused, setFocused] = useState(true);
+	const [state, dispatch] = useTestContext();
 	const containerRef = useRef(null);
-	const handleClick = (e) => {
-		//* If click outside the test box
-		if (!containerRef.current?.contains(e.target)) {
-			setFocused(false);
-		}
-	};
-	const handleControls = (e) => {
-		// console.log(
-		// 	"Inside Test:",
-		// 	e.key,
-		// 	!(e.key == "Backspace" || printableCharacterPattern.test(e.key))
-		// );
-		// job of this function is capture keyboard and manage shortcuts.
+	const handleKeyDown = (e) => {
+		e.preventDefault();
+		console.log("HandleKeyDown", e);
 
-		if (!isFocused) {
-			setFocused(true);
-			e.stopPropagation();
-		} else if (e.key === "Escape") {
-			setFocused(false);
-			e.stopPropagation();
-		} else if (e.ctrlKey) {
+		if (e.key === "Escape") {
+			console.log("Escaped");
+			return;
+		}
+		if (e.ctrlKey) {
 			if (e.key == "r") {
 				console.log("Restart the test");
-				e.stopPropagation();
+				return;
 			} else if (e.key == "c") {
 				console.log("Reset the test");
-				e.stopPropagation();
+				return;
 			}
 		}
-		if (!(e.key == "Backspace" || printableCharacterPattern.test(e.key))) {
-			e.stopPropagation();
+		if (e.key == "Backspace" || printableCharacterPattern.test(e.key)) {
+			handleKeyPress(e);
 		}
 	};
-	useEffect(() => {
-		// todo Window focus and blur should be handled
-		window.addEventListener("keydown", handleControls, true);
 
-		return () => {
-			window.removeEventListener("keydown", handleControls, true);
-		};
-	}, []);
+	const handleKeyPress = (e) => {
+		console.log("HandleKeyPress", e);
+		if (e.key == "Backspace") {
+			if (e.ctrlKey) {
+				dispatch({type: "CTRLBACKSPACE"});
+			} else {
+				dispatch({type: "BACKSPACE"});
+			}
+		} else if (e.key === " ") {
+			dispatch({type: "SPACE", payload: {timeStamp: e.timeStamp}});
+		} else {
+			dispatch({
+				type: "CHARACTER",
+				payload: {character: e.key, timeStamp: e.timeStamp},
+			});
+		}
+	};
 
 	return (
-		<div className="main" ref={containerRef}>
-			<Text testText={text} focus={isFocused} />
+		<div
+			className="main"
+			ref={containerRef}
+			onKeyDown={handleKeyDown}
+			tabIndex={0}
+			onFocus={() => (containerRef.current.style.filter = `blur(0)`)}
+			onBlur={() => (containerRef.current.style.filter = `blur(2px)`)}
+		>
+			<Text testText={text} />
 			<Keyboard />
 		</div>
 	);

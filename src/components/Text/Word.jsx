@@ -44,7 +44,7 @@ const Word = ({word, done, typing, pending}) => {
 	);
 };
 
-export default React.memo(Word);
+export default Word;
 
 // const getClass = (index) => {
 // 	if (current && index === word.typed.length) {
