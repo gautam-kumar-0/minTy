@@ -11,7 +11,7 @@ const Key = ({keyName, isActive}) => {
 			} else {
 				keyRef.current.style.backgroundColor = `rgba(100,100,100,0.1)`;
 				keyRef.current.style.boxShadow = `0 0 0 transparent`;
-				keyRef.current.style.transitionDuration = `500ms`;
+				keyRef.current.style.transitionDuration = `300ms`;
 			}
 		}
 	}, [isActive]);

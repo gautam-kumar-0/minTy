@@ -1,19 +1,24 @@
-import React, {useContext} from "react";
-import Keyboard from "./Keyboard/Keyboard";
-import Text from "./Text/Text.jsx";
-import {useState, useRef, useEffect} from "react";
-import "./Test.css";
+import React, {useState} from "react";
+
+import {useRef, useEffect} from "react";
 import {printableCharacterPattern} from "./config";
 import useTestContext from "../hooks/useTestContext.js";
-const Test = ({status, setStatus, text}) => {
+
+import Keyboard from "./Keyboard/Keyboard";
+import Text from "./Text/Text.jsx";
+import "./Test.css";
+import TestResult from "./TestResult.jsx";
+import LiveStats from "./LiveStats";
+
+const Test = ({}) => {
 	const [state, dispatch] = useTestContext();
+	const [text, setText] = useState("");
 	const containerRef = useRef(null);
+
 	const handleKeyDown = (e) => {
 		e.preventDefault();
-		console.log("HandleKeyDown", e);
-
 		if (e.key === "Escape") {
-			console.log("Escaped");
+			containerRef.current.blur();
 			return;
 		}
 		if (e.ctrlKey) {
@@ -31,7 +36,7 @@ const Test = ({status, setStatus, text}) => {
 	};
 
 	const handleKeyPress = (e) => {
-		console.log("HandleKeyPress", e);
+		// console.log("HandleKeyPress", e);
 		if (e.key == "Backspace") {
 			if (e.ctrlKey) {
 				dispatch({type: "CTRLBACKSPACE"});
@@ -47,18 +52,66 @@ const Test = ({status, setStatus, text}) => {
 			});
 		}
 	};
+	useEffect(() => {
+		const getText = async (params) => {
+			params = {
+				type: "random",
+				numberOfWords: 50,
+			};
+			let data = new Promise((resolve, reject) => {
+				let data = null;
+				setTimeout(() => {
+					data =
+						"Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem architecto magnam in nam cupiditate dolores esse omnis quasi porro iusto!";
+					resolve(data);
+				}, 1000);
+			});
+			data = await data;
+			setText(data);
+		};
+		if (text) {
+			dispatch({type: "NEW", payload: text});
+		} else getText();
+	}, [text]);
+	useEffect(() => {
+		containerRef.current.focus();
+	}, []);
 
+	let display = null;
+	const blurRef = useRef(null);
+	if (state.status == "uncomplete") {
+		display = (
+			<>
+				<div className="stats-box">
+					{state?.words[0]?.start ? <LiveStats /> : <></>}
+				</div>
+				<Text ref={blurRef} />
+				<div className="keyboard-wrapper">
+					<Keyboard />
+				</div>
+			</>
+		);
+	} else if (state.status == "complete") {
+		display = <TestResult setText={setText} />;
+	} else {
+		display = <span>Loading</span>;
+	}
 	return (
 		<div
 			className="main"
 			ref={containerRef}
-			onKeyDown={handleKeyDown}
 			tabIndex={0}
-			onFocus={() => (containerRef.current.style.filter = `blur(0)`)}
-			onBlur={() => (containerRef.current.style.filter = `blur(2px)`)}
+			onKeyDown={handleKeyDown}
+			onFocus={() => {
+				containerRef.current.querySelector(".test-container").style.filter =
+					"blur(0px)";
+			}}
+			onBlur={() => {
+				containerRef.current.querySelector(".test-container").style.filter =
+					"blur(3px)";
+			}}
 		>
-			<Text testText={text} />
-			<Keyboard />
+			{display}
 		</div>
 	);
 };

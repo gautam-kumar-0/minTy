@@ -1,16 +1,17 @@
 .testWindow {
-	font-size: 1.5rem;
+	font-size: 1.6rem;
 	max-height: calc(4.8lh);
 	overflow: hidden;
-	/* border: 2px solid rgb(255, 255, 255); */
+	border: 2px solid rgb(236, 175, 32);
 	position: relative;
+	margin-inline: 1rem;
 }
 .testText {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: stretch;
 	position: relative;
-	/* translate: 0 calc(-1lh - 1ch); */
+	transition: translate 200ms 200ms ease;
 	column-gap: 1ch;
 }
 .current {

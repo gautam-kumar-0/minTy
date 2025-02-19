@@ -6,38 +6,58 @@
 .main {
 	display: grid;
 	place-content: center;
-	place-items: center;
+	place-items: center stretch;
 	font-family: "Oxygen Mono";
 	-webkit-user-select: none;
 	user-select: none;
 	grid-template-columns: 1fr;
-	gap: 2rem;
-	padding: 2rem;
-}
-.stats-container {
-	display: flex;
+	gap: 1rem;
+	padding: 2rem 3rem;
 	border: 1px solid red;
-	flex-direction: row;
-	gap: 2rem;
+}
+.keyboard-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.stats-box {
+	min-height: 3lh;
+	border: 1px solid rgb(60, 255, 144);
+	display: flex;
+
+	justify-content: stretch;
+	align-items: center;
+}
+.live-stats {
+	flex: 1 1 100%;
+	display: flex;
 	justify-content: space-between;
-	width: clamp(400px, 60vw, 600px);
+	opacity: 0;
+	transition: opacity 200ms ease;
+}
+.live-stats > div {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	column-gap: 1rem;
+	border: 1px solid rgb(24, 192, 192);
 }
 
-.wpm,
-.accuracy {
-	font-size: 3rem;
+.progress {
+	justify-self: start;
+	align-self: last baseline;
+}
+.stats-desc {
+	font-size: 0.7rem;
+	opacity: 0.8;
+}
+.stats-data {
+	font-size: 1.5rem;
+	min-width: 3ch;
+	display: flex;
+
+	place-content: center;
 }
 .name {
 	opacity: 0.7;
-}
-.total-accuracy,
-.average-wpm,
-.live-wpm {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	min-width: 15ch;
-}
-
-.live-wpm {
 }

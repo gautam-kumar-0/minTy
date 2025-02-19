@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Orbitron:wght@400..900&family=VT323&display=swap");
 :where(*) {
 	margin: 0;
 	padding: 0;
@@ -10,6 +11,7 @@ body {
 	background-blend-mode: overlay;
 	background-size: 100%;
 	background-position: center;
+	font-family: "IBM Plex Mono";
 }
 #root {
 	margin: auto;
@@ -33,4 +35,38 @@ body {
 	perspective: 1000px;
 	z-index: 0;
 	pointer-events: none;
+}
+.result {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1ch;
+}
+.app {
+	min-height: 100vh;
+	min-width: 100vw;
+}
+header {
+	padding: 0.5rem 1rem;
+	border: 2px solid rgb(106, 255, 14);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+header .logo {
+	display: flex;
+	font-size: 1.5rem;
+	align-items: center;
+	gap: 1ch;
+}
+header nav {
+	display: flex;
+	gap: 1rem;
+	font-size: 1.5rem;
+	color: rgba(255, 255, 255, 0.674);
+	border: 1px solid red;
+}
+
+h1 {
+	font-family: "VT323";
+	font-size: 2.7rem;
 }

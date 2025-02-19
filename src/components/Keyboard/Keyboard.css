@@ -1,8 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Oxygen+Mono&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 .key {
 	background-color: rgba(100, 100, 100, 0.1);
+
 	color: rgba(255, 255, 255, 0.571);
-	/* border: 0.5px solid rgba(83, 83, 83, 0.5); */
+	border: 0.5px solid rgba(83, 83, 83, 0.5);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -17,11 +18,12 @@
 .keyboard {
 	border-radius: 0.5em;
 	width: clamp(600px, 70vw, 750px);
-	-webkit-backdrop-filter: blur(4px);
-	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+
 	border: rgba(100, 100, 100, 0.2) 2px solid;
 	margin-block: 2rem;
-	background-color: hsla(0, 0, 50, 1);
+	background-color: transparent;
 	padding: 1.5rem 1rem 1rem 1rem;
 	display: flex;
 	flex-direction: column;
@@ -31,6 +33,7 @@
 	/* display: none; */
 	scale: 80%;
 }
+
 .keyboard.shifted {
 	text-transform: uppercase;
 }
@@ -57,10 +60,4 @@
 	letter-spacing: 3px;
 	color: rgba(255, 255, 255, 0.3);
 	text-transform: lowercase;
-}
-.main {
-	display: grid;
-	place-content: center;
-	place-items: center;
-	font-family: "Oxygen Mono";
 }

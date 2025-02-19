@@ -1,5 +1,6 @@
 import React from "react";
-import {useRef, useEffect} from "react";
+import {useEffect} from "react";
+
 const Letter = ({letter}) => {
 	const {value, isTyped, isCurrent, isValid} = letter;
 	let className = "letter ";
@@ -11,6 +12,7 @@ const Letter = ({letter}) => {
 	} else className += " unprocessed";
 	return <span className={className}>{value}</span>;
 };
+
 const Word = ({word, done, typing, pending}) => {
 	const LETTERS = Array.from(word.original + " ").map((letter, i) => ({
 		value: letter,
@@ -18,7 +20,9 @@ const Word = ({word, done, typing, pending}) => {
 		isCurrent: typing && i == word.typed.length,
 		isValid: letter == word.typed.charAt(i),
 	}));
+
 	LETTERS[LETTERS.length - 1].value = "";
+
 	if (word.original.length < word.typed.length) {
 		Array.from(word.typed.slice(word.original.length)).forEach((letter, i) => {
 			LETTERS.push({
@@ -29,8 +33,6 @@ const Word = ({word, done, typing, pending}) => {
 			});
 		});
 	}
-
-	useEffect(() => {});
 
 	return (
 		<div className="word">

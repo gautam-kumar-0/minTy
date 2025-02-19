@@ -1,12 +1,11 @@
-import React, {useEffect, useReducer} from "react";
+import React, {useContext} from "react";
 import Word from "./Word";
-import {useState, useRef, useLayoutEffect} from "react";
+import {useRef, useLayoutEffect} from "react";
 import "./Text.css";
-
-import useTestContext from "../../hooks/useTestContext";
+import {TestContext} from "../context/TestContextProvider";
 
 const Text = ({}) => {
-	const [state, dispatch] = useTestContext();
+	const state = useContext(TestContext);
 
 	const renderWord = (word, i) => {
 		return (
@@ -44,15 +43,15 @@ const Text = ({}) => {
 		cursor.current.style.translate = `${cursorX}px ${cursorY}px`;
 	}, [state]);
 
-	return !state.isCompleted ? (
-		<div className="testWindow" ref={testWindow}>
-			<div className="testText" ref={testText}>
-				<span className="cursor" ref={cursor}></span>
-				{state.words.map(renderWord)}
+	return (
+		<div className="test-container">
+			<div className="testWindow" ref={testWindow}>
+				<div className="testText" ref={testText}>
+					<span className="cursor" ref={cursor}></span>
+					{state.words.map(renderWord)}
+				</div>
 			</div>
 		</div>
-	) : (
-		<h1>Result</h1>
 	);
 };
 
