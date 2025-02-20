@@ -20,24 +20,21 @@ const LiveStats = () => {
 	};
 
 	const calculateAvgWPM = (state, interval) => {
-		console.log("Live Calculation", state, avgWPM);
-		if (state.isCompleted) {
+		console.log("Live Calculation", state);
+		if (state.status == "complete") {
 			clearInterval(interval);
 			return;
 		}
-		if (!state.words[0].start) {
+		if (state.status != "uncomplete") {
+			console.log("AVG STOPPED");
 			return;
 		}
-		const start = state.words[0].start;
-		let timeElapsed = 1;
-		if (start) {
-			timeElapsed = performance.now() - start;
-			let character = 0;
-			for (let i = 0; i <= state.index; i++) {
-				character += state.words[i].typed.length;
-			}
-			setAvgWPM((character * 12000) / timeElapsed);
+		let timeElapsed = performance.now() - state.words[0].start;
+		let character = 0;
+		for (let i = 0; i <= state.index; i++) {
+			character += state.words[i].typed.length;
 		}
+		setAvgWPM((character * 12000) / timeElapsed);
 	};
 	const liveRef = useRef(null);
 	useEffect(() => {

@@ -1,0 +1,36 @@
+Date : 2025-02-19 21:49:42
+Directory : c:\Users\gk725\Desktop\MERN\typing\src
+Total : 6 files,  51 codes, -14 comments, -5 blanks, all 32 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| CSS            |          1 |         28 |          0 |          0 |         28 |
+| JavaScript JSX |          5 |         23 |        -14 |         -5 |          4 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                              | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                 |          6 |         51 |        -14 |         -5 |         32 |
+| components                                                                        |          6 |         51 |        -14 |         -5 |         32 |
+| components (Files)                                                                |          3 |         55 |          0 |          0 |         55 |
+| components\Keyboard                                                               |          1 |          5 |          0 |          0 |          5 |
+| components\Text                                                                   |          1 |         -1 |        -14 |         -2 |        -17 |
+| components\context                                                                |          1 |         -8 |          0 |         -3 |        -11 |
++-----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                          | language       | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Keyboard\Key.jsx                | JavaScript JSX |          5 |          0 |          0 |          5 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\LiveStats.jsx                   | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Test.css                        | CSS            |         28 |          0 |          0 |         28 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\TestResult.jsx                  | JavaScript JSX |         26 |          0 |          0 |         26 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Text\Word.jsx                   | JavaScript JSX |         -1 |        -14 |         -2 |        -17 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\context\TestContextProvider.jsx | JavaScript JSX |         -8 |          0 |         -3 |        -11 |
+| Total                                                                             |                |         51 |        -14 |         -5 |         32 |
++-----------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

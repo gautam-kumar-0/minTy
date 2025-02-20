@@ -1,18 +1,39 @@
 import React, {createContext, useMemo} from "react";
 import {useImmerReducer} from "use-immer";
 const Status = {
+	READY: "ready",
 	UNCOMPLETE: "uncomplete",
 	COMPLETE: "complete",
-	PENDING: "pending",
+	NOTREADY: "notready",
 };
 export const initialState = {
 	words: [],
-	isCompleted: false,
 	index: 0,
-	status: Status.PENDING,
+	status: Status.NOTREADY,
 };
-
+const config = {
+	freedom: false,
+};
 const reducer = (draft, action) => {
+	function helperBackSpace(clearAll = false) {
+		const word = draft.words[draft.index];
+		if (word.typed) {
+			word.typed = clearAll ? "" : word.typed.slice(0, -1);
+		} else if (draft.index > 0) {
+			const prev = draft.words[draft.index - 1];
+			if (config.freedom || prev.typed != prev.original) {
+				draft.index -= 1;
+			}
+		}
+	}
+	function helperCalculateWPM() {
+		draft.words[draft.index].end = action.payload.timeStamp;
+		const currentWord = draft.words[draft.index];
+		draft.words[draft.index].wpm =
+			(currentWord.typed.length * 12000) /
+			(currentWord.end - draft.words[draft.index].start);
+	}
+
 	switch (action.type) {
 		case "NEW":
 			draft.words = action.payload.split(" ").map((w) => ({
@@ -24,30 +45,19 @@ const reducer = (draft, action) => {
 				errors: 0,
 			}));
 
-			draft.status = Status.UNCOMPLETE;
+			draft.status = Status.READY;
 			draft.index = 0;
-			draft.isCompleted = false;
-
+			break;
 		case "BACKSPACE":
-			if (draft.words[draft.index].typed) {
-				draft.words[draft.index].typed = draft.words[draft.index].typed.slice(
-					0,
-					-1
-				);
-			} else {
-				draft.index = draft.index > 0 ? draft.index - 1 : 0;
-			}
+			helperBackSpace();
 			break;
 
 		case "CTRLBACKSPACE":
-			if (draft.words[draft.index].typed) {
-				draft.words[draft.index].typed = "";
-			} else {
-				draft.index = draft.index > 0 ? draft.index - 1 : 0;
-			}
+			helperBackSpace(true);
 			break;
 
 		case "CHARACTER":
+			if (draft.status == Status.READY) draft.status = Status.UNCOMPLETE;
 			let temp = draft.words[draft.index];
 			if (temp.typed.length < temp.original.length + 5) {
 				if (
@@ -58,29 +68,22 @@ const reducer = (draft, action) => {
 				if (!temp.typed.length) temp.start = action.payload.timeStamp;
 				temp.typed = `${temp.typed}${action.payload.character}`;
 			}
+			//for last word
 			if (
 				draft.index === draft.words.length - 1 &&
 				temp.typed === temp.original
 			) {
-				draft.words[draft.index].end = action.payload.timeStamp;
-				const currentWord = draft.words[draft.index];
-				draft.words[draft.index].wpm =
-					(currentWord.typed.length * 12000) /
-					(currentWord.end - draft.words[draft.index].start);
-				draft.isCompleted = true;
+				console.log("COMpleted from character condition is right");
+				helperCalculateWPM();
 				draft.status = Status.COMPLETE;
 			}
 			break;
 
 		case "SPACE":
-			draft.words[draft.index].end = action.payload.timeStamp;
-			const currentWord = draft.words[draft.index];
-			draft.words[draft.index].wpm =
-				(currentWord.typed.length * 12000) /
-				(currentWord.end - draft.words[draft.index].start);
-
+			if (draft.status == Status.READY) draft.status = Status.UNCOMPLETE;
+			if (!draft.words[draft.index].typed) return;
+			helperCalculateWPM();
 			if (draft.index === draft.words.length - 1) {
-				draft.isCompleted = true;
 				draft.status = Status.COMPLETE;
 			} else {
 				draft.index += 1;
@@ -95,8 +98,7 @@ const reducer = (draft, action) => {
 				w.typed = "";
 			});
 			draft.index = 0;
-			draft.status = Status.UNCOMPLETE;
-			draft.isCompleted = false;
+			draft.status = Status.READY;
 		default:
 			break;
 	}

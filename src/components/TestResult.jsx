@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip} from "recharts";
+
 import useTestContext from "../hooks/useTestContext.js";
+import {FcNext} from "react-icons/fc";
+import {RiRestartLine} from "react-icons/ri";
+import TwoYAxisChart from "./TwoYAxisChart.jsx";
 
 const TestResult = ({setText}) => {
 	const [state, dispatch] = useTestContext();
@@ -15,6 +18,9 @@ const TestResult = ({setText}) => {
 			return "";
 		});
 	};
+	const handleRestart = (e) => {
+		setText((prev) => new String(prev));
+	};
 	console.log(state, result);
 	useEffect(() => {
 		if (state.status == "complete") {
@@ -24,33 +30,40 @@ const TestResult = ({setText}) => {
 				return {
 					name: i + 1,
 					raw: Math.round(word.wpm),
-					errors: word.errors,
+					...(word.errors > 0 ? {errors: word.errors} : {}),
 					average: Math.round(totalwpm / (i + 1)),
 				};
 			});
 			setResult(r);
 		}
 	}, [state]);
-	const renderLineChart = (
-		<LineChart
-			width={600}
-			height={300}
-			data={result}
-			margin={{top: 5, right: 20, bottom: 5, left: 0}}
-		>
-			<Line type="monotone" dataKey="raw" stroke="#8884d8" />
-			<Line type="monotone" dataKey="average" stroke="#0ff1ce" />
-			<CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-			<XAxis dataKey="name" />
-			<YAxis />
-			<Tooltip />
-		</LineChart>
-	);
+	let renderChart = <span>Loading</span>;
+	if (result) {
+		renderChart = <TwoYAxisChart result={result} />;
+	}
 
 	return (
 		<div className="result">
-			{renderLineChart}
-			<button onClick={handleNext}>Next Test</button>
+			<div className="result-values">
+				<div className="average">
+					<span>Average</span>
+					<h1>{result ? result[result.length - 1].average : 0}</h1>
+				</div>
+				<div className="accuracy">
+					<span>Accuracy</span>
+					<h1>{result ? 90 : 0}%</h1>
+				</div>
+			</div>
+			<div className="linechart">{renderChart}</div>
+			<div className="result-details"></div>
+			<div className="actions">
+				<button onClick={handleNext}>
+					<FcNext />
+				</button>
+				<button onClick={handleRestart}>
+					<RiRestartLine />
+				</button>
+			</div>
 		</div>
 	);
 };

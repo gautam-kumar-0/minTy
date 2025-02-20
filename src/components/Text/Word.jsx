@@ -1,6 +1,4 @@
 import React from "react";
-import {useEffect} from "react";
-
 const Letter = ({letter}) => {
 	const {value, isTyped, isCurrent, isValid} = letter;
 	let className = "letter ";
@@ -47,18 +45,3 @@ const Word = ({word, done, typing, pending}) => {
 };
 
 export default Word;
-
-// const getClass = (index) => {
-// 	if (current && index === word.typed.length) {
-// 		return "current";
-// 	}
-// 	if (index >= word.typed.length) {
-// 		return "unprocessed";
-// 	}
-// 	if (
-// 		index < word.original.length &&
-// 		word.typed.charAt(index) === word.original.charAt(index)
-// 	) {
-// 		return "valid";
-// 	} else return "invalid";
-// };

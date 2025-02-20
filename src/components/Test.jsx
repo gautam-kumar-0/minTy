@@ -78,23 +78,23 @@ const Test = ({}) => {
 	}, []);
 
 	let display = null;
-	const blurRef = useRef(null);
-	if (state.status == "uncomplete") {
+
+	if (state.status == "notready") {
+		display = <span>Loading...</span>;
+	} else if (state.status == "complete") {
+		display = <TestResult setText={setText} />;
+	} else {
 		display = (
 			<>
 				<div className="stats-box">
-					{state?.words[0]?.start ? <LiveStats /> : <></>}
+					{state.status == "uncomplete" ? <LiveStats /> : <></>}
 				</div>
-				<Text ref={blurRef} />
+				<Text />
 				<div className="keyboard-wrapper">
 					<Keyboard />
 				</div>
 			</>
 		);
-	} else if (state.status == "complete") {
-		display = <TestResult setText={setText} />;
-	} else {
-		display = <span>Loading</span>;
 	}
 	return (
 		<div
@@ -103,12 +103,18 @@ const Test = ({}) => {
 			tabIndex={0}
 			onKeyDown={handleKeyDown}
 			onFocus={() => {
-				containerRef.current.querySelector(".test-container").style.filter =
-					"blur(0px)";
+				let testContainer =
+					containerRef.current.querySelector(".test-container");
+				if (testContainer) {
+					testContainer.style.filter = "blur(0px)";
+				}
 			}}
 			onBlur={() => {
-				containerRef.current.querySelector(".test-container").style.filter =
-					"blur(3px)";
+				let testContainer =
+					containerRef.current.querySelector(".test-container");
+				if (testContainer) {
+					testContainer.style.filter = "blur(3px)";
+				}
 			}}
 		>
 			{display}

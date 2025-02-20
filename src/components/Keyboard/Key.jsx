@@ -1,4 +1,9 @@
 import React, {useRef, useEffect} from "react";
+const config = {
+	theme: {
+		primary: "",
+	},
+};
 const Key = ({keyName, isActive}) => {
 	const keyRef = useRef(null);
 
