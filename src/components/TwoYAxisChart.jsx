@@ -1,3 +1,4 @@
+import React from "react";
 import {
 	ComposedChart,
 	Line,
@@ -9,11 +10,28 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 
-const primaryColor = "#0ff1ce88"; // color for labels and values of x-axis and y axis,
+const primaryColor = "#0ff1ce88"; // color for labels and values of x-axis and y-axis
 const gridColor = "#eeeeee17"; // color for gridlines subtle
 const scatterColor = "tomato"; // color for scatter
 const Linewithaverage = "gray"; // color for line with datakey = average
 const linewithraw = "springgreen"; // color for line with datakey = raw
+
+const CustomScatterShape = (props) => {
+	const {cx, cy, payload} = props;
+	return payload.errors != 0 ? (
+		<text
+			x={cx}
+			y={cy}
+			textAnchor="middle"
+			dominantBaseline="middle"
+			fontFamily="VT323"
+			fontSize={14}
+			fill={scatterColor}
+		>
+			x
+		</text>
+	) : null;
+};
 
 const TwoYAxisChart = ({result}) => {
 	const maxErrors = Math.max(...result.map((d) => d.errors)) + 1;
@@ -41,12 +59,8 @@ const TwoYAxisChart = ({result}) => {
 						fill: primaryColor,
 						fontSize: 12,
 					}}
-					axisLine={{
-						strokeWidth: 0,
-					}}
-					tickLine={{
-						strokeWidth: 0.5,
-					}}
+					axisLine={{strokeWidth: 0}}
+					tickLine={{strokeWidth: 0.5}}
 				/>
 				<YAxis
 					yAxisId="left"
@@ -60,12 +74,8 @@ const TwoYAxisChart = ({result}) => {
 						fontSize: 12,
 						dy: 80,
 					}}
-					axisLine={{
-						strokeWidth: 0,
-					}}
-					tickLine={{
-						strokeWidth: 0.5,
-					}}
+					axisLine={{strokeWidth: 0}}
+					tickLine={{strokeWidth: 0.5}}
 				/>
 				<YAxis
 					yAxisId="right"
@@ -81,12 +91,8 @@ const TwoYAxisChart = ({result}) => {
 						fill: primaryColor,
 						fontSize: 12,
 					}}
-					axisLine={{
-						strokeWidth: 0,
-					}}
-					tickLine={{
-						strokeWidth: 0.5,
-					}}
+					axisLine={{strokeWidth: 0}}
+					tickLine={{strokeWidth: 0.5}}
 				/>
 				<Tooltip
 					contentStyle={{
@@ -106,8 +112,10 @@ const TwoYAxisChart = ({result}) => {
 					strokeWidth={2}
 					dot={{strokeWidth: 0, fill: "#8884d8"}}
 					activeDot={{strokeWidth: 0, fill: "#8884d8", r: 4}}
+					isAnimationActive={false}
 				/>
 				<Line
+					isAnimationActive={false}
 					yAxisId="left"
 					type="monotone"
 					dataKey="average"
@@ -116,7 +124,11 @@ const TwoYAxisChart = ({result}) => {
 					dot={{strokeWidth: 0, fill: "#0ff1ce"}}
 					activeDot={{strokeWidth: 0, fill: "#0ff1ce", r: 4}}
 				/>
-				<Scatter yAxisId="right" dataKey="errors" fill="red" />
+				<Scatter
+					yAxisId="right"
+					dataKey="errors"
+					shape={<CustomScatterShape />}
+				/>
 			</ComposedChart>
 		</ResponsiveContainer>
 	);

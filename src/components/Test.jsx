@@ -9,6 +9,7 @@ import Text from "./Text/Text.jsx";
 import "./Test.css";
 import TestResult from "./TestResult.jsx";
 import LiveStats from "./LiveStats";
+import {RiRestartLine} from "react-icons/ri";
 
 const Test = ({}) => {
 	const [state, dispatch] = useTestContext();
@@ -89,7 +90,14 @@ const Test = ({}) => {
 				<div className="stats-box">
 					{state.status == "uncomplete" ? <LiveStats /> : <></>}
 				</div>
-				<Text />
+				<Text text={text} />
+				<button
+					className="action-button"
+					onClick={() => setText((prev) => new String(prev))}
+					data-action="Restart"
+				>
+					<RiRestartLine />
+				</button>
 				<div className="keyboard-wrapper">
 					<Keyboard />
 				</div>
