@@ -5,70 +5,40 @@ import React, {
 	useState,
 	useLayoutEffect,
 } from "react";
-import Word from "./Word";
 import "./Text.css";
 import {TestContext} from "../context/TestContextProvider";
+import TestContent from "./TestContent.jsx"; // Import the new component
 
 const Text = ({}) => {
 	const state = useContext(TestContext);
 	const [children, setChildren] = useState(null);
-	const [fade, setFade] = useState("in"); // Initialize with "in" for initial fade-in
-	const renderWord = (word, i) => {
-		return (
-			<Word
-				word={word}
-				key={i}
-				done={state.index > i}
-				typing={state.index === i}
-				pending={state.index < i}
-			/>
-		);
-	};
-
-	const offset = useRef(0);
+	const [currentText, setCurrentText] = useState(state.text);
+	const [fade, setFade] = useState("in");
 	const testWindow = useRef(null);
-	const testText = useRef(null);
-	const cursor = useRef(null);
-
-	// update cursor
-	useEffect(() => {
-		setChildren(state.words.map(renderWord));
-	}, [state.words]);
+	const testContentRef = useRef(null); // Ref for the TestContent component
 
 	useLayoutEffect(() => {
-		const next = document.querySelector(".current");
-		if (!next) {
-			return;
-		}
-		if (
-			next.offsetTop <
-			testText.current.offsetHeight - 2 * next.offsetHeight
-		) {
-			offset.current = next.offsetTop - next.offsetHeight;
-		}
-
-		testText.current.style.transform = `translateY(-${offset.current}px)`; // Use transform for smoother animation
-
-		const cursorX = next.offsetLeft;
-		const cursorY = next.offsetTop;
-		cursor.current.style.transform = `translate(${cursorX}px, ${cursorY}px)`; // Use transform for smoother animation
-	}, [state]);
-
-	useEffect(() => {
 		setFade("out");
 		setTimeout(() => {
-			setChildren(state.words.map(renderWord));
+			setChildren(
+				<TestContent fade={fade} ref={testContentRef} state={state} />
+			);
 			setFade("in");
 		}, 200);
-	}, [state.text]);
+	}, [currentText]);
+	useLayoutEffect(() => {
+		if (currentText == state.text)
+			setChildren(
+				<TestContent fade={fade} ref={testContentRef} state={state} />
+			);
+		else setCurrentText(state.text);
+	}, [state]);
 
 	return (
 		<div className="test-container">
 			<div className={`testWindow ${fade}`} ref={testWindow}>
-				<div className="testText" ref={testText}>
-					<span className="cursor" ref={cursor}></span>
-					{children}
-				</div>
+				{children}
+				{/* Use the new component */}
 			</div>
 		</div>
 	);
