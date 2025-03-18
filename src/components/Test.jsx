@@ -10,10 +10,34 @@ import "./Test.css";
 import TestResult from "./TestResult.jsx";
 import LiveStats from "./LiveStats";
 import {RiRestartLine} from "react-icons/ri";
+import TestMode from "./TestMode.jsx";
+import {wordList} from "./config";
+const generateRandomText = (words) => {
+	let arr = Array(words)
+		.fill(null)
+		.map(() => wordList[Math.floor(Math.random() * 1000)]);
+	return arr.join(" ");
+};
+const FetchQuotes = async () => {
+	const response = await fetch("http://localhost:3000/quotes");
+	if (!response.ok) {
+		throw new Error("Error while fetching quote", response.status);
+	}
+	return await response.json();
+};
+
+const MODE = {
+	time: [30, 60, 120, "custom"],
+	words: [10, 25, 50, 100, "custom"],
+	quote: ["short", "medium", "long"],
+	custom: ["change"],
+};
 
 const Test = ({}) => {
 	const [state, dispatch] = useTestContext();
-	const [text, setText] = useState("");
+
+	const [mode, setMode] = useState({type: "words", index: 0});
+	const [error, setError] = useState(null);
 	const containerRef = useRef(null);
 
 	const handleKeyDown = (e) => {
@@ -53,34 +77,48 @@ const Test = ({}) => {
 			});
 		}
 	};
+	const setText = async (mode) => {
+		console.log("setText(): ", mode);
+		let text = "";
+		if (mode.type == "words") {
+			text = generateRandomText(MODE[mode.type][mode.index]);
+		} else if (mode.type == "time") {
+			text = generateRandomText(100);
+		} else if (mode.type == "quote") {
+			console.log("STATE.QUOTES", state.quotes);
+			if (state.quotes.length) {
+				text = state.quotes[0].text;
+				dispatch({type: "QUOTES/USE"});
+			} else {
+				try {
+					let quotes = await FetchQuotes();
+					dispatch({type: "QUOTES/STORE", payload: quotes});
+					text = quotes[0].text;
+				} catch (e) {
+					console.log(e);
+					setError(e.message);
+				}
+			}
+		} else if (mode.type == "custom") {
+			text = generateRandomText();
+		}
+		console.log(text);
+		dispatch({type: "NEW", payload: text});
+	};
 	useEffect(() => {
-		const getText = async (params) => {
-			params = {
-				type: "random",
-				numberOfWords: 50,
-			};
-			let data = new Promise((resolve, reject) => {
-				let data = null;
-				setTimeout(() => {
-					data =
-						"Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem architecto magnam in nam cupiditate dolores esse omnis quasi porro iusto!";
-					resolve(data);
-				}, 1000);
-			});
-			data = await data;
-			setText(data);
-		};
-		if (text) {
-			dispatch({type: "NEW", payload: text});
-		} else getText();
-	}, [text]);
+		console.log("Loaded");
+		setText(mode);
+	}, [mode]);
+
 	useEffect(() => {
 		containerRef.current.focus();
+		setText(mode);
 	}, []);
 
 	let display = null;
 
-	if (state.status == "notready") {
+	if (!state.text) display = null;
+	else if (state.status == "notready") {
 		display = <span>Loading...</span>;
 	} else if (state.status == "complete") {
 		display = <TestResult setText={setText} />;
@@ -88,16 +126,23 @@ const Test = ({}) => {
 		display = (
 			<>
 				<div className="stats-box">
-					{state.status == "uncomplete" ? <LiveStats /> : <></>}
+					{state.status == "uncomplete" ? <LiveStats /> : ""}
 				</div>
-				<Text text={text} />
-				<button
-					className="action-button"
-					onClick={() => setText((prev) => new String(prev))}
-					data-action="Restart"
-				>
-					<RiRestartLine />
-				</button>
+				{error && (
+					<div className="error">
+						<span>{error}</span> <button>Refresh</button>
+					</div>
+				)}
+				<Text />
+				<div className="actions">
+					<button
+						className="action-button"
+						onClick={() => setText((prev) => new String(prev))}
+						data-action="Restart"
+					>
+						<RiRestartLine />
+					</button>
+				</div>
 				<div className="keyboard-wrapper">
 					<Keyboard />
 				</div>
@@ -125,6 +170,11 @@ const Test = ({}) => {
 				}
 			}}
 		>
+			<TestMode
+				mode={mode}
+				setMode={setMode}
+				className={state.status == "uncomplete" ? "invisible" : ""}
+			/>
 			{display}
 		</div>
 	);

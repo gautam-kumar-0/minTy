@@ -43,7 +43,7 @@ body {
 }
 header {
 	padding: 0.5rem 1rem;
-	border: 2px solid rgb(106, 255, 14);
+
 	display: flex;
 	justify-content: space-between;
 	align-items: center;

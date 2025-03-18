@@ -5,17 +5,22 @@
 	border: 2px solid rgb(236, 175, 32);
 	position: relative;
 	margin-inline: 1rem;
+	transition: opacity 400ms ease;
+}
+.testWindow.out {
+	opacity: 0;
 }
 .testText {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: stretch;
 	position: relative;
-	transition: translate 200ms 200ms ease;
+	transition: translate 200ms ease 200ms;
 	column-gap: 1ch;
 }
 .current {
 	color: cadetblue;
+	transition: color 100ms ease 150ms;
 }
 .cursor {
 	background-color: #2dff57;
@@ -23,7 +28,7 @@
 	height: 1.1lh;
 	width: 3px;
 
-	transition: all 200ms;
+	transition: transform 200ms ease-in-out;
 }
 .word {
 	display: flex;

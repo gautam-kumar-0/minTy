@@ -45,7 +45,7 @@ const TwoYAxisChart = ({result}) => {
 				margin={{top: 20, right: 20, bottom: 20, left: 20}}
 			>
 				<CartesianGrid
-					stroke="#eeeeee15"
+					stroke={gridColor}
 					strokeWidth={1}
 					lightingColor={"red"}
 				/>
@@ -108,10 +108,10 @@ const TwoYAxisChart = ({result}) => {
 					yAxisId="left"
 					type="monotone"
 					dataKey="raw"
-					stroke="#8884d8"
+					stroke={linewithraw}
 					strokeWidth={2}
-					dot={{strokeWidth: 0, fill: "#8884d8"}}
-					activeDot={{strokeWidth: 0, fill: "#8884d8", r: 4}}
+					dot={{strokeWidth: 0, fill: linewithraw}}
+					activeDot={{strokeWidth: 0, fill: linewithraw, r: 4}}
 					isAnimationActive={false}
 				/>
 				<Line
@@ -119,10 +119,10 @@ const TwoYAxisChart = ({result}) => {
 					yAxisId="left"
 					type="monotone"
 					dataKey="average"
-					stroke="#0ff1ce"
+					stroke={Linewithaverage}
 					strokeWidth={2}
-					dot={{strokeWidth: 0, fill: "#0ff1ce"}}
-					activeDot={{strokeWidth: 0, fill: "#0ff1ce", r: 4}}
+					dot={{strokeWidth: 0, fill: Linewithaverage}}
+					activeDot={{strokeWidth: 0, fill: Linewithaverage, r: 4}}
 				/>
 				<Scatter
 					yAxisId="right"

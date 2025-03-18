@@ -6,11 +6,15 @@ const Status = {
 	COMPLETE: "complete",
 	NOTREADY: "notready",
 };
+
 export const initialState = {
 	words: [],
 	index: 0,
 	status: Status.NOTREADY,
+	text: "",
+	quotes: [],
 };
+
 const config = {
 	freedom: false,
 };
@@ -47,7 +51,14 @@ const reducer = (draft, action) => {
 
 			draft.status = Status.READY;
 			draft.index = 0;
+			draft.text = action.payload;
 			break;
+
+		case "QUOTES/STORE":
+			draft.quotes = action.payload;
+			break;
+		case "QUOTES/USE":
+			draft.quotes.shift();
 		case "BACKSPACE":
 			helperBackSpace();
 			break;

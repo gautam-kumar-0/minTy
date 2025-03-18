@@ -1,0 +1,42 @@
+.mode-container {
+	display: flex;
+	padding: 0.5rem;
+	justify-content: center;
+	border: 1px solid red;
+	transition: opacity 300ms ease;
+}
+.mode-container.invisible {
+	opacity: 0;
+	pointer-events: none;
+}
+.mode-ribbon {
+	display: flex;
+	justify-content: center;
+	padding: 8px 2rem;
+	gap: 3rem;
+	border-radius: 8px;
+	background-color: rgba(0, 0, 0, 0.921);
+}
+.mode-type {
+	display: flex;
+	justify-content: space-around;
+	gap: 2rem;
+}
+.mode-type div,
+.mode-values div {
+	cursor: pointer;
+}
+.mode-values {
+	display: flex;
+	gap: 1rem;
+	cursor: pointer;
+	/* border: palegoldenrod 2px solid; */
+	justify-content: space-around;
+}
+
+.mode {
+}
+
+.active {
+	color: rgb(104, 184, 84);
+}

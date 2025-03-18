@@ -4,11 +4,8 @@ import {RiSettings4Fill} from "react-icons/ri";
 import "./App.css";
 import TestContextProvider from "./components/context/TestContextProvider.jsx";
 import {LuKeyboard} from "react-icons/lu";
+
 function App() {
-	const [status, setStatus] = useState("idle");
-	const text =
-		"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat, illum!";
-	// todo find a way to store wpm and other stats
 	return (
 		<div className="app">
 			<div className="starfall"></div>
@@ -24,7 +21,8 @@ function App() {
 						<RiSettings4Fill />
 					</nav>
 				</header>
-				<Test status={status} setStatus={setStatus} text={text} />
+				{/* <TestMode mode={mode} setMode={setMode} /> */}
+				<Test />
 			</TestContextProvider>
 		</div>
 	);

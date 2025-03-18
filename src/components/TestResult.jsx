@@ -56,10 +56,18 @@ const TestResult = ({setText}) => {
 			</div>
 			<div className="linechart">{renderChart}</div>
 			<div className="actions">
-				<button onClick={handleNext} data-action="Next">
+				<button
+					onClick={handleNext}
+					className="action-button"
+					data-action="Next"
+				>
 					<FcNext />
 				</button>
-				<button onClick={handleRestart} data-action="Restart">
+				<button
+					onClick={handleRestart}
+					className="action-button"
+					data-action="Restart"
+				>
 					<RiRestartLine />
 				</button>
 			</div>
