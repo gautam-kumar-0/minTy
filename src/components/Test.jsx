@@ -18,6 +18,7 @@ const generateRandomText = (words) => {
 		.map(() => wordList[Math.floor(Math.random() * 1000)]);
 	return arr.join(" ");
 };
+
 const FetchQuotes = async () => {
 	const response = await fetch("http://localhost:3000/quotes");
 	if (!response.ok) {
@@ -108,6 +109,7 @@ const Test = ({}) => {
 	useEffect(() => {
 		console.log("Loaded");
 		setText(mode);
+		setError(null);
 	}, [mode]);
 
 	useEffect(() => {
@@ -121,23 +123,19 @@ const Test = ({}) => {
 	else if (state.status == "notready") {
 		display = <span>Loading...</span>;
 	} else if (state.status == "complete") {
-		display = <TestResult setText={setText} />;
+		display = <TestResult setMode={setMode} />;
 	} else {
 		display = (
 			<>
 				<div className="stats-box">
 					{state.status == "uncomplete" ? <LiveStats /> : ""}
 				</div>
-				{error && (
-					<div className="error">
-						<span>{error}</span> <button>Refresh</button>
-					</div>
-				)}
+
 				<Text />
 				<div className="actions">
 					<button
 						className="action-button"
-						onClick={() => setText((prev) => new String(prev))}
+						onClick={() => setText(mode)}
 						data-action="Restart"
 					>
 						<RiRestartLine />
@@ -175,6 +173,11 @@ const Test = ({}) => {
 				setMode={setMode}
 				className={state.status == "uncomplete" ? "invisible" : ""}
 			/>
+			{error && (
+				<div className="error">
+					<span>{error}</span> <button>Refresh</button>
+				</div>
+			)}
 			{display}
 		</div>
 	);
