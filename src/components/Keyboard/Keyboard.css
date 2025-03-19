@@ -20,9 +20,7 @@
 	width: clamp(600px, 70vw, 750px);
 	-webkit-backdrop-filter: blur(10px);
 	backdrop-filter: blur(10px);
-
 	border: rgba(100, 100, 100, 0.2) 2px solid;
-	margin-block: 2rem;
 	background-color: transparent;
 	padding: 1.5rem 1rem 1rem 1rem;
 	display: flex;

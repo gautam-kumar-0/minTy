@@ -4,23 +4,22 @@
 	opacity: 0;
 }
 .main {
-	display: grid;
-	place-content: center;
-	place-items: center stretch;
+	display: flex;
+	align-items: stretch;
+	gap: 0.5rem;
+	flex-direction: column;
 	font-family: "Oxygen Mono";
 	-webkit-user-select: none;
 	user-select: none;
-	grid-template-columns: 1fr;
-	gap: 1rem;
-	padding: 2rem 3rem;
-	border: 1px solid red;
-	margin: 2rem;
+	padding: 1rem 3rem;
+	/* border: 1px solid red; */
 }
+
 .keyboard-wrapper {
 	display: flex;
-	align-items: center;
 	justify-content: center;
 }
+
 .stats-box {
 	min-height: 3lh;
 

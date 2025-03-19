@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 const Letter = ({letter}) => {
 	const {value, isTyped, isCurrent, isValid} = letter;
 	let className = "letter ";
@@ -44,4 +44,5 @@ const Word = ({word, done, typing, pending}) => {
 	);
 };
 
-export default Word;
+// Memoize the Word component
+export default memo(Word);
