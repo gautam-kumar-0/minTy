@@ -24,7 +24,7 @@ const TestResult = ({dispatch}) => {
 	useEffect(() => {
 		if (state.status == "complete") {
 			const r = state.words.map((word, i) => {
-				console.log("Inside R", word, i);
+				console.log("Inside Result", word, i);
 				totalwpm += word.wpm;
 				return {
 					name: i + 1,

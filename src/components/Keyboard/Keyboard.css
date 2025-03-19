@@ -11,7 +11,6 @@
 	width: clamp(2em, 4vw, 3em);
 	border-radius: 0.8em;
 	font-family: "Oxygen Mono", monospace;
-	/* text-transform: uppercase; */
 	transition: background-color cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
@@ -28,7 +27,6 @@
 	align-items: stretch;
 	justify-content: space-around;
 	gap: 0.75rem;
-	/* display: none; */
 	scale: 80%;
 }
 

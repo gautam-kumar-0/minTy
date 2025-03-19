@@ -2,7 +2,6 @@
 	display: flex;
 	padding: 0.5rem;
 	justify-content: center;
-	/* border: 1px solid red; */
 	transition: opacity 300ms ease;
 }
 .mode-container.invisible {
@@ -30,11 +29,7 @@
 	display: flex;
 	gap: 1rem;
 	cursor: pointer;
-	/* border: palegoldenrod 2px solid; */
 	justify-content: space-around;
-}
-
-.mode {
 }
 
 .active {

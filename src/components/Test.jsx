@@ -113,9 +113,27 @@ const Test = ({}) => {
 	}, [state.mode]);
 
 	useEffect(() => {
-		containerRef.current.focus();
+		containerRef.current.focus(); // Ensure the container is focused on mount
 		setText(state.mode);
+
+		const checkFocus = (e) => {
+			// Check if the currently focused element is not the container
+			if (document.activeElement !== containerRef.current) {
+				containerRef.current.focus(); // Make the container focus
+			}
+		};
+
+		window.addEventListener("keydown", checkFocus); // Attach the event listener
+		return () => {
+			window.removeEventListener("keydown", checkFocus); // Cleanup the event listener
+		};
 	}, []);
+
+	useEffect(() => {
+		if (state.status == "ready") {
+			containerRef.current.focus();
+		}
+	}, [state.status]);
 
 	let display = null;
 
