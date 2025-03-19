@@ -3,6 +3,7 @@ import {
 	ComposedChart,
 	Line,
 	Scatter,
+	Area,
 	XAxis,
 	YAxis,
 	CartesianGrid,
@@ -10,15 +11,36 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 
-const primaryColor = "#0ff1ce88"; // color for labels and values of x-axis and y-axis
-const gridColor = "#eeeeee17"; // color for gridlines subtle
-const scatterColor = "tomato"; // color for scatter
-const Linewithaverage = "gray"; // color for line with datakey = average
-const linewithraw = "springgreen"; // color for line with datakey = raw
+const chartConfig = {
+	colors: {
+		primary: "#0ff1ce88",
+		grid: "#eeeeee17",
+		scatter: "tomato",
+		lineAverage: "gray",
+		lineRaw: "springgreen",
+		areaFill: "rgba(0, 255, 127, 0.3)",
+		tooltipBackground: "rgba(0, 0, 0, 0.7)",
+		tooltipText: "#ffffff",
+	},
+	fontSize: 12,
+	strokeWidth: {
+		grid: 1,
+		line: 2,
+		dot: 0,
+		activeDot: 4,
+		tickLine: 0.5,
+	},
+	chartDimensions: {
+		width: 600,
+		height: 250,
+		margin: {top: 20, right: 20, bottom: 20, left: 20},
+	},
+	yAxisLabelOffset: 80,
+};
 
 const CustomScatterShape = (props) => {
 	const {cx, cy, payload} = props;
-	return payload.errors != 0 ? (
+	return payload.errors !== 0 ? (
 		<text
 			x={cx}
 			y={cy}
@@ -26,7 +48,7 @@ const CustomScatterShape = (props) => {
 			dominantBaseline="middle"
 			fontFamily="VT323"
 			fontSize={14}
-			fill={scatterColor}
+			fill={chartConfig.colors.scatter}
 		>
 			x
 		</text>
@@ -39,43 +61,48 @@ const TwoYAxisChart = ({result}) => {
 	return (
 		<ResponsiveContainer width="100%" height={300}>
 			<ComposedChart
-				width={600}
-				height={250}
+				width={chartConfig.chartDimensions.width}
+				height={chartConfig.chartDimensions.height}
 				data={result}
-				margin={{top: 20, right: 20, bottom: 20, left: 20}}
+				margin={chartConfig.chartDimensions.margin}
 			>
 				<CartesianGrid
-					stroke={gridColor}
-					strokeWidth={1}
-					lightingColor={"red"}
+					stroke={chartConfig.colors.grid}
+					strokeWidth={chartConfig.strokeWidth.grid}
 				/>
 				<XAxis
 					dataKey="name"
-					tick={{fill: primaryColor, fontSize: 12}}
+					tick={{
+						fill: chartConfig.colors.primary,
+						fontSize: chartConfig.fontSize,
+					}}
 					label={{
 						value: "Words",
 						position: "insideBottom",
 						offset: -10,
-						fill: primaryColor,
-						fontSize: 12,
+						fill: chartConfig.colors.primary,
+						fontSize: chartConfig.fontSize,
 					}}
 					axisLine={{strokeWidth: 0}}
-					tickLine={{strokeWidth: 0.5}}
+					tickLine={{strokeWidth: chartConfig.strokeWidth.tickLine}}
 				/>
 				<YAxis
 					yAxisId="left"
 					orientation="left"
-					tick={{fill: primaryColor, fontSize: 12}}
+					tick={{
+						fill: chartConfig.colors.primary,
+						fontSize: chartConfig.fontSize,
+					}}
 					label={{
 						value: "Words per Minute",
 						angle: -90,
 						position: "insideLeft",
-						fill: primaryColor,
-						fontSize: 12,
-						dy: 80,
+						fill: chartConfig.colors.primary,
+						fontSize: chartConfig.fontSize,
+						dy: chartConfig.yAxisLabelOffset,
 					}}
 					axisLine={{strokeWidth: 0}}
-					tickLine={{strokeWidth: 0.5}}
+					tickLine={{strokeWidth: chartConfig.strokeWidth.tickLine}}
 				/>
 				<YAxis
 					yAxisId="right"
@@ -83,35 +110,59 @@ const TwoYAxisChart = ({result}) => {
 					min={0}
 					max={maxErrors}
 					tickFormatter={(tick) => (tick === 0 ? "" : tick)}
-					tick={{fill: primaryColor, fontSize: 12}}
+					tick={{
+						fill: chartConfig.colors.primary,
+						fontSize: chartConfig.fontSize,
+					}}
 					label={{
 						value: "Errors",
 						angle: -90,
 						position: "insideRight",
-						fill: primaryColor,
-						fontSize: 12,
+						fill: chartConfig.colors.primary,
+						fontSize: chartConfig.fontSize,
 					}}
 					axisLine={{strokeWidth: 0}}
-					tickLine={{strokeWidth: 0.5}}
+					tickLine={{strokeWidth: chartConfig.strokeWidth.tickLine}}
 				/>
 				<Tooltip
 					contentStyle={{
-						backgroundColor: "rgba(0, 0, 0, 0.7)",
+						backgroundColor: chartConfig.colors.tooltipBackground,
 						border: "none",
 						borderRadius: "5px",
 					}}
-					itemStyle={{color: "#ffffff", fontSize: "12px"}}
-					labelStyle={{color: primaryColor, fontSize: "12px"}}
+					itemStyle={{
+						color: chartConfig.colors.tooltipText,
+						fontSize: chartConfig.fontSize,
+					}}
+					labelStyle={{
+						color: chartConfig.colors.primary,
+						fontSize: chartConfig.fontSize,
+					}}
 					formatter={(value, name) => [`${value}`, name]}
+				/>
+				<Area
+					yAxisId="left"
+					type="monotone"
+					dataKey="raw"
+					stroke={chartConfig.colors.lineRaw}
+					fill={chartConfig.colors.areaFill}
+					isAnimationActive={false}
 				/>
 				<Line
 					yAxisId="left"
 					type="monotone"
 					dataKey="raw"
-					stroke={linewithraw}
-					strokeWidth={2}
-					dot={{strokeWidth: 0, fill: linewithraw}}
-					activeDot={{strokeWidth: 0, fill: linewithraw, r: 4}}
+					stroke={chartConfig.colors.lineRaw}
+					strokeWidth={chartConfig.strokeWidth.line}
+					dot={{
+						strokeWidth: chartConfig.strokeWidth.dot,
+						fill: chartConfig.colors.lineRaw,
+					}}
+					activeDot={{
+						strokeWidth: chartConfig.strokeWidth.dot,
+						fill: chartConfig.colors.lineRaw,
+						r: chartConfig.strokeWidth.activeDot,
+					}}
 					isAnimationActive={false}
 				/>
 				<Line
@@ -119,10 +170,17 @@ const TwoYAxisChart = ({result}) => {
 					yAxisId="left"
 					type="monotone"
 					dataKey="average"
-					stroke={Linewithaverage}
-					strokeWidth={2}
-					dot={{strokeWidth: 0, fill: Linewithaverage}}
-					activeDot={{strokeWidth: 0, fill: Linewithaverage, r: 4}}
+					stroke={chartConfig.colors.lineAverage}
+					strokeWidth={chartConfig.strokeWidth.line}
+					dot={{
+						strokeWidth: chartConfig.strokeWidth.dot,
+						fill: chartConfig.colors.lineAverage,
+					}}
+					activeDot={{
+						strokeWidth: chartConfig.strokeWidth.dot,
+						fill: chartConfig.colors.lineAverage,
+						r: chartConfig.strokeWidth.activeDot,
+					}}
 				/>
 				<Scatter
 					yAxisId="right"

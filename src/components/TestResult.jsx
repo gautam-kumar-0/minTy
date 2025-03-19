@@ -5,14 +5,17 @@ import {FcNext} from "react-icons/fc";
 import {RiRestartLine} from "react-icons/ri";
 import TwoYAxisChart from "./TwoYAxisChart.jsx";
 
-const TestResult = ({setMode}) => {
-	const [state, dispatch] = useTestContext();
+const TestResult = ({dispatch}) => {
+	const [state] = useTestContext(); // Removed setMode
 	let totalwpm = 0;
 
 	const [result, setResult] = useState(null);
 	console.log(result);
 	const handleNext = (e) => {
-		setMode((mode) => ({type: mode.type, index: mode.index}));
+		dispatch({
+			type: "SET_MODE",
+			payload: {type: state.mode.type, index: state.mode.index},
+		});
 	};
 	const handleRestart = (e) => {
 		dispatch({type: "NEW", payload: state.text});

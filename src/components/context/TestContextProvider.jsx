@@ -6,12 +6,20 @@ const Status = {
 	COMPLETE: "complete",
 	NOTREADY: "notready",
 };
+const MODE = {
+	time: [5, 60, 120, "custom"],
+	words: [10, 25, 50, 100, "custom"],
+	quote: ["short", "medium", "long"],
+	custom: ["change"],
+};
 
 export const initialState = {
 	words: [],
 	index: 0,
 	status: Status.NOTREADY,
 	text: "",
+	mode: {type: "words", index: 0}, // Default mode initialization
+	MODE: MODE,
 	quotes: [],
 };
 
@@ -54,11 +62,16 @@ const reducer = (draft, action) => {
 			draft.text = action.payload;
 			break;
 
+		case "TIMEUP":
+			draft.status = Status.COMPLETE;
+			draft.words.splice(draft.index);
+
 		case "QUOTES/STORE":
 			draft.quotes = action.payload;
 			break;
 		case "QUOTES/USE":
 			draft.quotes.shift();
+
 		case "BACKSPACE":
 			helperBackSpace();
 			break;
@@ -110,6 +123,12 @@ const reducer = (draft, action) => {
 			});
 			draft.index = 0;
 			draft.status = Status.READY;
+			break;
+
+		case "SET_MODE":
+			draft.mode = action.payload; // Update mode in state
+			break;
+
 		default:
 			break;
 	}

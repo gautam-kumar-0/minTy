@@ -39,7 +39,7 @@ const Word = ({word, done, typing, pending}) => {
 					return <Letter letter={l} key={i} />;
 				})}
 			</span>
-			<span className="typed">{word.typed}</span>
+			{/* <span className="typed">{word.typed}</span> */}
 		</div>
 	);
 };

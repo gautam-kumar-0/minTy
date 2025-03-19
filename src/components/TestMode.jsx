@@ -8,12 +8,12 @@ const MODE = {
 	custom: ["change"],
 };
 
-const TestMode = ({mode, setMode, className}) => {
+const TestMode = ({mode, dispatch, className}) => {
 	const handleModeChange = (key) => {
-		setMode({type: key, index: 0});
+		dispatch({type: "SET_MODE", payload: {type: key, index: 0}});
 	};
 	const handleValueChange = (index) => {
-		setMode({...mode, index: index});
+		dispatch({type: "SET_MODE", payload: {...mode, index: index}});
 	};
 
 	return (
@@ -33,15 +33,20 @@ const TestMode = ({mode, setMode, className}) => {
 				</div>
 				<div className="mode-values">
 					{mode &&
-						MODE[mode.type].map((v, i) => (
-							<div
-								className={`${mode.index == i ? "active" : ""} values`}
-								key={i}
-								onClick={() => handleValueChange(i)}
-							>
-								<span>{v}</span>
-							</div>
-						))}
+						MODE[mode.type]?.map(
+							(
+								v,
+								i // Added optional chaining for safety
+							) => (
+								<div
+									className={`${mode.index == i ? "active" : ""} values`}
+									key={i}
+									onClick={() => handleValueChange(i)}
+								>
+									<span>{v}</span>
+								</div>
+							)
+						)}
 				</div>
 			</div>{" "}
 		</div>

@@ -28,7 +28,7 @@ const FetchQuotes = async () => {
 };
 
 const MODE = {
-	time: [30, 60, 120, "custom"],
+	time: [5, 60, 120, "custom"],
 	words: [10, 25, 50, 100, "custom"],
 	quote: ["short", "medium", "long"],
 	custom: ["change"],
@@ -37,7 +37,6 @@ const MODE = {
 const Test = ({}) => {
 	const [state, dispatch] = useTestContext();
 
-	const [mode, setMode] = useState({type: "words", index: 0});
 	const [error, setError] = useState(null);
 	const containerRef = useRef(null);
 
@@ -63,6 +62,7 @@ const Test = ({}) => {
 
 	const handleKeyPress = (e) => {
 		// console.log("HandleKeyPress", e);
+		if (state.status == "complete") return;
 		if (e.key == "Backspace") {
 			if (e.ctrlKey) {
 				dispatch({type: "CTRLBACKSPACE"});
@@ -108,13 +108,13 @@ const Test = ({}) => {
 	};
 	useEffect(() => {
 		console.log("Loaded");
-		setText(mode);
+		setText(state.mode);
 		setError(null);
-	}, [mode]);
+	}, [state.mode]);
 
 	useEffect(() => {
 		containerRef.current.focus();
-		setText(mode);
+		setText(state.mode);
 	}, []);
 
 	let display = null;
@@ -123,7 +123,7 @@ const Test = ({}) => {
 	else if (state.status == "notready") {
 		display = <span>Loading...</span>;
 	} else if (state.status == "complete") {
-		display = <TestResult setMode={setMode} />;
+		display = <TestResult dispatch={dispatch} />;
 	} else {
 		display = (
 			<>
@@ -135,7 +135,7 @@ const Test = ({}) => {
 				<div className="actions">
 					<button
 						className="action-button"
-						onClick={() => setText(mode)}
+						onClick={() => setText(state.mode)}
 						data-action="Restart"
 					>
 						<RiRestartLine />
@@ -169,8 +169,8 @@ const Test = ({}) => {
 			}}
 		>
 			<TestMode
-				mode={mode}
-				setMode={setMode}
+				mode={state.mode}
+				dispatch={dispatch}
 				className={state.status == "uncomplete" ? "invisible" : ""}
 			/>
 			{error && (
