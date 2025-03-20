@@ -121,6 +121,7 @@ const Test = ({}) => {
 			if (document.activeElement !== containerRef.current) {
 				containerRef.current.focus(); // Make the container focus
 			}
+			dispatch({type: "FOCUS", payload: true});
 		};
 
 		window.addEventListener("keydown", checkFocus); // Attach the event listener
@@ -171,6 +172,7 @@ const Test = ({}) => {
 			ref={containerRef}
 			tabIndex={0}
 			onKeyDown={handleKeyDown}
+			onMouseMove={() => dispatch({type: "FOCUS", payload: false})}
 			onFocus={() => {
 				let testContainer =
 					containerRef.current.querySelector(".test-container");
@@ -186,11 +188,8 @@ const Test = ({}) => {
 				}
 			}}
 		>
-			<TestMode
-				mode={state.mode}
-				dispatch={dispatch}
-				className={state.status == "uncomplete" ? "invisible" : ""}
-			/>
+			<TestMode mode={state.mode} dispatch={dispatch} />
+
 			{error && (
 				<div className="error">
 					<span>{error}</span> <button>Refresh</button>

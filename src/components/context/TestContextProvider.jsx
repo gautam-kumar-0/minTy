@@ -21,6 +21,7 @@ export const initialState = {
 	mode: {type: "words", index: 0}, // Default mode initialization
 	MODE: MODE,
 	quotes: [],
+	focus: false,
 };
 
 const config = {
@@ -62,15 +63,21 @@ const reducer = (draft, action) => {
 			draft.text = action.payload;
 			break;
 
+		case "FOCUS":
+			draft.focus = action.payload;
+			break;
+
 		case "TIMEUP":
 			draft.status = Status.COMPLETE;
 			draft.words.splice(draft.index);
+			break;
 
 		case "QUOTES/STORE":
 			draft.quotes = action.payload;
 			break;
 		case "QUOTES/USE":
 			draft.quotes.shift();
+			break;
 
 		case "BACKSPACE":
 			helperBackSpace();

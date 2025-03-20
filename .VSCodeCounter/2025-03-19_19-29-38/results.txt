@@ -1,0 +1,66 @@
+Date : 2025-03-19 19:29:38
+Directory : c:\Users\gk725\Desktop\MERN\typing\src
+Total : 31 files,  2386 codes, 10 comments, 155 blanks, all 2551 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JavaScript     |          6 |      1,024 |          1 |          8 |      1,033 |
+| JavaScript JSX |         19 |        981 |          7 |        115 |      1,103 |
+| CSS            |          6 |        381 |          2 |         32 |        415 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                              | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                 |         31 |      2,386 |         10 |        155 |      2,551 |
+| . (Files)                                                                         |          4 |        129 |          2 |         18 |        149 |
+| components                                                                        |         20 |      2,223 |          7 |        121 |      2,351 |
+| components (Files)                                                                |         10 |      1,767 |          3 |         64 |      1,834 |
+| components\Keyboard                                                               |          5 |        134 |          0 |         20 |        154 |
+| components\Text                                                                   |          4 |        187 |          3 |         21 |        211 |
+| components\context                                                                |          1 |        135 |          1 |         16 |        152 |
+| hooks                                                                             |          2 |          9 |          0 |          3 |         12 |
+| pages                                                                             |          4 |         20 |          0 |         12 |         32 |
+| utils                                                                             |          1 |          5 |          1 |          1 |          7 |
++-----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                          | language       | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\gk725\Desktop\MERN\typing\src\App.css                                    | CSS            |         63 |          1 |          5 |         69 |
+| c:\Users\gk725\Desktop\MERN\typing\src\App.jsx                                    | JavaScript JSX |         26 |          1 |          5 |         32 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Keyboard\Key.jsx                | JavaScript JSX |         28 |          0 |          3 |         31 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Keyboard\Keyboard.css           | CSS            |         54 |          0 |          6 |         60 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Keyboard\Keyboard.jsx           | JavaScript JSX |         34 |          0 |          8 |         42 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Keyboard\Row.jsx                | JavaScript JSX |         12 |          0 |          2 |         14 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Keyboard\config.js              | JavaScript     |          6 |          0 |          1 |          7 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\LiveStats.jsx                   | JavaScript JSX |         87 |          0 |         11 |         98 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Navbar.js                       | JavaScript     |          0 |          0 |          1 |          1 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Test.css                        | CSS            |        131 |          1 |         11 |        143 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Test.jsx                        | JavaScript JSX |        186 |          2 |         17 |        205 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\TestMode.css                    | CSS            |         36 |          0 |          2 |         38 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\TestMode.jsx                    | JavaScript JSX |         52 |          0 |          5 |         57 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\TestProgress.jsx                | JavaScript JSX |          9 |          0 |          3 |         12 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\TestResult.jsx                  | JavaScript JSX |         72 |          0 |          6 |         78 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Text\TestContent.jsx            | JavaScript JSX |         42 |          0 |          8 |         50 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Text\Text.css                   | CSS            |         62 |          0 |          2 |         64 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Text\Text.jsx                   | JavaScript JSX |         42 |          1 |          5 |         48 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\Text\Word.jsx                   | JavaScript JSX |         41 |          2 |          6 |         49 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\TwoYAxisChart.jsx               | JavaScript JSX |        190 |          0 |          6 |        196 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\config.js                       | JavaScript     |      1,004 |          0 |          2 |      1,006 |
+| c:\Users\gk725\Desktop\MERN\typing\src\components\context\TestContextProvider.jsx | JavaScript JSX |        135 |          1 |         16 |        152 |
+| c:\Users\gk725\Desktop\MERN\typing\src\hooks\useTestContext.js                    | JavaScript     |          9 |          0 |          2 |         11 |
+| c:\Users\gk725\Desktop\MERN\typing\src\hooks\useTestResult.js                     | JavaScript     |          0 |          0 |          1 |          1 |
+| c:\Users\gk725\Desktop\MERN\typing\src\index.css                                  | CSS            |         35 |          0 |          6 |         41 |
+| c:\Users\gk725\Desktop\MERN\typing\src\main.jsx                                   | JavaScript JSX |          5 |          0 |          2 |          7 |
+| c:\Users\gk725\Desktop\MERN\typing\src\pages\About.jsx                            | JavaScript JSX |          5 |          0 |          3 |          8 |
+| c:\Users\gk725\Desktop\MERN\typing\src\pages\Main.jsx                             | JavaScript JSX |          5 |          0 |          3 |          8 |
+| c:\Users\gk725\Desktop\MERN\typing\src\pages\Setting.jsx                          | JavaScript JSX |          5 |          0 |          3 |          8 |
+| c:\Users\gk725\Desktop\MERN\typing\src\pages\Stats.jsx                            | JavaScript JSX |          5 |          0 |          3 |          8 |
+| c:\Users\gk725\Desktop\MERN\typing\src\utils\keys.js                              | JavaScript     |          5 |          1 |          1 |          7 |
+| Total                                                                             |                |      2,386 |         10 |        155 |      2,551 |
++-----------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

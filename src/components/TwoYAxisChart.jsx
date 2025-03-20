@@ -38,6 +38,12 @@ const chartConfig = {
 	yAxisLabelOffset: 80,
 };
 
+const animationConfig = {
+	isAnimationActive: true,
+	animationDuration: 1000,
+	animationEasing: "ease-in-out",
+};
+
 const CustomScatterShape = (props) => {
 	const {cx, cy, payload} = props;
 	return payload.errors !== 0 ? (
@@ -163,7 +169,7 @@ const TwoYAxisChart = ({result}) => {
 						fill: chartConfig.colors.lineRaw,
 						r: chartConfig.strokeWidth.activeDot,
 					}}
-					isAnimationActive={false}
+					{...animationConfig}
 				/>
 				<Line
 					isAnimationActive={false}

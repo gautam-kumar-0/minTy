@@ -10,7 +10,7 @@ const TestResult = ({dispatch}) => {
 	let totalwpm = 0;
 
 	const [result, setResult] = useState(null);
-	console.log(result);
+	// console.log(result);
 	const handleNext = (e) => {
 		dispatch({
 			type: "SET_MODE",
@@ -20,7 +20,9 @@ const TestResult = ({dispatch}) => {
 	const handleRestart = (e) => {
 		dispatch({type: "NEW", payload: state.text});
 	};
-	console.log(state, result);
+
+	// console.log(state, result);
+
 	useEffect(() => {
 		if (state.status == "complete") {
 			const r = state.words.map((word, i) => {
@@ -36,6 +38,7 @@ const TestResult = ({dispatch}) => {
 			setResult(r);
 		}
 	}, [state]);
+
 	let renderChart = <span>Loading</span>;
 	if (result) {
 		renderChart = <TwoYAxisChart result={result} />;
@@ -45,7 +48,7 @@ const TestResult = ({dispatch}) => {
 		<div className="result">
 			<div className="result-values">
 				<div className="average">
-					<h1>{result ? result[result.length - 1].average : 0}</h1>
+					<h1>{result ? result[result.length - 1]?.average : 0}</h1>
 					<span>Average</span>
 				</div>
 				<div className="accuracy">

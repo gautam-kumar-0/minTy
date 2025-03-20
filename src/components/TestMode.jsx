@@ -1,5 +1,6 @@
 import React from "react";
 import "./TestMode.css";
+import Fadable from "./Fadable";
 
 const MODE = {
 	time: [30, 60, 120, "custom"],
@@ -8,7 +9,7 @@ const MODE = {
 	custom: ["change"],
 };
 
-const TestMode = ({mode, dispatch, className}) => {
+const TestMode = ({mode, dispatch}) => {
 	const handleModeChange = (key) => {
 		dispatch({type: "SET_MODE", payload: {type: key, index: 0}});
 	};
@@ -17,7 +18,7 @@ const TestMode = ({mode, dispatch, className}) => {
 	};
 
 	return (
-		<div className={`mode-container ${className}`}>
+		<Fadable className="mode-container">
 			<div className="mode-ribbon">
 				<div className="additional"></div>
 				<div className="mode-type">
@@ -49,7 +50,7 @@ const TestMode = ({mode, dispatch, className}) => {
 						)}
 				</div>
 			</div>{" "}
-		</div>
+		</Fadable>
 	);
 };
 

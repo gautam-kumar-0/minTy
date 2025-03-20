@@ -15,6 +15,10 @@
 	/* border: 1px solid red; */
 }
 
+.main:focus {
+	outline: none;
+}
+
 .keyboard-wrapper {
 	display: flex;
 	justify-content: center;

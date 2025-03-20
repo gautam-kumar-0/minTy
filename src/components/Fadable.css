@@ -1,0 +1,7 @@
+.fadable {
+	transition: opacity 0.5s;
+	opacity: 1;
+}
+.fadable.focus {
+	opacity: 0;
+}

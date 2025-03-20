@@ -2,16 +2,18 @@ import {useState} from "react";
 import Test from "./components/Test";
 import {RiSettings4Fill} from "react-icons/ri";
 import "./App.css";
-import TestContextProvider from "./components/context/TestContextProvider.jsx";
 import {LuKeyboard} from "react-icons/lu";
+import useTestContext from "./hooks/useTestContext";
+import Fadable from "./components/Fadable";
 
 function App() {
+	const [state, dispatch] = useTestContext();
 	return (
 		<div className="app">
 			<div className="starfall"></div>
 
-			<TestContextProvider>
-				<header>
+			<header>
+				<Fadable>
 					<div className="logo">
 						<h1>TYPING</h1>
 						<LuKeyboard />
@@ -20,10 +22,9 @@ function App() {
 					<nav>
 						<RiSettings4Fill />
 					</nav>
-				</header>
-				{/* <TestMode mode={mode} setMode={setMode} /> */}
-				<Test />
-			</TestContextProvider>
+				</Fadable>
+			</header>
+			<Test />
 		</div>
 	);
 }
