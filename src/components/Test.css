@@ -49,6 +49,7 @@
 .progress {
 	justify-self: start;
 	align-self: last baseline;
+	font-size: 2rem;
 }
 .stats-desc {
 	font-size: 0.7rem;

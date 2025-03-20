@@ -63,6 +63,7 @@ const Test = ({}) => {
 	const handleKeyPress = (e) => {
 		// console.log("HandleKeyPress", e);
 		if (state.status == "complete") return;
+		if (!state.focus) dispatch({type: "FOCUS", payload: true});
 		if (e.key == "Backspace") {
 			if (e.ctrlKey) {
 				dispatch({type: "CTRLBACKSPACE"});
@@ -121,7 +122,6 @@ const Test = ({}) => {
 			if (document.activeElement !== containerRef.current) {
 				containerRef.current.focus(); // Make the container focus
 			}
-			dispatch({type: "FOCUS", payload: true});
 		};
 
 		window.addEventListener("keydown", checkFocus); // Attach the event listener

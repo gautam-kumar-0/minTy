@@ -22,10 +22,7 @@
 	transition: translate 200ms ease 200ms;
 	column-gap: 1ch;
 }
-.current {
-	color: cadetblue;
-	transition: color 100ms ease 150ms;
-}
+
 .cursor {
 	background-color: #2dff57;
 	position: absolute;
@@ -58,6 +55,7 @@
 .invalid {
 	color: rgb(192, 0, 0);
 }
-.unprocessed {
+.unprocessed,
+.current {
 	color: rgba(182, 182, 182, 0.479);
 }
