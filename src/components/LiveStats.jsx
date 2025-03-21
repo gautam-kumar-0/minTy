@@ -30,9 +30,7 @@ const LiveStats = () => {
 	const [avgWPM, setAvgWPM] = useState(0);
 	const [accuracy, setAccuracy] = useState(0);
 	const [timeLeft, setTimeLeft] = useState(
-		context.mode.type === "time"
-			? context.MODE[context.mode.type][context.mode.index]
-			: null
+		context.mode.type === "time" ? context.mode.value : null
 	);
 	const stateRef = useRef(context);
 	const liveRef = useRef(null);

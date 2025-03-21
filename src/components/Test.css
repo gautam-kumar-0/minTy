@@ -132,7 +132,6 @@
 	transform-origin: top center;
 	scale: 1 0;
 	transition: scale 150ms ease;
-
 	position: absolute;
 	top: 100%;
 	left: 50%;

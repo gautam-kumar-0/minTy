@@ -83,7 +83,7 @@ const Test = ({}) => {
 		console.log("setText(): ", mode);
 		let text = "";
 		if (mode.type == "words") {
-			text = generateRandomText(MODE[mode.type][mode.index]);
+			text = generateRandomText(mode.value);
 		} else if (mode.type == "time") {
 			text = generateRandomText(100);
 		} else if (mode.type == "quote") {
@@ -118,9 +118,27 @@ const Test = ({}) => {
 		setText(state.mode);
 
 		const checkFocus = (e) => {
-			// Check if the currently focused element is not the container
-			if (document.activeElement !== containerRef.current) {
-				containerRef.current.focus(); // Make the container focus
+			const activeElement = document.activeElement;
+
+			// Debugging: Log the currently focused element
+			console.log("Active Element:", activeElement);
+
+			// Check if the currently focused element is an input, textarea, or other focusable element
+			if (
+				activeElement &&
+				(["INPUT", "TEXTAREA", "SELECT", "BUTTON"].includes(
+					activeElement.tagName
+				) ||
+					activeElement.isContentEditable)
+			) {
+				console.log("Focus is on a focusable element. Skipping...");
+				return;
+			}
+
+			// Shift focus to the container if no other focusable element is active
+			if (activeElement !== containerRef.current) {
+				console.log("Shifting focus to container...");
+				containerRef.current.focus();
 			}
 		};
 

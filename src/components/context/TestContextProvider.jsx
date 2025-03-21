@@ -18,7 +18,7 @@ export const initialState = {
 	index: 0,
 	status: Status.NOTREADY,
 	text: "",
-	mode: {type: "words", index: 0}, // Default mode initialization
+	mode: {type: "words", value: 25}, // Default mode initialization
 	MODE: MODE,
 	quotes: [],
 	focus: false,

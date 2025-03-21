@@ -4,7 +4,7 @@ import {RiSettings4Fill} from "react-icons/ri";
 import "./App.css";
 import {LuKeyboard} from "react-icons/lu";
 import useTestContext from "./hooks/useTestContext";
-import Fadable from "./components/Fadable";
+import Fadable from "./components/Fadable/Fadable";
 
 function App() {
 	const [state, dispatch] = useTestContext();
