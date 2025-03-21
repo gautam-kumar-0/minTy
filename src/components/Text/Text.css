@@ -10,6 +10,10 @@
 	overflow: hidden;
 	position: relative;
 	transition: opacity 400ms ease;
+	opacity: 0;
+}
+.testWindow.in {
+	opacity: 1;
 }
 .testWindow.out {
 	opacity: 0;

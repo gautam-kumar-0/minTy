@@ -12,6 +12,7 @@ body {
 	background-size: 100%;
 	background-position: center;
 	font-family: "IBM Plex Mono";
+	position: relative;
 }
 #root {
 	margin: auto;

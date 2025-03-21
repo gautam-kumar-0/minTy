@@ -17,7 +17,7 @@ const Text = ({}) => {
 	const testWindow = useRef(null);
 	const testContentRef = useRef(null); // Ref for the TestContent component
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		setFade("out");
 		setTimeout(() => {
 			setChildren(
@@ -26,7 +26,8 @@ const Text = ({}) => {
 			setFade("in");
 		}, 200);
 	}, [currentText]);
-	useLayoutEffect(() => {
+
+	useEffect(() => {
 		if (currentText == state.text)
 			setChildren(
 				<TestContent fade={fade} ref={testContentRef} state={state} />

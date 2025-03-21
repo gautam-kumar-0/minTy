@@ -35,3 +35,71 @@
 .active {
 	color: rgb(104, 184, 84);
 }
+.pop-up {
+	position: absolute;
+	display: flex;
+	gap: 1rem;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: rgb(9, 9, 9);
+	color: rgb(255, 255, 255);
+	border-radius: 10px;
+
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	padding: 1rem;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 100;
+}
+.pop-up form button {
+	font-family: inherit;
+	letter-spacing: 0.2ch;
+	padding: 0.7rem 1.2rem;
+	background-color: rgba(104, 184, 84, 0.086);
+	border: 1px solid rgba(104, 184, 84, 0.506);
+	border-radius: 0.5rem;
+	font-size: 1.2rem;
+	cursor: pointer;
+	color: aliceblue;
+	transition: background-color 200ms ease;
+	align-self: center;
+}
+.pop-up .close-btn {
+	align-self: flex-end;
+	top: 10px;
+	right: 10px;
+	background-color: transparent;
+	border: 1px solid rgba(201, 201, 201, 0.149);
+	border-radius: 8px;
+	aspect-ratio: 1/1;
+	height: 1lh;
+	font-size: 2rem;
+	cursor: pointer;
+	color: rgb(227, 227, 227);
+	transition: color 200ms ease;
+}
+.pop-up form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: start;
+	gap: 1rem;
+}
+.pop-up input {
+	font-family: inherit;
+	letter-spacing: 0.2ch;
+	font-size: 1.2rem;
+	padding: 1rem;
+	border: none;
+	outline: none;
+	border: 1px solid rgba(20, 102, 0, 0.302);
+	background-color: rgba(126, 126, 126, 0.062);
+	width: 10ch;
+	border-radius: 4px;
+}
+
+.pop-up .close-btn:hover {
+	color: red;
+}

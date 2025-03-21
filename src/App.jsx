@@ -5,6 +5,7 @@ import "./App.css";
 import {LuKeyboard} from "react-icons/lu";
 import useTestContext from "./hooks/useTestContext";
 import Fadable from "./components/Fadable/Fadable";
+import TestMode from "./components/TestMode";
 
 function App() {
 	const [state, dispatch] = useTestContext();
@@ -24,6 +25,7 @@ function App() {
 					</nav>
 				</Fadable>
 			</header>
+			<TestMode mode={state.mode} dispatch={dispatch} />
 			<Test />
 		</div>
 	);

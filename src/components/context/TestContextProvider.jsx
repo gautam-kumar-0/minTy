@@ -133,7 +133,10 @@ const reducer = (draft, action) => {
 			break;
 
 		case "SET_MODE":
-			draft.mode = action.payload; // Update mode in state
+			draft.mode = {
+				type: action.payload.type,
+				value: parseInt(action.payload.value),
+			}; // Update mode in state
 			break;
 
 		default:
