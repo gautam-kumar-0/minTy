@@ -1,6 +1,5 @@
-import React, {useRef, useLayoutEffect, useContext} from "react";
+import React, {useRef, useLayoutEffect, useContext, useEffect} from "react";
 import Word from "./Word";
-import {TestContext} from "../context/TestContextProvider";
 
 const TestContent = React.forwardRef(({fade, state}, ref) => {
 	const testText = useRef(null);

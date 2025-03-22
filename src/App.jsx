@@ -5,7 +5,7 @@ import "./App.css";
 import {LuKeyboard} from "react-icons/lu";
 import useTestContext from "./hooks/useTestContext";
 import Fadable from "./components/Fadable/Fadable";
-import TestMode from "./components/TestMode";
+import TestMode from "./components/TestMode.jsx";
 
 function App() {
 	const [state, dispatch] = useTestContext();

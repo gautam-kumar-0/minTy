@@ -14,7 +14,7 @@ const TestResult = ({dispatch}) => {
 	const handleNext = (e) => {
 		dispatch({
 			type: "SET_MODE",
-			payload: {...state.mode},
+			payload: state.mode,
 		});
 	};
 	const handleRestart = (e) => {

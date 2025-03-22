@@ -154,7 +154,7 @@ const Test = ({}) => {
 		if (state.status == "ready") {
 			containerRef.current.focus();
 		}
-	}, [state.status]);
+	}, [state.mode]);
 
 	let display = null;
 
