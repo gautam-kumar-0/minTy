@@ -25,7 +25,14 @@
 	position: relative;
 	transition: translate 200ms ease 200ms;
 	column-gap: 1ch;
+	transition: opacity 400ms ease;
 }
+/* .visible {
+	opacity: 1;
+}
+.invisible {
+	opacity: 0;
+} */
 
 .cursor {
 	background-color: #2dff57;

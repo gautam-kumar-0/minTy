@@ -48,6 +48,9 @@ const reducer = (draft, action) => {
 	}
 
 	switch (action.type) {
+		case "CLEAR":
+			draft = initialState;
+			break;
 		case "NEW":
 			draft.words = action.payload.split(" ").map((w) => ({
 				original: w,

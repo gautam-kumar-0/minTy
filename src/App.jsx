@@ -25,7 +25,7 @@ function App() {
 					</nav>
 				</Fadable>
 			</header>
-			<TestMode mode={state.mode} dispatch={dispatch} />
+
 			<Test />
 		</div>
 	);

@@ -37,7 +37,8 @@ const TestResult = ({dispatch}) => {
 			});
 			setResult(r);
 		}
-	}, [state]);
+		dispatch({type: "CLEAR"});
+	}, []);
 
 	let renderChart = <span>Loading</span>;
 	if (result) {

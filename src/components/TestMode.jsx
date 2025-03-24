@@ -59,7 +59,11 @@ const CustomValue = ({label, onSubmit}) => {
 							type="number"
 							id="custom"
 							value={value}
-							onChange={(e) => setValue(e.target.value)}
+							onKeyDown={(e) => e.stopPropagation()}
+							onChange={(e) => {
+								setValue(e.target.value);
+								e.stopPropagation();
+							}}
 							max={1000}
 							placeholder="0"
 						/>

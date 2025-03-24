@@ -11,7 +11,9 @@ import TestResult from "./TestResult.jsx";
 import LiveStats from "./LiveStats";
 import {RiRestartLine} from "react-icons/ri";
 
+import TestMode from "./TestMode.jsx";
 import {wordList} from "./config";
+
 const generateRandomText = (words) => {
 	console.log("generateRandomText(): ", words);
 	let arr = Array(words)
@@ -208,6 +210,7 @@ const Test = ({}) => {
 				}
 			}}
 		>
+			<TestMode mode={state.mode} dispatch={dispatch} />
 			{error && (
 				<div className="error">
 					<span>{error}</span> <button>Refresh</button>

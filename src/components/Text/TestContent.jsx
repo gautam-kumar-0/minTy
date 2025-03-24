@@ -5,6 +5,7 @@ const TestContent = React.forwardRef(({fade, state}, ref) => {
 	const testText = useRef(null);
 	const cursor = useRef(null);
 	const offset = useRef(0);
+	const [visible, setVisible] = React.useState(false);
 
 	const renderWord = (word, i) => {
 		return (
@@ -17,6 +18,9 @@ const TestContent = React.forwardRef(({fade, state}, ref) => {
 			/>
 		);
 	};
+	useEffect(() => {
+		setVisible(true);
+	}, []);
 
 	useLayoutEffect(() => {
 		const next = document.querySelector(".current");
@@ -38,7 +42,10 @@ const TestContent = React.forwardRef(({fade, state}, ref) => {
 	}, [state]);
 
 	return (
-		<div className={`testText ${fade}`} ref={testText}>
+		<div
+			className={`testText ${fade} ${visible ? "visible" : "invisible"}`}
+			ref={testText}
+		>
 			<span className="cursor" ref={cursor}></span>
 			{state.words.map(renderWord)}
 		</div>

@@ -13,7 +13,7 @@ const Text = ({}) => {
 	const state = useContext(TestContext);
 	const [children, setChildren] = useState(null);
 	const [currentText, setCurrentText] = useState(state.text);
-	const [fade, setFade] = useState("in");
+	const [fade, setFade] = useState("out");
 	const testWindow = useRef(null);
 	const testContentRef = useRef(null); // Ref for the TestContent component
 
