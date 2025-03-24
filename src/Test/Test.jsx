@@ -1,18 +1,15 @@
 import React, {useState} from "react";
-
 import {useRef, useEffect} from "react";
-import {printableCharacterPattern} from "./config";
+import {printableCharacterPattern} from "../utils/config.js";
 import useTestContext from "../hooks/useTestContext.js";
-
 import Keyboard from "./Keyboard/Keyboard";
 import Text from "./Text/Text.jsx";
 import "./Test.css";
 import TestResult from "./TestResult.jsx";
 import LiveStats from "./LiveStats";
 import {RiRestartLine} from "react-icons/ri";
-
 import TestMode from "./TestMode.jsx";
-import {wordList} from "./config";
+import {wordList} from "../utils/config.js";
 
 const generateRandomText = (words) => {
 	console.log("generateRandomText(): ", words);
@@ -89,7 +86,7 @@ const Test = ({}) => {
 		if (mode.type == "words") {
 			text = generateRandomText(mode.value);
 		} else if (mode.type == "time") {
-			text = generateRandomText(100);
+			text = generateRandomText(2);
 		} else if (mode.type == "quote") {
 			console.log("STATE.QUOTES", state.quotes);
 			if (state.quotes.length) {
@@ -156,7 +153,7 @@ const Test = ({}) => {
 		if (state.status == "ready") {
 			containerRef.current.focus();
 		}
-	}, [state.mode]);
+	}, [state.status]);
 
 	let display = null;
 

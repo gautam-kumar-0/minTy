@@ -46,20 +46,20 @@ const reducer = (draft, action) => {
 			(currentWord.typed.length * 12000) /
 			(currentWord.end - draft.words[draft.index].start);
 	}
+	function convertToArray(text) {
+		return text.split(" ").map((w) => ({
+			original: w,
+			typed: "",
+			start: null,
+			end: null,
+			wpm: null,
+			errors: 0,
+		}));
+	}
 
 	switch (action.type) {
-		case "CLEAR":
-			draft = initialState;
-			break;
 		case "NEW":
-			draft.words = action.payload.split(" ").map((w) => ({
-				original: w,
-				typed: "",
-				start: null,
-				end: null,
-				wpm: null,
-				errors: 0,
-			}));
+			draft.words = convertToArray(action.payload);
 
 			draft.status = Status.READY;
 			draft.index = 0;
@@ -121,6 +121,11 @@ const reducer = (draft, action) => {
 				draft.status = Status.COMPLETE;
 			} else {
 				draft.index += 1;
+			}
+			if (draft.mode == "time") {
+				/// caused testContent to react
+				draft.text += " time";
+				draft.words.push(convertToArray("time"));
 			}
 			break;
 		case "RESTART":
