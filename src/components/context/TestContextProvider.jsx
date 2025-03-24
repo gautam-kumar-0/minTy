@@ -1,5 +1,7 @@
 import React, {createContext, useMemo} from "react";
 import {useImmerReducer} from "use-immer";
+import {produce} from "immer";
+
 const Status = {
 	READY: "ready",
 	UNCOMPLETE: "uncomplete",
@@ -27,7 +29,8 @@ export const initialState = {
 const config = {
 	freedom: false,
 };
-const reducer = (draft, action) => {
+
+const reducer = produce((draft, action) => {
 	function helperBackSpace(clearAll = false) {
 		const word = draft.words[draft.index];
 		if (word.typed) {
@@ -150,7 +153,7 @@ const reducer = (draft, action) => {
 		default:
 			break;
 	}
-};
+});
 
 export const TestContext = createContext();
 export const TestDispatchContext = createContext();

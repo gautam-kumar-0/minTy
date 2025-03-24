@@ -10,4 +10,4 @@ const Row = ({keys, className, activeKey}) => {
 	);
 };
 
-export default Row;
+export default React.memo(Row);

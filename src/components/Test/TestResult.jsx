@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useMemo} from "react";
 
 import useTestContext from "../../hooks/useTestContext";
 import {FcNext} from "react-icons/fc";
@@ -9,8 +9,22 @@ const TestResult = ({dispatch}) => {
 	const [state] = useTestContext(); // Removed setMode
 	let totalwpm = 0;
 
-	const [result, setResult] = useState(null);
-	// console.log(result);
+	const result = useMemo(() => {
+		if (state.status === "complete") {
+			let totalwpm = 0;
+			return state.words.map((word, i) => {
+				totalwpm += word.wpm;
+				return {
+					name: i + 1,
+					raw: Math.round(word.wpm),
+					errors: word.errors,
+					average: Math.round(totalwpm / (i + 1)),
+				};
+			});
+		}
+		return null;
+	}, [state]);
+
 	const handleNext = (e) => {
 		dispatch({
 			type: "SET_MODE",
@@ -20,24 +34,6 @@ const TestResult = ({dispatch}) => {
 	const handleRestart = (e) => {
 		dispatch({type: "NEW", payload: state.text});
 	};
-
-	// console.log(state, result);
-
-	useEffect(() => {
-		if (state.status == "complete") {
-			const r = state.words.map((word, i) => {
-				console.log("Inside Result", word, i);
-				totalwpm += word.wpm;
-				return {
-					name: i + 1,
-					raw: Math.round(word.wpm),
-					errors: word.errors,
-					average: Math.round(totalwpm / (i + 1)),
-				};
-			});
-			setResult(r);
-		}
-	}, []);
 
 	let renderChart = <span>Loading</span>;
 	if (result) {

@@ -1,7 +1,13 @@
-import React, {useRef, useLayoutEffect, useContext, useEffect} from "react";
+import React, {
+	useRef,
+	useLayoutEffect,
+	useContext,
+	useEffect,
+	memo,
+} from "react";
 import Word from "./Word";
 
-const TestContent = React.forwardRef(({state}, ref) => {
+const TestContent = memo(({state}, ref) => {
 	const testText = useRef(null);
 	const cursor = useRef(null);
 	const offset = useRef(0);

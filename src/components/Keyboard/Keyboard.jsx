@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import React, {useState, useEffect, memo} from "react";
 import "./Keyboard.css";
 import Row from "./Row";
 import {convertToKey} from "../../utils/keys";

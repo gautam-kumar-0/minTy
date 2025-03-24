@@ -1,5 +1,6 @@
 import React, {memo} from "react";
-const Letter = ({letter}) => {
+
+const Letter = memo(({letter}) => {
 	const {value, isTyped, isCurrent, isValid} = letter;
 	let className = "letter ";
 	if (isCurrent) className += " current";
@@ -9,9 +10,9 @@ const Letter = ({letter}) => {
 		} else className += " invalid";
 	} else className += " unprocessed";
 	return <span className={className}>{value}</span>;
-};
+});
 
-const Word = ({word, done, typing, pending}) => {
+const Word = memo(({word, done, typing, pending}) => {
 	const LETTERS = Array.from(word.original + " ").map((letter, i) => ({
 		value: letter,
 		isTyped: i < word.typed.length,
@@ -35,14 +36,12 @@ const Word = ({word, done, typing, pending}) => {
 	return (
 		<div className="word">
 			<span>
-				{LETTERS.map((l, i) => {
-					return <Letter letter={l} key={i} />;
-				})}
+				{LETTERS.map((l, i) => (
+					<Letter letter={l} key={i} />
+				))}
 			</span>
-			{/* <span className="typed">{word.typed}</span> */}
 		</div>
 	);
-};
+});
 
-// Memoize the Word component
-export default memo(Word);
+export default Word;

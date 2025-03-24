@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {TestContext, TestDispatchContext} from "../context/TestContextProvider";
 import TestProgress from "./TestProgress";
+import {debounce} from "lodash";
 
 const calculateAccuracy = (state) => {
 	let errors = 0;
@@ -48,9 +49,13 @@ const LiveStats = () => {
 
 	useEffect(() => {
 		liveRef.current.style.opacity = "1";
-		const liveUpdateInterval = setInterval(() => {
+		const updateStats = debounce(() => {
 			const currentState = stateRef.current;
 			setAvgWPM(calculateAvgWPM(currentState));
+		}, 500);
+
+		const liveUpdateInterval = setInterval(() => {
+			updateStats();
 
 			if (context.mode.type === "time") {
 				setTimeLeft((prev) => {
@@ -63,7 +68,10 @@ const LiveStats = () => {
 			}
 		}, 1000);
 
-		return () => clearInterval(liveUpdateInterval);
+		return () => {
+			clearInterval(liveUpdateInterval);
+			updateStats.cancel();
+		};
 	}, [context.mode.type, dispatch]);
 
 	return (
