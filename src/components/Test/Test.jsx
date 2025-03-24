@@ -1,15 +1,15 @@
 import React, {useState} from "react";
 import {useRef, useEffect} from "react";
-import {printableCharacterPattern} from "../utils/config.js";
-import useTestContext from "../hooks/useTestContext.js";
-import Keyboard from "./Keyboard/Keyboard";
-import Text from "./Text/Text.jsx";
+import {printableCharacterPattern} from "../../utils/config.js";
+import useTestContext from "../../hooks/useTestContext.js";
+import Keyboard from "../Keyboard/Keyboard";
+import Text from "../Text/Text";
 import "./Test.css";
 import TestResult from "./TestResult.jsx";
-import LiveStats from "./LiveStats";
+import LiveStats from "./LiveStats.jsx";
 import {RiRestartLine} from "react-icons/ri";
 import TestMode from "./TestMode.jsx";
-import {wordList} from "../utils/config.js";
+import {wordList} from "../../utils/config.js";
 
 const generateRandomText = (words) => {
 	console.log("generateRandomText(): ", words);

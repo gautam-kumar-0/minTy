@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import useTestContext from "../hooks/useTestContext.js";
+import useTestContext from "../../hooks/useTestContext";
 import {FcNext} from "react-icons/fc";
 import {RiRestartLine} from "react-icons/ri";
 import TwoYAxisChart from "./TwoYAxisChart.jsx";

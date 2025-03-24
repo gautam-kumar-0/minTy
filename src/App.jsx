@@ -1,4 +1,4 @@
-import Test from "./Test/Test";
+import Test from "./components/Test/Test";
 import {RiSettings4Fill} from "react-icons/ri";
 import "./App.css";
 import {LuKeyboard} from "react-icons/lu";

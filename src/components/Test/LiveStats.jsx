@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {TestContext, TestDispatchContext} from "./context/TestContextProvider";
+import {TestContext, TestDispatchContext} from "../context/TestContextProvider";
 import TestProgress from "./TestProgress";
 
 const calculateAccuracy = (state) => {

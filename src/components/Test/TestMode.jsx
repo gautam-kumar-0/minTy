@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import "./TestMode.css";
-import Fadable from "./Fadable/Fadable";
+import Fadable from "../Fadable/Fadable";
 import {BsWrench} from "react-icons/bs";
-import useTestContext from "../hooks/useTestContext";
+import useTestContext from "../../hooks/useTestContext";
 
 const MODE = {
 	time: [10, 30, 60, 120, null],
