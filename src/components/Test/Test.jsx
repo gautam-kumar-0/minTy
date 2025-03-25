@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {useRef, useEffect} from "react";
 import {printableCharacterPattern} from "../../utils/config.js";
-import useTestContext from "../../hooks/useTestContext.js";
 import Keyboard from "../Keyboard/Keyboard";
 import Text from "../Text/Text";
 import "./Test.css";
@@ -10,6 +9,11 @@ import LiveStats from "./LiveStats.jsx";
 import {RiRestartLine} from "react-icons/ri";
 import TestMode from "./TestMode.jsx";
 import {wordList} from "../../utils/config.js";
+import useTestSelector from "../../hooks/useTestSelector.js";
+import {backspace} from "./testSlice.js";
+import {useGetQuoteQuery} from "../../services/quotes.js";
+import {start} from "../Test/testSlice.js";
+import useModeSlice from "../../hooks/useModeSlice.js";
 
 const generateRandomText = (words) => {
 	console.log("generateRandomText(): ", words);
@@ -20,24 +24,9 @@ const generateRandomText = (words) => {
 	return arr.join(" ");
 };
 
-const FetchQuotes = async () => {
-	const response = await fetch("http://localhost:3000/quotes");
-	if (!response.ok) {
-		throw new Error("Error while fetching quote", response.status);
-	}
-	return await response.json();
-};
-
-const MODE = {
-	time: [5, 60, 120, "custom"],
-	words: [10, 25, 50, 100, "custom"],
-	quote: ["short", "medium", "long"],
-	custom: ["change"],
-};
-
 const Test = ({}) => {
-	const [state, dispatch] = useTestContext();
-
+	const [state, dispatch] = useTestSelector();
+	const [mode] = useModeSlice();
 	const [error, setError] = useState(null);
 	const containerRef = useRef(null);
 
@@ -64,59 +53,35 @@ const Test = ({}) => {
 	const handleKeyPress = (e) => {
 		// console.log("HandleKeyPress", e);
 		if (state.status == "complete") return;
-		if (!state.focus) dispatch({type: "FOCUS", payload: true});
 		if (e.key == "Backspace") {
 			if (e.ctrlKey) {
-				dispatch({type: "CTRLBACKSPACE"});
+				dispatch(backspace({ctrl: true, timeStamp: e.timeStamp}));
 			} else {
-				dispatch({type: "BACKSPACE"});
+				dispatch(backspace({timeStamp: e.timeStamp}));
 			}
 		} else if (e.key === " ") {
-			dispatch({type: "SPACE", payload: {timeStamp: e.timeStamp}});
+			dispatch(space({timeStamp: e.timeStamp}));
 		} else {
-			dispatch({
-				type: "CHARACTER",
-				payload: {character: e.key, timeStamp: e.timeStamp},
-			});
+			dispatch(character({character: e.key, timeStamp: e.timeStamp}));
 		}
 	};
-	const setText = async (mode) => {
+	const setText = async () => {
 		console.log("setText(): ", mode);
 		let text = "";
 		if (mode.type == "words") {
 			text = generateRandomText(mode.value);
 		} else if (mode.type == "time") {
 			text = generateRandomText(2);
-		} else if (mode.type == "quote") {
-			console.log("STATE.QUOTES", state.quotes);
-			if (state.quotes.length) {
-				text = state.quotes[0].text;
-				dispatch({type: "QUOTES/USE"});
-			} else {
-				try {
-					let quotes = await FetchQuotes();
-					dispatch({type: "QUOTES/STORE", payload: quotes});
-					text = quotes[0].text;
-				} catch (e) {
-					console.log(e);
-					setError(e.message);
-				}
-			}
 		} else if (mode.type == "custom") {
 			text = generateRandomText();
 		}
 		console.log(text);
-		dispatch({type: "NEW", payload: text});
+		dispatch(start({text}));
 	};
-	useEffect(() => {
-		console.log("Loaded");
-		setText(state.mode);
-		setError(null);
-	}, [state.mode]);
 
 	useEffect(() => {
+		setText();
 		containerRef.current.focus(); // Ensure the container is focused on mount
-		setText(state.mode);
 
 		const checkFocus = (e) => {
 			const activeElement = document.activeElement;
@@ -155,13 +120,16 @@ const Test = ({}) => {
 		}
 	}, [state.status]);
 
+	useEffect(() => {
+		setText();
+	}, [mode]);
+
 	let display = null;
 
-	if (!state.text) display = null;
-	else if (state.status == "notready") {
+	if (state.status == "notready") {
 		display = <span>Loading...</span>;
 	} else if (state.status == "complete") {
-		display = <TestResult dispatch={dispatch} />;
+		display = <TestResult />;
 	} else {
 		display = (
 			<>
@@ -173,7 +141,7 @@ const Test = ({}) => {
 				<div className="actions">
 					<button
 						className="action-button"
-						onClick={() => setText(state.mode)}
+						onClick={() => console.log("setup restart")}
 						data-action="Restart"
 					>
 						<RiRestartLine />
@@ -191,7 +159,6 @@ const Test = ({}) => {
 			ref={containerRef}
 			tabIndex={0}
 			onKeyDown={handleKeyDown}
-			onMouseMove={() => dispatch({type: "FOCUS", payload: false})}
 			onFocus={() => {
 				let testContainer =
 					containerRef.current.querySelector(".test-container");
@@ -207,7 +174,7 @@ const Test = ({}) => {
 				}
 			}}
 		>
-			<TestMode mode={state.mode} dispatch={dispatch} />
+			<TestMode />
 			{error && (
 				<div className="error">
 					<span>{error}</span> <button>Refresh</button>

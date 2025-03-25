@@ -26,13 +26,10 @@ const TestResult = ({dispatch}) => {
 	}, [state]);
 
 	const handleNext = (e) => {
-		dispatch({
-			type: "SET_MODE",
-			payload: state.mode,
-		});
+		console.log("Next");
 	};
 	const handleRestart = (e) => {
-		dispatch({type: "NEW", payload: state.text});
+		console.log("Restart");
 	};
 
 	let renderChart = <span>Loading</span>;

@@ -1,7 +1,9 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {TestContext, TestDispatchContext} from "../context/TestContextProvider";
 import TestProgress from "./TestProgress";
 import {debounce} from "lodash";
+import useTestSelector from "../../hooks/useTestSelector";
+import {completed} from "./testSlice";
+import useModeSlice from "../../hooks/useModeSlice";
 
 const calculateAccuracy = (state) => {
 	let errors = 0;
@@ -25,13 +27,13 @@ const calculateAvgWPM = (state) => {
 };
 
 const LiveStats = () => {
-	const context = useContext(TestContext);
-	const dispatch = useContext(TestDispatchContext);
+	const [context, dispatch] = useTestSelector();
+	const [mode] = useModeSlice();
 	const [liveWPM, setLiveWPM] = useState(0);
 	const [avgWPM, setAvgWPM] = useState(0);
 	const [accuracy, setAccuracy] = useState(0);
 	const [timeLeft, setTimeLeft] = useState(
-		context.mode.type === "time" ? context.mode.value : null
+		context.mode.type === "time" ? parseInt(context.mode.value) : null
 	);
 	const stateRef = useRef(context);
 	const liveRef = useRef(null);
@@ -58,13 +60,13 @@ const LiveStats = () => {
 			updateStats();
 
 			if (context.mode.type === "time") {
-				setTimeLeft((prev) => {
-					if (prev === 0) {
-						dispatch({type: "TIMEUP"});
-						return 0;
-					}
-					return prev - 1;
-				});
+				if (context.mode.value != Infinity)
+					setTimeLeft((prev) => {
+						if (prev === 0) {
+							dispatch(completed());
+						}
+						return prev ? prev - 1 : prev;
+					});
 			}
 		}, 1000);
 
@@ -72,7 +74,7 @@ const LiveStats = () => {
 			clearInterval(liveUpdateInterval);
 			updateStats.cancel();
 		};
-	}, [context.mode.type, dispatch]);
+	}, [mode]);
 
 	return (
 		<div className="live-stats" ref={liveRef}>

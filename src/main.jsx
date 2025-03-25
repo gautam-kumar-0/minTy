@@ -2,9 +2,10 @@ import {StrictMode} from "react";
 import {createRoot} from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
-import TestContextProvider from "./components/context/TestContextProvider.jsx";
+import Provider from "react-redux";
+import {store} from "./app/store.js";
 createRoot(document.getElementById("root")).render(
-	<TestContextProvider>
+	<Provider store={store}>
 		<App />
-	</TestContextProvider>
+	</Provider>
 );
