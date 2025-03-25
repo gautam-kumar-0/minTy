@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-
+import {generateRandomWord} from "../../utils/functions";
 const Status = {
 	READY: "ready",
 	UNCOMPLETE: "uncomplete",

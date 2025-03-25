@@ -2,11 +2,12 @@ import React, {useEffect, useState} from "react";
 import "./TestMode.css";
 import Fadable from "../Fadable/Fadable";
 import {BsWrench} from "react-icons/bs";
-
 import {BiFile} from "react-icons/bi";
-import useModeSlice from "../../hooks/useModeSlice";
+import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
+import {setType, setValue} from "./modeSlice"; // Import actions
+
 const ModeValue = ({value, handleSelect}) => {
-	const [mode] = useModeSlice();
+	const mode = useSelector((state) => state.mode); // Select the mode state
 	return (
 		<div
 			className={`mode-value ${parseInt(mode.value) == value ? "active" : ""}`}
@@ -17,73 +18,10 @@ const ModeValue = ({value, handleSelect}) => {
 	);
 };
 
-// const CustomText = ({label, handleSelect}) => {
-// 	const [show, setShow] = useState(false);
-// 	const [value, setValue] = useState(null);
-// 	useEffect(() => {
-// 		let hidePop = (e) => {
-// 			if (!e.target.closest(".custom-value-container")) {
-// 				setShow(false);
-// 			}
-// 		};
-// 		window.addEventListener("click", hidePop);
-// 		return () => removeEventListener("click", hidePop);
-// 	});
-// 	return (
-// 		<div className="custom-value-container">
-// 			<div
-// 				className={`custom-value ${state.mode.value == value ? "active" : ""}`}
-// 				onClick={() => setShow(!show)}
-// 			>
-// 				<span>
-// 					<BsWrench />
-// 				</span>
-// 			</div>
-// 			{show && (
-// 				<div className="pop-up">
-// 					<button className="close-btn" onClick={() => setShow(false)}>
-// 						&times;
-// 					</button>
-// 					<form
-// 						onSubmit={(e) => {
-// 							e.preventDefault();
-// 							setShow(false);
-// 							if (value == 0) value = Infinity;
-// 							handleSelect(value);
-// 						}}
-// 					>
-// 						<input
-// 							type="number"
-// 							id="custom"
-// 							value={value}
-// 							onKeyDown={(e) => e.stopPropagation()}
-// 							onChange={(e) => {
-// 								setValue(e.target.value);
-// 								e.stopPropagation();
-// 							}}
-// 							max={1000}
-// 							min={0}
-// 							placeholder="0"
-// 						/>
-// 						<label htmlFor="custom">
-// 							<span>{label}</span>
-// 							<br />
-// 							<span>(Max 1000) use 0 for infinity.</span>
-// 						</label>
-// 						<button type="submit" disabled={!value}>
-// 							OK
-// 						</button>
-// 					</form>
-// 				</div>
-// 			)}
-// 		</div>
-// 	);
-// };
-
 const CustomValue = ({label, handleSelect}) => {
 	const [show, setShow] = useState(false);
 	const [value, setValue] = useState(null);
-	const [mode] = useModeSlice();
+	const mode = useSelector((state) => state.mode); // Select the mode state
 	useEffect(() => {
 		let hidePop = (e) => {
 			if (!e.target.closest(".custom-value-container")) {
@@ -214,7 +152,8 @@ const MODE = {
 };
 
 const TestMode = ({}) => {
-	const [mode, dispatch] = useModeSlice();
+	const dispatch = useDispatch(); // Use dispatch from Redux
+	const mode = useSelector((state) => state.mode); // Select the mode state
 	const handleModeChange = (key) => {
 		dispatch(setType(key));
 	};

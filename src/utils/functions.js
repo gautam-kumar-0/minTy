@@ -1,8 +1,9 @@
-const generateRandomWord = () => {
+import {wordList} from "./config";
+export const generateRandomWord = () => {
 	return wordList[Math.floor(Math.random() * 1000)];
 };
 
-const generateRandomText = (words) => {
+export const generateRandomText = (words) => {
 	let arr = Array(words).fill(null).map(generateRandomWord);
 	console.log("generateRandomText(): ", words, arr);
 	return arr.join(" ");

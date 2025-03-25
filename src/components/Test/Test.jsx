@@ -9,9 +9,8 @@ import LiveStats from "./LiveStats.jsx";
 import {RiRestartLine} from "react-icons/ri";
 import TestMode from "./TestMode.jsx";
 import {wordList} from "../../utils/config.js";
-import useTestSelector from "../../hooks/useTestSelector.js";
+import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 import {useGetQuoteQuery} from "../../services/quotes.js";
-import useModeSlice from "../../hooks/useModeSlice.js";
 import {start, character, space, backspace} from "./testSlice.js";
 const generateRandomText = (words) => {
 	console.log("generateRandomText(): ", words);
@@ -23,8 +22,9 @@ const generateRandomText = (words) => {
 };
 
 const Test = ({}) => {
-	const [state, dispatch] = useTestSelector();
-	const [mode] = useModeSlice();
+	const dispatch = useDispatch(); // Use dispatch from Redux
+	const state = useSelector((state) => state.test); // Select the test state
+	const mode = useSelector((state) => state.mode); // Select the mode state
 	const [error, setError] = useState(null);
 	const containerRef = useRef(null);
 
@@ -58,7 +58,7 @@ const Test = ({}) => {
 				dispatch(backspace({timeStamp: e.timeStamp}));
 			}
 		} else if (e.key === " ") {
-			dispatch(space({timeStamp: e.timeStamp}));
+			dispatch(space({timeStamp: e.timeStamp, mode: mode.type}));
 		} else {
 			dispatch(character({character: e.key, timeStamp: e.timeStamp}));
 		}
@@ -74,7 +74,7 @@ const Test = ({}) => {
 			text = generateRandomText();
 		}
 		console.log(text);
-		dispatch(start(text));
+		dispatch(start(text)); // Dispatch the start action
 	};
 
 	useEffect(() => {

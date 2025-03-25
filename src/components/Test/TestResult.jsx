@@ -3,11 +3,11 @@ import React, {useEffect, useState, useMemo} from "react";
 import {FcNext} from "react-icons/fc";
 import {RiRestartLine} from "react-icons/ri";
 import TwoYAxisChart from "./TwoYAxisChart.jsx";
-import useTestSelector from "../../hooks/useTestSelector.js";
+import {useSelector} from "react-redux"; // Import useSelector from Redux
 
 const TestResult = () => {
+	const state = useSelector((state) => state.test); // Select the test state
 	let totalwpm = 0;
-	const [state] = useTestSelector();
 	const result = useMemo(() => {
 		if (state.status === "complete") {
 			let totalwpm = 0;

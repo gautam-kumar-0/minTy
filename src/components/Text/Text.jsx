@@ -1,9 +1,10 @@
 import React, {useContext, useRef, useEffect, useState} from "react";
 import "./Text.css";
+
 import TestContent from "./TestContent.jsx"; // Import the new component
-import useTestSelector from "../../hooks/useTestSelector.js";
+import {useSelector} from "react-redux";
 const Text = ({}) => {
-	const [state] = useTestSelector();
+	const state = useSelector((state) => state.test);
 	const [children, setChildren] = useState(null);
 
 	const [fade, setFade] = useState("out");
