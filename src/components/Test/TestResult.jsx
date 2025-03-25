@@ -1,14 +1,13 @@
 import React, {useEffect, useState, useMemo} from "react";
 
-import useTestContext from "../../hooks/useTestContext";
 import {FcNext} from "react-icons/fc";
 import {RiRestartLine} from "react-icons/ri";
 import TwoYAxisChart from "./TwoYAxisChart.jsx";
+import useTestSelector from "../../hooks/useTestSelector.js";
 
-const TestResult = ({dispatch}) => {
-	const [state] = useTestContext(); // Removed setMode
+const TestResult = () => {
 	let totalwpm = 0;
-
+	const [state] = useTestSelector();
 	const result = useMemo(() => {
 		if (state.status === "complete") {
 			let totalwpm = 0;
@@ -23,7 +22,7 @@ const TestResult = ({dispatch}) => {
 			});
 		}
 		return null;
-	}, [state]);
+	}, []);
 
 	const handleNext = (e) => {
 		console.log("Next");

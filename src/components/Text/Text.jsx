@@ -1,12 +1,11 @@
 import React, {useContext, useRef, useEffect, useState} from "react";
 import "./Text.css";
-import {TestContext} from "../context/TestContextProvider";
 import TestContent from "./TestContent.jsx"; // Import the new component
-
+import useTestSelector from "../../hooks/useTestSelector.js";
 const Text = ({}) => {
-	const state = useContext(TestContext);
+	const [state] = useTestSelector();
 	const [children, setChildren] = useState(null);
-	// const [currentText, setCurrentText] = useState(state.text);
+
 	const [fade, setFade] = useState("out");
 	const testWindow = useRef(null);
 

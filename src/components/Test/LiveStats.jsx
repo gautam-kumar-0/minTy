@@ -33,7 +33,7 @@ const LiveStats = () => {
 	const [avgWPM, setAvgWPM] = useState(0);
 	const [accuracy, setAccuracy] = useState(0);
 	const [timeLeft, setTimeLeft] = useState(
-		context.mode.type === "time" ? parseInt(context.mode.value) : null
+		mode.type === "time" ? parseInt(mode.value) : null
 	);
 	const stateRef = useRef(context);
 	const liveRef = useRef(null);
@@ -59,8 +59,8 @@ const LiveStats = () => {
 		const liveUpdateInterval = setInterval(() => {
 			updateStats();
 
-			if (context.mode.type === "time") {
-				if (context.mode.value != Infinity)
+			if (mode.type === "time") {
+				if (mode.value != Infinity)
 					setTimeLeft((prev) => {
 						if (prev === 0) {
 							dispatch(completed());
@@ -79,7 +79,7 @@ const LiveStats = () => {
 	return (
 		<div className="live-stats" ref={liveRef}>
 			<TestProgress
-				isTimed={context.mode.type === "time"}
+				isTimed={mode.type === "time"}
 				timeLeft={timeLeft}
 				index={context.index}
 				length={context.words.length}

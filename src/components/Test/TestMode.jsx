@@ -20,7 +20,6 @@ const ModeValue = ({value, handleSelect}) => {
 // const CustomText = ({label, handleSelect}) => {
 // 	const [show, setShow] = useState(false);
 // 	const [value, setValue] = useState(null);
-// 	const [state] = useTestContext();
 // 	useEffect(() => {
 // 		let hidePop = (e) => {
 // 			if (!e.target.closest(".custom-value-container")) {
@@ -124,8 +123,8 @@ const CustomValue = ({label, handleSelect}) => {
 						onSubmit={(e) => {
 							e.preventDefault();
 							setShow(false);
-							if (value == 0) value = Infinity;
-							handleSelect(value);
+							if (value == 0) handleSelect(Infinity);
+							else handleSelect(value);
 						}}
 					>
 						<textarea

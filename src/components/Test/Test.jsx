@@ -10,11 +10,9 @@ import {RiRestartLine} from "react-icons/ri";
 import TestMode from "./TestMode.jsx";
 import {wordList} from "../../utils/config.js";
 import useTestSelector from "../../hooks/useTestSelector.js";
-import {backspace} from "./testSlice.js";
 import {useGetQuoteQuery} from "../../services/quotes.js";
-import {start} from "../Test/testSlice.js";
 import useModeSlice from "../../hooks/useModeSlice.js";
-
+import {start, character, space, backspace} from "./testSlice.js";
 const generateRandomText = (words) => {
 	console.log("generateRandomText(): ", words);
 	let arr = Array(words)
@@ -76,7 +74,7 @@ const Test = ({}) => {
 			text = generateRandomText();
 		}
 		console.log(text);
-		dispatch(start({text}));
+		dispatch(start(text));
 	};
 
 	useEffect(() => {
@@ -104,7 +102,7 @@ const Test = ({}) => {
 			// Shift focus to the container if no other focusable element is active
 			if (activeElement !== containerRef.current) {
 				console.log("Shifting focus to container...");
-				containerRef.current.focus();
+				containerRef.current?.focus();
 			}
 		};
 
