@@ -4,7 +4,7 @@ export const generateRandomWord = () => {
 };
 
 export const generateRandomText = (words) => {
-	let arr = Array(words).fill(null).map(generateRandomWord);
+	let arr = Array(parseInt(words)).fill(null).map(generateRandomWord);
 	console.log("generateRandomText(): ", words, arr);
 	return arr.join(" ");
 };

@@ -8,41 +8,87 @@ import TestResult from "./TestResult.jsx";
 import LiveStats from "./LiveStats.jsx";
 import {RiRestartLine} from "react-icons/ri";
 import TestMode from "./TestMode.jsx";
-import {wordList} from "../../utils/config.js";
+
 import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
-import {useGetQuoteQuery} from "../../services/quotes.js";
-import {start, character, space, backspace} from "./testSlice.js";
-const generateRandomText = (words) => {
-	console.log("generateRandomText(): ", words);
-	let arr = Array(words)
-		.fill(null)
-		.map(() => wordList[Math.floor(Math.random() * 1000)]);
-	console.log(arr);
-	return arr.join(" ");
-};
+
+import {start, reset, character, space, backspace} from "./testSlice.js";
+import {generateRandomText} from "../../utils/functions.js";
 
 const Test = ({}) => {
 	const dispatch = useDispatch(); // Use dispatch from Redux
 	const state = useSelector((state) => state.test); // Select the test state
 	const mode = useSelector((state) => state.mode); // Select the mode state
+	const [text, setText] = useState("");
+	const [focus, setFocus] = useState(true);
 	const [error, setError] = useState(null);
 	const containerRef = useRef(null);
 
+	const startTest = async () => {
+		console.log("setText(): ", mode);
+		let text = "";
+		if (mode.type == "words") {
+			text = generateRandomText(mode.value);
+		} else if (mode.type == "time") {
+			text = generateRandomText(20);
+		} else if (mode.type == "custom") {
+			text = generateRandomText();
+		}
+		setText(text);
+		dispatch(start(text));
+	};
+
+	const resetTest = (e) => {
+		dispatch(reset());
+	};
+
+	const updateFocus = (e) => {
+		const activeElement = document.activeElement;
+
+		// Debugging: Log the currently focused element
+		console.log("Active Element:", activeElement);
+
+		// Check if the currently focused element is an input, textarea, or other focusable element
+		const isFocusableElement =
+			activeElement &&
+			(["INPUT", "TEXTAREA", "SELECT", "BUTTON"].includes(
+				activeElement.tagName
+			) ||
+				activeElement.isContentEditable);
+
+		if (isFocusableElement) {
+			console.log("Focus is on a focusable element. Skipping...");
+			setFocus(false);
+			return false;
+		} else {
+			console.log("Shifting focus to container...");
+			setFocus(true);
+
+			return true;
+		}
+	};
 	const handleKeyDown = (e) => {
-		e.preventDefault();
+		let focus = updateFocus(e);
+
 		if (e.key === "Escape") {
-			containerRef.current.blur();
+			setFocus(false);
 			return;
 		}
 		if (e.ctrlKey) {
 			if (e.key == "r") {
 				console.log("Restart the test");
+				startTest();
 				return;
 			} else if (e.key == "c") {
 				console.log("Reset the test");
+				resetTest();
 				return;
 			}
 		}
+
+		if (!focus || state.status == "complete") return;
+		e.preventDefault();
+		console.log("focus", focus);
+
 		if (e.key == "Backspace" || printableCharacterPattern.test(e.key)) {
 			handleKeyPress(e);
 		}
@@ -50,7 +96,6 @@ const Test = ({}) => {
 
 	const handleKeyPress = (e) => {
 		// console.log("HandleKeyPress", e);
-		if (state.status == "complete") return;
 		if (e.key == "Backspace") {
 			if (e.ctrlKey) {
 				dispatch(backspace({ctrl: true, timeStamp: e.timeStamp}));
@@ -63,71 +108,32 @@ const Test = ({}) => {
 			dispatch(character({character: e.key, timeStamp: e.timeStamp}));
 		}
 	};
-	const setText = async () => {
-		console.log("setText(): ", mode);
-		let text = "";
-		if (mode.type == "words") {
-			text = generateRandomText(mode.value);
-		} else if (mode.type == "time") {
-			text = generateRandomText(2);
-		} else if (mode.type == "custom") {
-			text = generateRandomText();
-		}
-		console.log(text);
-		dispatch(start(text)); // Dispatch the start action
-	};
 
 	useEffect(() => {
-		setText();
-		containerRef.current.focus(); // Ensure the container is focused on mount
+		startTest();
+		setFocus(true); // Ensure the container is focused on mount
 
-		const checkFocus = (e) => {
-			const activeElement = document.activeElement;
-
-			// Debugging: Log the currently focused element
-			console.log("Active Element:", activeElement);
-
-			// Check if the currently focused element is an input, textarea, or other focusable element
-			if (
-				activeElement &&
-				(["INPUT", "TEXTAREA", "SELECT", "BUTTON"].includes(
-					activeElement.tagName
-				) ||
-					activeElement.isContentEditable)
-			) {
-				console.log("Focus is on a focusable element. Skipping...");
-				return;
-			}
-
-			// Shift focus to the container if no other focusable element is active
-			if (activeElement !== containerRef.current) {
-				console.log("Shifting focus to container...");
-				containerRef.current?.focus();
-			}
-		};
-
-		window.addEventListener("keydown", checkFocus); // Attach the event listener
-		return () => {
-			window.removeEventListener("keydown", checkFocus); // Cleanup the event listener
-		};
+		window.addEventListener("keydown", handleKeyDown); // Attach the event listener
+		return () => window.removeEventListener("keydown", handleKeyDown); // Cleanup the event listener
 	}, []);
 
+	// Focus Every time new test is loaded
 	useEffect(() => {
-		if (state.status == "ready") {
-			containerRef.current.focus();
-		}
+		if (state.status == "ready") setFocus(true);
 	}, [state.status]);
 
+	// Start new test
 	useEffect(() => {
-		setText();
+		startTest();
 	}, [mode]);
 
 	let display = null;
-
-	if (state.status == "notready") {
+	if (!text) {
+		display = null;
+	} else if (state.status == "notready") {
 		display = <span>Loading...</span>;
 	} else if (state.status == "complete") {
-		display = <TestResult />;
+		display = <TestResult startTest={startTest} resetTest={resetTest} />;
 	} else {
 		display = (
 			<>
@@ -135,9 +141,13 @@ const Test = ({}) => {
 					{state.status == "uncomplete" ? <LiveStats /> : ""}
 				</div>
 
-				<Text />
+				<Text
+					setFocus={setFocus}
+					details={error ? error.message : "Click or press any key to start"}
+				/>
 				<div className="actions">
 					<button
+						tabIndex={1}
 						className="action-button"
 						onClick={() => console.log("setup restart")}
 						data-action="Restart"
@@ -152,26 +162,7 @@ const Test = ({}) => {
 		);
 	}
 	return (
-		<div
-			className="main"
-			ref={containerRef}
-			tabIndex={0}
-			onKeyDown={handleKeyDown}
-			onFocus={() => {
-				let testContainer =
-					containerRef.current.querySelector(".test-container");
-				if (testContainer) {
-					testContainer.style.filter = "blur(0px)";
-				}
-			}}
-			onBlur={() => {
-				let testContainer =
-					containerRef.current.querySelector(".test-container");
-				if (testContainer) {
-					testContainer.style.filter = "blur(3px)";
-				}
-			}}
-		>
+		<div className={`main ${focus ? "focus" : "blur"}`} ref={containerRef}>
 			<TestMode />
 			{error && (
 				<div className="error">

@@ -3,7 +3,7 @@ import "./Text.css";
 
 import TestContent from "./TestContent.jsx"; // Import the new component
 import {useSelector} from "react-redux";
-const Text = ({}) => {
+const Text = ({focus, setFocus, details}) => {
 	const state = useSelector((state) => state.test);
 	const [children, setChildren] = useState(null);
 
@@ -22,8 +22,12 @@ const Text = ({}) => {
 	}, [state]);
 
 	return (
-		<div className="test-container">
-			<div className={`testWindow ${fade}`} ref={testWindow}>
+		<div className="test-container " onClick={() => setFocus(true)}>
+			<div
+				className={`testWindow ${fade}`}
+				ref={testWindow}
+				data-details={details}
+			>
 				{children}
 			</div>
 		</div>

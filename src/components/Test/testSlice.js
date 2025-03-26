@@ -25,7 +25,7 @@ function convertToWordObject(word) {
 function helperCalculateWPM(state, action) {
 	state.words[state.index].end = action.payload.timeStamp;
 	const currentWord = state.words[state.index];
-	const delta = Math.min(currentWord.end - currentWord.start, 5); // keyboard latency
+	const delta = Math.max(currentWord.end - currentWord.start, 10); // keyboard latency
 	state.words[state.index].wpm = (currentWord.typed.length * 12000) / delta;
 }
 
@@ -35,6 +35,11 @@ export const testSlice = createSlice({
 	reducers: {
 		start: (state, action) => {
 			state.words = action.payload.split(" ").map(convertToWordObject);
+			state.index = 0;
+			state.status = Status.READY;
+		},
+		reset: (state) => {
+			state.words = state.words.map((w) => convertToWordObject(w.original));
 			state.index = 0;
 			state.status = Status.READY;
 		},
@@ -104,7 +109,7 @@ export const testSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {start, backspace, character, space, completed} =
+export const {start, reset, backspace, character, space, completed} =
 	testSlice.actions;
 
 export default testSlice.reducer;

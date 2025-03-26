@@ -5,7 +5,7 @@ import {RiRestartLine} from "react-icons/ri";
 import TwoYAxisChart from "./TwoYAxisChart.jsx";
 import {useSelector} from "react-redux"; // Import useSelector from Redux
 
-const TestResult = () => {
+const TestResult = ({startTest, resetTest}) => {
 	const state = useSelector((state) => state.test); // Select the test state
 	let totalwpm = 0;
 	const result = useMemo(() => {
@@ -25,10 +25,10 @@ const TestResult = () => {
 	}, []);
 
 	const handleNext = (e) => {
-		console.log("Next");
+		startTest();
 	};
 	const handleRestart = (e) => {
-		console.log("Restart");
+		resetTest();
 	};
 
 	let renderChart = <span>Loading</span>;
