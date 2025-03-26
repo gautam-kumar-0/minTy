@@ -69,6 +69,7 @@ const Test = ({}) => {
 	};
 
 	const handleKeyDown = (e) => {
+		console.log("HandleKeyDown", e.key);
 		let focus = updateFocus(e);
 
 		if (e.key === "Escape") {
@@ -86,7 +87,7 @@ const Test = ({}) => {
 				return;
 			}
 		}
-
+		console.log("ISPRESSABLE", !focus || state.status == "complete");
 		if (!focus || state.status == "complete") return;
 		e.preventDefault();
 		console.log("focus", focus);
@@ -97,7 +98,7 @@ const Test = ({}) => {
 	};
 
 	const handleKeyPress = (e) => {
-		// console.log("HandleKeyPress", e);
+		console.log("HandleKeyPress", e);
 		if (e.key == "Backspace") {
 			if (e.ctrlKey) {
 				dispatch(backspace({ctrl: true, timeStamp: e.timeStamp}));

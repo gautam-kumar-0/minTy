@@ -22,6 +22,7 @@ function convertToWordObject(word) {
 		end: null,
 		wpm: null,
 		errors: 0,
+		accuracy: 0,
 	};
 }
 
@@ -30,6 +31,8 @@ function helperCalculateWPM(state, action) {
 	const currentWord = state.words[state.index];
 	const delta = Math.max(currentWord.end - currentWord.start, 10); // keyboard latency
 	state.words[state.index].wpm = (currentWord.typed.length * 12000) / delta;
+	state.words[state.index].accuracy =
+		100 - Math.round((currentWord.errors / currentWord.original.length) * 100);
 }
 
 export const testSlice = createSlice({

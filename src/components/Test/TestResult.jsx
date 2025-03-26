@@ -7,14 +7,15 @@ import {useSelector} from "react-redux"; // Import useSelector from Redux
 
 const TestResult = ({startTest, resetTest}) => {
 	const state = useSelector((state) => state.test); // Select the test state
-	const accuracy = useRef(0);
+	const averageAcc = useRef(0);
 	const result = useMemo(() => {
 		if (state.status === "complete") {
 			let totalwpm = 0;
-			let errors = 0;
+			let totalacc = 0;
 			let r = state.words.map((word, i) => {
 				totalwpm += word.wpm;
-				errors += word.errors;
+				totalacc += word.accuracy;
+
 				return {
 					name: i + 1,
 					raw: Math.round(word.wpm),
@@ -22,7 +23,9 @@ const TestResult = ({startTest, resetTest}) => {
 					average: Math.round(totalwpm / (i + 1)),
 				};
 			});
-			accuracy.current = Math.round((errors / r.length) * 100);
+
+			averageAcc.current = Math.round(totalacc / r.length);
+			return r;
 		}
 		return null;
 	}, [state]);
@@ -38,7 +41,7 @@ const TestResult = ({startTest, resetTest}) => {
 	if (result) {
 		renderChart = (
 			<>
-				<TwoYAxisChart result={result} />;
+				<TwoYAxisChart result={result} />
 			</>
 		);
 	}
@@ -50,8 +53,9 @@ const TestResult = ({startTest, resetTest}) => {
 					<h1>{result ? result[result.length - 1]?.average : 0}</h1>
 					<span>Average</span>
 				</div>
+
 				<div className="accuracy">
-					<h1>{result ? 90 : 0}%</h1>
+					<h1>{averageAcc.current}%</h1>
 					<span>Accuracy</span>
 				</div>
 			</div>
