@@ -7,18 +7,16 @@ const Text = ({focus, setFocus, details}) => {
 	const state = useSelector((state) => state.test);
 	const [children, setChildren] = useState(null);
 
-	const [fade, setFade] = useState("out");
+	const [fade, setFade] = useState("");
 	const testWindow = useRef(null);
 
 	useEffect(() => {
 		if (state.status == "ready") {
-			setFade("out");
+			setFade("");
 			setTimeout(() => {
 				setChildren(<TestContent state={state} />);
-				setTimeout(() => {
-					setFade("in");
-				}, 1000);
-			}, 100);
+				setFade("appear");
+			}, 50);
 		} else if (state.status == "uncomplete")
 			setChildren(<TestContent state={state} />);
 	}, [state]);

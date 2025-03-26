@@ -15,6 +15,9 @@
 	opacity: 0;
 	padding: 1rem;
 }
+.appear {
+	animation: appear 300ms ease forwards;
+}
 
 .test-container::after {
 	content: attr(data-details);
@@ -43,12 +46,13 @@
 	opacity: 0.5;
 	filter: blur(8px);
 }
-.testWindow.in {
-	opacity: 1;
-}
-
-.testWindow.out {
-	opacity: 0;
+@keyframes appear {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 .testText {
