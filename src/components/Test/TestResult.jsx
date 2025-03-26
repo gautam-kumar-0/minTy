@@ -7,7 +7,6 @@ import {useSelector} from "react-redux"; // Import useSelector from Redux
 
 const TestResult = ({startTest, resetTest}) => {
 	const state = useSelector((state) => state.test); // Select the test state
-	let totalwpm = 0;
 	const result = useMemo(() => {
 		if (state.status === "complete") {
 			let totalwpm = 0;
@@ -22,7 +21,7 @@ const TestResult = ({startTest, resetTest}) => {
 			});
 		}
 		return null;
-	}, []);
+	}, [state]);
 
 	const handleNext = (e) => {
 		startTest();
@@ -33,7 +32,11 @@ const TestResult = ({startTest, resetTest}) => {
 
 	let renderChart = <span>Loading</span>;
 	if (result) {
-		renderChart = <TwoYAxisChart result={result} />;
+		renderChart = (
+			<>
+				<TwoYAxisChart result={result} />;
+			</>
+		);
 	}
 
 	return (

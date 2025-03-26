@@ -66,6 +66,7 @@ const Test = ({}) => {
 			return true;
 		}
 	};
+
 	const handleKeyDown = (e) => {
 		let focus = updateFocus(e);
 
@@ -119,8 +120,8 @@ const Test = ({}) => {
 
 	// Focus Every time new test is loaded
 	useEffect(() => {
-		if (state.status == "ready") setFocus(true);
-	}, [state.status]);
+		setFocus(true);
+	}, [state]);
 
 	// Start new test
 	useEffect(() => {
@@ -149,7 +150,7 @@ const Test = ({}) => {
 					<button
 						tabIndex={1}
 						className="action-button"
-						onClick={() => console.log("setup restart")}
+						onClick={() => resetTest()}
 						data-action="Restart"
 					>
 						<RiRestartLine />

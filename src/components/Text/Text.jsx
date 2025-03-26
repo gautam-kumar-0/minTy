@@ -22,12 +22,12 @@ const Text = ({focus, setFocus, details}) => {
 	}, [state]);
 
 	return (
-		<div className="test-container " onClick={() => setFocus(true)}>
-			<div
-				className={`testWindow ${fade}`}
-				ref={testWindow}
-				data-details={details}
-			>
+		<div
+			className="test-container "
+			onClick={() => setFocus(true)}
+			data-details={details}
+		>
+			<div className={`testWindow ${fade}`} ref={testWindow}>
 				{children}
 			</div>
 		</div>

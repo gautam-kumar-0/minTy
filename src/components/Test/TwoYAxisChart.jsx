@@ -151,14 +151,14 @@ const TwoYAxisChart = ({result}) => {
 					}}
 					formatter={(value, name) => [`${value}`, name]}
 				/>
-				<Area
+				{/* <Area
 					yAxisId="left"
 					type="monotone"
 					dataKey="raw"
 					stroke={chartConfig.colors.lineRaw}
 					fill={chartConfig.colors.areaFill}
 					{...animationConfig}
-				/>
+				/> */}
 				<Line
 					yAxisId="left"
 					type="monotone"

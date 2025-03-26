@@ -13,7 +13,7 @@
 	opacity: 0;
 	padding: 1rem;
 }
-.testWindow::after {
+.test-container::after {
 	content: attr(data-details);
 	position: absolute;
 	display: flex;
@@ -31,7 +31,7 @@
 	transition: opacity 300ms ease;
 }
 
-.blur .testWindow::after {
+.blur .test-container::after {
 	visibility: visible;
 	opacity: 1;
 }

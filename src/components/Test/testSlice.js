@@ -103,6 +103,7 @@ export const testSlice = createSlice({
 			}
 		},
 		completed: (state) => {
+			state.words.length = state.index;
 			state.status = Status.COMPLETE;
 		},
 	},
