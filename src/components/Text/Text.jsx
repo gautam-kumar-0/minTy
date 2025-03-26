@@ -15,8 +15,10 @@ const Text = ({focus, setFocus, details}) => {
 			setFade("out");
 			setTimeout(() => {
 				setChildren(<TestContent state={state} />);
-				setFade("in");
-			}, 150);
+				setTimeout(() => {
+					setFade("in");
+				}, 1000);
+			}, 100);
 		} else if (state.status == "uncomplete")
 			setChildren(<TestContent state={state} />);
 	}, [state]);

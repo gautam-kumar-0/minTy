@@ -4,7 +4,7 @@ import {RiSettings4Fill} from "react-icons/ri";
 import "./App.css";
 import {LuKeyboard} from "react-icons/lu";
 import Fadable from "./components/Fadable/Fadable";
-
+import TestMode from "./components/Test/TestMode";
 const Header = memo(() => (
 	<header>
 		<Fadable>
@@ -24,6 +24,7 @@ function App() {
 		<div className="app">
 			<div className="starfall"></div>
 			<Header />
+			<TestMode />
 			<Test />
 		</div>
 	);

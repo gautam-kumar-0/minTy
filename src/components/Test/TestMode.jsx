@@ -11,7 +11,11 @@ const ModeValue = ({value, handleSelect}) => {
 	return (
 		<div
 			className={`mode-value ${parseInt(mode.value) == value ? "active" : ""}`}
-			onClick={() => handleSelect(value)}
+			onClick={(e) => {
+				handleSelect(value);
+
+				e.stopPropagation();
+			}}
 		>
 			<span>{value}</span>
 		</div>

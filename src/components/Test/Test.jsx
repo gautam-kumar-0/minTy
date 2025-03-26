@@ -35,6 +35,7 @@ const Test = ({}) => {
 		}
 		setText(text);
 		dispatch(start(text));
+		setFocus(true);
 	};
 
 	const resetTest = (e) => {
@@ -110,10 +111,17 @@ const Test = ({}) => {
 		}
 	};
 
+	const handleClick = (e) => {
+		console.log(e);
+		if (containerRef.current && !containerRef.current.contains(e.target)) {
+			setFocus(false);
+		} else setFocus(true);
+	};
+
 	useEffect(() => {
 		startTest();
-		setFocus(true); // Ensure the container is focused on mount
 
+		window.addEventListener("click", handleClick);
 		window.addEventListener("keydown", handleKeyDown); // Attach the event listener
 		return () => window.removeEventListener("keydown", handleKeyDown); // Cleanup the event listener
 	}, []);
@@ -121,6 +129,7 @@ const Test = ({}) => {
 	// Focus Every time new test is loaded
 	useEffect(() => {
 		setFocus(true);
+		console.log("STATE CHANGED", focus);
 	}, [state]);
 
 	// Start new test
@@ -164,12 +173,12 @@ const Test = ({}) => {
 	}
 	return (
 		<div className={`main ${focus ? "focus" : "blur"}`} ref={containerRef}>
-			<TestMode />
 			{error && (
 				<div className="error">
 					<span>{error}</span> <button>Refresh</button>
 				</div>
 			)}
+
 			{display}
 		</div>
 	);

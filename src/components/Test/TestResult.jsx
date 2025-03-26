@@ -7,11 +7,14 @@ import {useSelector} from "react-redux"; // Import useSelector from Redux
 
 const TestResult = ({startTest, resetTest}) => {
 	const state = useSelector((state) => state.test); // Select the test state
+	const accuracy = useRef(0);
 	const result = useMemo(() => {
 		if (state.status === "complete") {
 			let totalwpm = 0;
-			return state.words.map((word, i) => {
+			let errors = 0;
+			let r = state.words.map((word, i) => {
 				totalwpm += word.wpm;
+				errors += word.errors;
 				return {
 					name: i + 1,
 					raw: Math.round(word.wpm),
@@ -19,6 +22,7 @@ const TestResult = ({startTest, resetTest}) => {
 					average: Math.round(totalwpm / (i + 1)),
 				};
 			});
+			accuracy.current = Math.round((errors / r.length) * 100);
 		}
 		return null;
 	}, [state]);

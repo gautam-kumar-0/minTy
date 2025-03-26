@@ -1,11 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {generateRandomWord} from "../../utils/functions";
+
 const Status = {
 	READY: "ready",
 	UNCOMPLETE: "uncomplete",
 	COMPLETE: "complete",
 	NOTREADY: "notready",
 };
+
 export const initialState = {
 	words: [],
 	index: 0,
@@ -22,6 +24,7 @@ function convertToWordObject(word) {
 		errors: 0,
 	};
 }
+
 function helperCalculateWPM(state, action) {
 	state.words[state.index].end = action.payload.timeStamp;
 	const currentWord = state.words[state.index];
