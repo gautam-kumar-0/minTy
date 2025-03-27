@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import TestProgress from "./TestProgress";
 import {debounce} from "lodash";
 import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
-import {completed} from "./testSlice";
+import {completed} from "../Text/textSlice";
 
 const calculateAccuracy = (state) => {
 	let errors = 0;
@@ -27,8 +27,8 @@ const calculateAvgWPM = (state) => {
 
 const LiveStats = () => {
 	const dispatch = useDispatch(); // Use dispatch from Redux
-	const context = useSelector((state) => state.test); // Select the test state
-	const mode = useSelector((state) => state.mode); // Select the mode state
+	const context = useSelector((state) => state.text); // Select the text state
+	const mode = useSelector((state) => state.test.mode); // Select the mode state
 	const [liveWPM, setLiveWPM] = useState(0);
 	const [avgWPM, setAvgWPM] = useState(0);
 	const [accuracy, setAccuracy] = useState(0);

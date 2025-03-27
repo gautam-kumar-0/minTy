@@ -2,32 +2,60 @@ import React, {useContext, useRef, useEffect, useState} from "react";
 import "./Text.css";
 
 import TestContent from "./TestContent.jsx"; // Import the new component
-import {useSelector} from "react-redux";
-const Text = ({focus, setFocus, details}) => {
-	const state = useSelector((state) => state.test);
+import {useDispatch, useSelector} from "react-redux";
+import {printableCharacterPattern} from "../../utils/config.js";
+import {setTyping} from "../Test/testSlice.js";
+import {space, character, backspace} from "./textSlice.js";
+const Text = ({details}) => {
+	const textState = useSelector((state) => state.text);
+	const testState = useSelector((state) => state.test);
+	const dispatch = useDispatch();
 	const [children, setChildren] = useState(null);
 
-	const [fade, setFade] = useState("");
+	const [animation, setAnimation] = useState("");
 	const testWindow = useRef(null);
+	const containerRef = useRef(null);
 
+	// Handle Input
+	const handleKeyPress = (e) => {
+		if (!(e.key == "Backspace" || printableCharacterPattern.test(e.key)))
+			return;
+		if (!testState.isTyping) dispatch(setTyping(true));
+		if (e.key == "Backspace") {
+			if (e.ctrlKey) {
+				dispatch(backspace({ctrl: true, timeStamp: e.timeStamp}));
+			} else {
+				dispatch(backspace({timeStamp: e.timeStamp}));
+			}
+		} else if (e.key === " ") {
+			dispatch(space({timeStamp: e.timeStamp, mode: testState.mode.type}));
+		} else {
+			dispatch(character({character: e.key, timeStamp: e.timeStamp}));
+		}
+	};
+
+	// Handling Swapping of TestContent
 	useEffect(() => {
-		if (state.status == "ready") {
-			setFade("");
+		if (textState.status == "ready") {
+			setAnimation("");
 			setTimeout(() => {
-				setChildren(<TestContent state={state} />);
-				setFade("appear");
+				setChildren(<TestContent state={textState} />);
+				setAnimation("appear");
+				containerRef.current.focus();
 			}, 50);
-		} else if (state.status == "uncomplete")
-			setChildren(<TestContent state={state} />);
-	}, [state]);
+		} else if (textState.status == "uncomplete")
+			setChildren(<TestContent state={textState} />);
+	}, [textState]);
 
 	return (
 		<div
 			className="test-container "
-			onClick={() => setFocus(true)}
 			data-details={details}
+			onKeyDown={handleKeyPress}
+			tabIndex={0}
+			ref={containerRef}
 		>
-			<div className={`testWindow ${fade}`} ref={testWindow}>
+			<div className={`testWindow ${animation}`} ref={testWindow}>
 				{children}
 			</div>
 		</div>

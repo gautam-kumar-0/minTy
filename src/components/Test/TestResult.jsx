@@ -6,7 +6,7 @@ import TwoYAxisChart from "./TwoYAxisChart.jsx";
 import {useSelector} from "react-redux"; // Import useSelector from Redux
 
 const TestResult = ({startTest, resetTest}) => {
-	const state = useSelector((state) => state.test); // Select the test state
+	const state = useSelector((state) => state.text); // Select the test state
 	const averageAcc = useRef(0);
 	const result = useMemo(() => {
 		if (state.status === "complete") {

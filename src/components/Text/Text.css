@@ -31,20 +31,25 @@
 	top: 0;
 	left: 0;
 	font-size: 1.2rem;
-	opacity: 0;
-	visibility: hidden;
-	transition: opacity 200ms 400ms ease;
-}
 
-.blur .test-container::after {
 	visibility: visible;
 	opacity: 1;
+	transition: opacity 200ms 300ms ease;
 }
-.blur .test-container .testWindow {
+
+.test-container:focus::after {
+	opacity: 0;
+	visibility: hidden;
+}
+.test-container .testWindow {
 	transition: filter 200ms 300ms ease;
 	transition: opacity 200ms 300ms ease;
 	opacity: 0.5;
 	filter: blur(8px);
+}
+.test-container:focus .testWindow {
+	opacity: 1;
+	filter: none;
 }
 @keyframes appear {
 	0% {

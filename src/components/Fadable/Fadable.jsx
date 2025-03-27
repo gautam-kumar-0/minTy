@@ -1,7 +1,9 @@
 import React from "react";
 import "./Fadable.css";
+import {useSelector} from "react-redux";
 const Fadable = ({className, children, ...restProps}) => {
-	const focus = false ? "focus" : " ";
+	const isTyping = useSelector((state) => state.test.isTyping);
+	const focus = isTyping ? "focus" : " ";
 	return (
 		<div className={`${focus} ${className || ""} fadable`} {...restProps}>
 			{children}

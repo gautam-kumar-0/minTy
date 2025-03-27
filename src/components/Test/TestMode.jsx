@@ -4,10 +4,10 @@ import Fadable from "../Fadable/Fadable";
 import {BsWrench} from "react-icons/bs";
 import {BiFile} from "react-icons/bi";
 import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
-import {setType, setValue} from "./modeSlice"; // Import actions
+import {setMode} from "./testSlice";
 
 const ModeValue = ({value, handleSelect}) => {
-	const mode = useSelector((state) => state.mode); // Select the mode state
+	const mode = useSelector((state) => state.test.mode); // Select the mode state
 	return (
 		<div
 			className={`mode-value ${parseInt(mode.value) == value ? "active" : ""}`}
@@ -25,7 +25,7 @@ const ModeValue = ({value, handleSelect}) => {
 const CustomValue = ({label, handleSelect}) => {
 	const [show, setShow] = useState(false);
 	const [value, setValue] = useState(null);
-	const mode = useSelector((state) => state.mode); // Select the mode state
+	const mode = useSelector((state) => state.test.mode); // Select the mode state
 	const input = useRef(null);
 	useEffect(() => {
 		let hidePop = (e) => {
@@ -225,13 +225,13 @@ const MODE = {
 
 const TestMode = ({}) => {
 	const dispatch = useDispatch(); // Use dispatch from Redux
-	const mode = useSelector((state) => state.mode); // Select the mode state
+	const mode = useSelector((state) => state.test.mode); // Select the mode state
 	const handleModeChange = (key) => {
-		dispatch(setType(key));
+		dispatch(setMode({type: key}));
 	};
 	const handleValueChange = (value) => {
 		console.log(value);
-		dispatch(setValue(value));
+		dispatch(setMode({value}));
 	};
 
 	return (

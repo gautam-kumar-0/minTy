@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {useRef, useEffect} from "react";
-import {printableCharacterPattern} from "../../utils/config.js";
 import Keyboard from "../Keyboard/Keyboard";
 import Text from "../Text/Text";
 import "./Test.css";
@@ -11,69 +10,41 @@ import TestMode from "./TestMode.jsx";
 
 import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 
-import {start, reset, character, space, backspace} from "./testSlice.js";
+import {start, reset, character, space, backspace} from "../Text/textSlice.js";
 import {generateRandomText} from "../../utils/functions.js";
+import {setTyping} from "./testSlice.js";
 
 const Test = ({}) => {
 	const dispatch = useDispatch(); // Use dispatch from Redux
-	const state = useSelector((state) => state.test); // Select the test state
-	const mode = useSelector((state) => state.mode); // Select the mode state
+	const testState = useSelector((state) => state.test); // Select the test state
+	const textState = useSelector((state) => state.text); // Select the mode state
 	const [text, setText] = useState("");
-	const [focus, setFocus] = useState(true);
+
 	const [error, setError] = useState(null);
 	const containerRef = useRef(null);
 
 	const startTest = async () => {
-		console.log("setText(): ", mode);
+		console.log("setText(): ", testState.mode);
 		let text = "";
-		if (mode.type == "words") {
-			text = generateRandomText(mode.value);
-		} else if (mode.type == "time") {
+		if (testState.mode.type == "words") {
+			text = generateRandomText(testState.mode.value);
+		} else if (testState.mode.type == "time") {
 			text = generateRandomText(20);
-		} else if (mode.type == "custom") {
+		} else if (testState.mode.type == "custom") {
 			text = generateRandomText();
 		}
 		setText(text);
 		dispatch(start(text));
-		setFocus(true);
+		focus.current = true;
 	};
 
 	const resetTest = (e) => {
 		dispatch(reset());
 	};
 
-	const updateFocus = (e) => {
-		const activeElement = document.activeElement;
-
-		// Debugging: Log the currently focused element
-		console.log("Active Element:", activeElement);
-
-		// Check if the currently focused element is an input, textarea, or other focusable element
-		const isFocusableElement =
-			activeElement &&
-			(["INPUT", "TEXTAREA", "SELECT", "BUTTON"].includes(
-				activeElement.tagName
-			) ||
-				activeElement.isContentEditable);
-
-		if (isFocusableElement) {
-			console.log("Focus is on a focusable element. Skipping...");
-			setFocus(false);
-			return false;
-		} else {
-			console.log("Shifting focus to container...");
-			setFocus(true);
-
-			return true;
-		}
-	};
-
 	const handleKeyDown = (e) => {
 		console.log("HandleKeyDown", e.key);
-		let focus = updateFocus(e);
-
 		if (e.key === "Escape") {
-			setFocus(false);
 			return;
 		}
 		if (e.ctrlKey) {
@@ -87,41 +58,26 @@ const Test = ({}) => {
 				return;
 			}
 		}
-		console.log("ISPRESSABLE", !focus || state.status == "complete");
-		if (!focus || state.status == "complete") return;
-		e.preventDefault();
-		console.log("focus", focus);
-
-		if (e.key == "Backspace" || printableCharacterPattern.test(e.key)) {
-			handleKeyPress(e);
-		}
-	};
-
-	const handleKeyPress = (e) => {
-		console.log("HandleKeyPress", e);
-		if (e.key == "Backspace") {
-			if (e.ctrlKey) {
-				dispatch(backspace({ctrl: true, timeStamp: e.timeStamp}));
-			} else {
-				dispatch(backspace({timeStamp: e.timeStamp}));
-			}
-		} else if (e.key === " ") {
-			dispatch(space({timeStamp: e.timeStamp, mode: mode.type}));
-		} else {
-			dispatch(character({character: e.key, timeStamp: e.timeStamp}));
-		}
 	};
 
 	const handleClick = (e) => {
 		console.log(e);
-		if (containerRef.current && !containerRef.current.contains(e.target)) {
-			setFocus(false);
-		} else setFocus(true);
 	};
 
+	const handleMouseMove = () => {
+		let timeOut;
+		return (...args) => {
+			clearTimeout(timeOut);
+			timeOut = setTimeout(() => {
+				console.log("MouseMoves");
+				dispatch(setTyping(false));
+			}, 300);
+		};
+	};
 	useEffect(() => {
 		startTest();
 
+		window.addEventListener("mousemove", handleMouseMove());
 		window.addEventListener("click", handleClick, {capture: true});
 		window.addEventListener("keydown", handleKeyDown); // Attach the event listener
 		return () => {
@@ -130,33 +86,27 @@ const Test = ({}) => {
 		};
 	}, []);
 
-	// Focus Every time new test is loaded
-	useEffect(() => {
-		setFocus(true);
-		console.log("STATE CHANGED", focus);
-	}, [state]);
-
 	// Start new test
 	useEffect(() => {
 		startTest();
-	}, [mode]);
+	}, [testState.mode]);
 
 	let display = null;
 	if (!text) {
 		display = null;
-	} else if (state.status == "notready") {
+	} else if (textState.status == "notready") {
 		display = <span>Loading...</span>;
-	} else if (state.status == "complete") {
+	} else if (textState.status == "complete") {
 		display = <TestResult startTest={startTest} resetTest={resetTest} />;
 	} else {
 		display = (
 			<>
 				<div className="stats-box">
-					{state.status == "uncomplete" ? <LiveStats /> : ""}
+					{textState.status == "uncomplete" ? <LiveStats /> : ""}
 				</div>
 
 				<Text
-					setFocus={setFocus}
+					focus={focus}
 					details={error ? error.message : "Click or press any key to start"}
 				/>
 				<div className="actions">
