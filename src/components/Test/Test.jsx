@@ -122,9 +122,12 @@ const Test = ({}) => {
 	useEffect(() => {
 		startTest();
 
-		window.addEventListener("click", handleClick);
+		window.addEventListener("click", handleClick, {capture: true});
 		window.addEventListener("keydown", handleKeyDown); // Attach the event listener
-		return () => window.removeEventListener("keydown", handleKeyDown); // Cleanup the event listener
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown); // Cleanup the event listener
+			window.removeEventListener("click", handleClick, {capture: true});
+		};
 	}, []);
 
 	// Focus Every time new test is loaded

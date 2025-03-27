@@ -14,7 +14,7 @@ const ModeValue = ({value, handleSelect}) => {
 			onClick={(e) => {
 				handleSelect(value);
 
-				e.stopPropagation();
+				// e.stopPropagation();
 			}}
 		>
 			<span>{value}</span>
