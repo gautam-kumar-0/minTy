@@ -15,7 +15,6 @@ import {clearQuote, setTyping, useQuote} from "./testSlice.js";
 import {useGetQuotesQuery} from "../../services/quotes.js";
 import {TiWarning} from "react-icons/ti";
 import NoticeBox from "../NoticeBox/NoticeBox.jsx";
-import {AiOutlineLoading} from "react-icons/ai";
 
 const Test = ({}) => {
 	const dispatch = useDispatch(); // Use dispatch from Redux
@@ -79,17 +78,17 @@ const Test = ({}) => {
 		}
 	};
 
-	const debounceMouseMove = () => {
-		let timeOut;
+	const throttleMouseMove = () => {
+		let isExecuted = false;
 		return (...args) => {
-			clearTimeout(timeOut);
-			timeOut = setTimeout(() => {
-				console.log("MouseMoves");
-				dispatch(setTyping(false));
-			}, 300);
+			if (isExecuted) return;
+			console.log("MouseMove Throttle");
+			if (testState.isTyping) dispatch(setTyping(false));
+			isExecuted = true;
+			setTimeout(() => (isExecuted = false), 2000);
 		};
 	};
-	const handleMouseMove = debounceMouseMove();
+	const handleMouseMove = throttleMouseMove();
 	useEffect(() => {
 		startTest();
 
@@ -130,11 +129,7 @@ const Test = ({}) => {
 					{textState.status == "uncomplete" ? <LiveStats /> : ""}
 				</div>
 
-				<Text
-					ref={textRef}
-					focus={focus}
-					details={"Click or press any key to start"}
-				/>
+				<Text ref={textRef} />
 				<div className="actions">
 					<button
 						tabIndex={1}
