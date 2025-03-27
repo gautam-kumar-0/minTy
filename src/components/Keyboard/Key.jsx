@@ -10,6 +10,9 @@ const Key = ({keyName, isActive}) => {
 	useEffect(() => {
 		if (keyRef.current) {
 			if (isActive) {
+				console.dir(keyRef.current);
+				// the reason for using harcoding style instead of class is to
+				// get control of transition duration to create the effect
 				keyRef.current.style.backgroundColor = `rgba(85,250,173,0.7)`;
 				keyRef.current.style.boxShadow = `0 0 1rem rgba(85,250,173,0.4)`;
 				keyRef.current.style.transitionDuration = `0s`;

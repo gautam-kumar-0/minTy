@@ -2,22 +2,64 @@
 	display: flex;
 	flex-direction: column;
 	align-items: start;
-	justify-content: center;
+	/* justify-content: center; */
 	font-size: 1.8rem; /*should be controlled by settings*/
 	height: 4.8lh; /*each line is 1.2 * 4 = 4.8*/
+	position: relative;
 }
+
 .testWindow {
 	overflow: hidden;
 	position: relative;
-	transition: opacity 300ms ease;
+	transition: opacity 3000ms ease;
 	opacity: 0;
+	padding: 1rem;
 }
-.testWindow.in {
+.appear {
+	animation: appear 300ms ease forwards;
+}
+
+.test-container .overlay {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	gap: 1ch;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	background: transparent;
+	top: 0;
+	left: 0;
+	font-size: 1.2rem;
+	visibility: visible;
 	opacity: 1;
+	transition: opacity 200ms 300ms ease;
 }
-.testWindow.out {
+
+.test-container:focus .overlay {
 	opacity: 0;
+	visibility: hidden;
 }
+.test-container .testWindow {
+	opacity: 0.5;
+	filter: blur(8px);
+}
+.test-container:focus .testWindow {
+	opacity: 1;
+	filter: none;
+}
+.test-container:focus {
+	outline: none;
+}
+@keyframes appear {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
 .testText {
 	display: flex;
 	flex-wrap: wrap;
@@ -28,13 +70,29 @@
 }
 
 .cursor {
-	background-color: #2dff57;
+	color: #2dff57;
+	background-color: currentColor;
 	position: absolute;
 	height: 1.1lh;
 	width: 3px;
 
 	transition: transform 150ms ease-out;
 }
+.blink {
+	animation: 1s linear 3s infinite alternate blink;
+}
+@keyframes blink {
+	0% {
+		background-color: #2dff57;
+	}
+	50% {
+		background-color: transparent;
+	}
+	100% {
+		background-color: #2dff57;
+	}
+}
+
 .word {
 	display: flex;
 	flex-direction: column;
@@ -63,3 +121,7 @@
 .current {
 	color: rgba(182, 182, 182, 0.479);
 }
+
+/* AI */
+
+/* gradient-glass-border.css */

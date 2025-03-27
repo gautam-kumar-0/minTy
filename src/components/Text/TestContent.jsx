@@ -1,10 +1,4 @@
-import React, {
-	useRef,
-	useLayoutEffect,
-	useContext,
-	useEffect,
-	memo,
-} from "react";
+import React, {useRef, useLayoutEffect, memo} from "react";
 import Word from "./Word";
 
 const TestContent = memo(({state}, ref) => {
@@ -24,6 +18,7 @@ const TestContent = memo(({state}, ref) => {
 		);
 	};
 	useLayoutEffect(() => {
+		cursor.current.classList.remove("blink");
 		const next = document.querySelector(".current");
 		if (!next) {
 			return;
@@ -40,6 +35,8 @@ const TestContent = memo(({state}, ref) => {
 		const cursorX = next.offsetLeft;
 		const cursorY = next.offsetTop;
 		cursor.current.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+		// resets the blink animation state
+		cursor.current.classList.add("blink");
 	}, [state]);
 
 	return (

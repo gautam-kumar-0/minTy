@@ -1,7 +1,8 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {TestContext, TestDispatchContext} from "../context/TestContextProvider";
 import TestProgress from "./TestProgress";
 import {debounce} from "lodash";
+import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
+import {completed} from "../Text/textSlice";
 
 const calculateAccuracy = (state) => {
 	let errors = 0;
@@ -25,13 +26,14 @@ const calculateAvgWPM = (state) => {
 };
 
 const LiveStats = () => {
-	const context = useContext(TestContext);
-	const dispatch = useContext(TestDispatchContext);
+	const dispatch = useDispatch(); // Use dispatch from Redux
+	const context = useSelector((state) => state.text); // Select the text state
+	const mode = useSelector((state) => state.test.mode); // Select the mode state
 	const [liveWPM, setLiveWPM] = useState(0);
 	const [avgWPM, setAvgWPM] = useState(0);
 	const [accuracy, setAccuracy] = useState(0);
 	const [timeLeft, setTimeLeft] = useState(
-		context.mode.type === "time" ? context.mode.value : null
+		mode.type === "time" ? parseInt(mode.value) : null
 	);
 	const stateRef = useRef(context);
 	const liveRef = useRef(null);
@@ -57,14 +59,14 @@ const LiveStats = () => {
 		const liveUpdateInterval = setInterval(() => {
 			updateStats();
 
-			if (context.mode.type === "time") {
-				setTimeLeft((prev) => {
-					if (prev === 0) {
-						dispatch({type: "TIMEUP"});
-						return 0;
-					}
-					return prev - 1;
-				});
+			if (mode.type === "time") {
+				if (mode.value != Infinity)
+					setTimeLeft((prev) => {
+						if (prev === 0) {
+							dispatch(completed());
+						}
+						return prev ? prev - 1 : prev;
+					});
 			}
 		}, 1000);
 
@@ -72,12 +74,12 @@ const LiveStats = () => {
 			clearInterval(liveUpdateInterval);
 			updateStats.cancel();
 		};
-	}, [context.mode.type, dispatch]);
+	}, [mode]);
 
 	return (
 		<div className="live-stats" ref={liveRef}>
 			<TestProgress
-				isTimed={context.mode.type === "time"}
+				isTimed={mode.type === "time"}
 				timeLeft={timeLeft}
 				index={context.index}
 				length={context.words.length}

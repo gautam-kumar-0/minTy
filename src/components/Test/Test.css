@@ -12,11 +12,8 @@
 	-webkit-user-select: none;
 	user-select: none;
 	padding: 1rem 3rem;
+	position: relative;
 	/* border: 1px solid red; */
-}
-
-.main:focus {
-	outline: none;
 }
 
 .keyboard-wrapper {
@@ -143,4 +140,32 @@
 
 .action-button:active {
 	outline: none;
+}
+
+.error div,
+.loading div {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+.error .small,
+.loading .small {
+	font-size: 0.8rem;
+}
+.spin {
+	border: 3px solid rgba(0, 0, 0, 0.1); /* Light grey border */
+	border-top: 3px solid currentColor; /* Blue border on top */
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }

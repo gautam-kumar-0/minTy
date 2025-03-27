@@ -1,179 +1,140 @@
 import React, {useState} from "react";
 import {useRef, useEffect} from "react";
-import {printableCharacterPattern} from "../../utils/config.js";
-import useTestContext from "../../hooks/useTestContext.js";
 import Keyboard from "../Keyboard/Keyboard";
 import Text from "../Text/Text";
 import "./Test.css";
 import TestResult from "./TestResult.jsx";
 import LiveStats from "./LiveStats.jsx";
 import {RiRestartLine} from "react-icons/ri";
-import TestMode from "./TestMode.jsx";
-import {wordList} from "../../utils/config.js";
 
-const generateRandomText = (words) => {
-	console.log("generateRandomText(): ", words);
-	let arr = Array(words)
-		.fill(null)
-		.map(() => wordList[Math.floor(Math.random() * 1000)]);
-	console.log(arr);
-	return arr.join(" ");
-};
+import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 
-const FetchQuotes = async () => {
-	const response = await fetch("http://localhost:3000/quotes");
-	if (!response.ok) {
-		throw new Error("Error while fetching quote", response.status);
-	}
-	return await response.json();
-};
-
-const MODE = {
-	time: [5, 60, 120, "custom"],
-	words: [10, 25, 50, 100, "custom"],
-	quote: ["short", "medium", "long"],
-	custom: ["change"],
-};
+import {start, reset} from "../Text/textSlice.js";
+import {generateRandomText} from "../../utils/functions.js";
+import {clearQuote, setTyping, useQuote} from "./testSlice.js";
+import {useGetQuotesQuery} from "../../services/quotes.js";
+import {TiWarning} from "react-icons/ti";
+import NoticeBox from "../NoticeBox/NoticeBox.jsx";
 
 const Test = ({}) => {
-	const [state, dispatch] = useTestContext();
+	const dispatch = useDispatch(); // Use dispatch from Redux
+	const testState = useSelector((state) => state.test); // Select the test state
+	const textState = useSelector((state) => state.text); // Select the mode state
 
-	const [error, setError] = useState(null);
+	const {isLoading, refetch: refetchQuote} = useGetQuotesQuery(
+		testState.mode.type == "quote" ? testState.mode.value : "quotes"
+	);
+
+	const [text, setText] = useState("");
 	const containerRef = useRef(null);
+	const textRef = useRef(null);
+
+	const previousQuoteValue = useRef(testState.mode.value);
+
+	const startTest = async () => {
+		console.log("setText(): ", testState.mode);
+		let text = "";
+		if (testState.mode.type == "words") {
+			text = generateRandomText(testState.mode.value);
+		} else if (testState.mode.type == "time") {
+			text = generateRandomText(50);
+		} else if (testState.mode.type == "custom") {
+			text = generateRandomText();
+		} else if (testState.mode.type == "quote") {
+			if (testState.quotes.length) {
+				text = testState.quotes[testState.quotes.length - 1].text;
+				dispatch(useQuote());
+			} else {
+				refetchQuote(testState.mode.value);
+			}
+		}
+		setText(text);
+		dispatch(start(text));
+	};
+
+	const resetTest = (e) => {
+		dispatch(reset());
+	};
 
 	const handleKeyDown = (e) => {
-		e.preventDefault();
+		console.log("HandleKeyDown", e.key);
 		if (e.key === "Escape") {
-			containerRef.current.blur();
 			return;
 		}
 		if (e.ctrlKey) {
-			if (e.key == "r") {
+			if (e.key == "Enter") {
 				console.log("Restart the test");
+				startTest();
 				return;
 			} else if (e.key == "c") {
 				console.log("Reset the test");
+				resetTest();
 				return;
 			}
 		}
-		if (e.key == "Backspace" || printableCharacterPattern.test(e.key)) {
-			handleKeyPress(e);
+		// if you want to take input in any another element then set it onKeydown stopPropagation
+		if (textRef.current && textRef.current != document.activeElement) {
+			textRef.current.focus();
 		}
 	};
 
-	const handleKeyPress = (e) => {
-		// console.log("HandleKeyPress", e);
-		if (state.status == "complete") return;
-		if (!state.focus) dispatch({type: "FOCUS", payload: true});
-		if (e.key == "Backspace") {
-			if (e.ctrlKey) {
-				dispatch({type: "CTRLBACKSPACE"});
-			} else {
-				dispatch({type: "BACKSPACE"});
-			}
-		} else if (e.key === " ") {
-			dispatch({type: "SPACE", payload: {timeStamp: e.timeStamp}});
-		} else {
-			dispatch({
-				type: "CHARACTER",
-				payload: {character: e.key, timeStamp: e.timeStamp},
-			});
-		}
-	};
-	const setText = async (mode) => {
-		console.log("setText(): ", mode);
-		let text = "";
-		if (mode.type == "words") {
-			text = generateRandomText(mode.value);
-		} else if (mode.type == "time") {
-			text = generateRandomText(2);
-		} else if (mode.type == "quote") {
-			console.log("STATE.QUOTES", state.quotes);
-			if (state.quotes.length) {
-				text = state.quotes[0].text;
-				dispatch({type: "QUOTES/USE"});
-			} else {
-				try {
-					let quotes = await FetchQuotes();
-					dispatch({type: "QUOTES/STORE", payload: quotes});
-					text = quotes[0].text;
-				} catch (e) {
-					console.log(e);
-					setError(e.message);
-				}
-			}
-		} else if (mode.type == "custom") {
-			text = generateRandomText();
-		}
-		console.log(text);
-		dispatch({type: "NEW", payload: text});
-	};
-	useEffect(() => {
-		console.log("Loaded");
-		setText(state.mode);
-		setError(null);
-	}, [state.mode]);
-
-	useEffect(() => {
-		containerRef.current.focus(); // Ensure the container is focused on mount
-		setText(state.mode);
-
-		const checkFocus = (e) => {
-			const activeElement = document.activeElement;
-
-			// Debugging: Log the currently focused element
-			console.log("Active Element:", activeElement);
-
-			// Check if the currently focused element is an input, textarea, or other focusable element
-			if (
-				activeElement &&
-				(["INPUT", "TEXTAREA", "SELECT", "BUTTON"].includes(
-					activeElement.tagName
-				) ||
-					activeElement.isContentEditable)
-			) {
-				console.log("Focus is on a focusable element. Skipping...");
-				return;
-			}
-
-			// Shift focus to the container if no other focusable element is active
-			if (activeElement !== containerRef.current) {
-				console.log("Shifting focus to container...");
-				containerRef.current.focus();
-			}
+	const throttleMouseMove = () => {
+		let isExecuted = false;
+		return (...args) => {
+			if (isExecuted) return;
+			console.log("MouseMove Throttle");
+			if (testState.isTyping) dispatch(setTyping(false));
+			isExecuted = true;
+			setTimeout(() => (isExecuted = false), 2000);
 		};
+	};
+	const handleMouseMove = throttleMouseMove();
+	useEffect(() => {
+		startTest();
 
-		window.addEventListener("keydown", checkFocus); // Attach the event listener
+		window.addEventListener("mousemove", handleMouseMove);
+		window.addEventListener("keydown", handleKeyDown); // Attach the event listener
 		return () => {
-			window.removeEventListener("keydown", checkFocus); // Cleanup the event listener
+			window.removeEventListener("keydown", handleKeyDown); // Cleanup the event listener
+			window.removeEventListener("mousemove", handleMouseMove);
 		};
 	}, []);
 
+	// Start new test
 	useEffect(() => {
-		if (state.status == "ready") {
-			containerRef.current.focus();
+		if (testState.mode.type == "quote") {
+			if (previousQuoteValue.current !== testState.mode.value) {
+				refetchQuote(testState.mode.value);
+			} else {
+				previousQuoteValue.current = testState.mode.value;
+			}
 		}
-	}, [state.status]);
+		startTest();
+	}, [testState.mode]);
 
+	useEffect(() => {
+		if (testState.quotes.length) startTest();
+	}, [testState.quotes]);
 	let display = null;
-
-	if (!state.text) display = null;
-	else if (state.status == "notready") {
+	if (!text) {
+		display = null;
+	} else if (textState.status == "notready") {
 		display = <span>Loading...</span>;
-	} else if (state.status == "complete") {
-		display = <TestResult dispatch={dispatch} />;
+	} else if (textState.status == "complete") {
+		display = <TestResult startTest={startTest} resetTest={resetTest} />;
 	} else {
 		display = (
 			<>
 				<div className="stats-box">
-					{state.status == "uncomplete" ? <LiveStats /> : ""}
+					{textState.status == "uncomplete" ? <LiveStats /> : ""}
 				</div>
 
-				<Text />
+				<Text ref={textRef} />
 				<div className="actions">
 					<button
+						tabIndex={1}
 						className="action-button"
-						onClick={() => setText(state.mode)}
+						onClick={() => resetTest()}
 						data-action="Restart"
 					>
 						<RiRestartLine />
@@ -186,33 +147,25 @@ const Test = ({}) => {
 		);
 	}
 	return (
-		<div
-			className="main"
-			ref={containerRef}
-			tabIndex={0}
-			onKeyDown={handleKeyDown}
-			onMouseMove={() => dispatch({type: "FOCUS", payload: false})}
-			onFocus={() => {
-				let testContainer =
-					containerRef.current.querySelector(".test-container");
-				if (testContainer) {
-					testContainer.style.filter = "blur(0px)";
-				}
-			}}
-			onBlur={() => {
-				let testContainer =
-					containerRef.current.querySelector(".test-container");
-				if (testContainer) {
-					testContainer.style.filter = "blur(3px)";
-				}
-			}}
-		>
-			<TestMode mode={state.mode} dispatch={dispatch} />
-			{error && (
-				<div className="error">
-					<span>{error}</span> <button>Refresh</button>
-				</div>
+		<div className={`main ${focus ? "focus" : "blur"}`} ref={containerRef}>
+			{testState.error && testState.mode.type == "quote" && (
+				<NoticeBox className="error" onClick={refetchQuote} color={"red"}>
+					<div>
+						<TiWarning />
+						<span>{testState.error}</span>
+					</div>
+					<span className="small">Click to reload</span>
+				</NoticeBox>
 			)}
+			{testState.isLoading && testState.mode.type == "quote" && (
+				<NoticeBox className="loading" color={"#0ff1ce"}>
+					<div>
+						<div className="spin"></div>
+						<span>Loading Quotes</span>
+					</div>
+				</NoticeBox>
+			)}
+
 			{display}
 		</div>
 	);

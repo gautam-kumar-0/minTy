@@ -1,9 +1,9 @@
 import React from "react";
-import useTestContext from "../../hooks/useTestContext";
 import "./Fadable.css";
+import {useSelector} from "react-redux";
 const Fadable = ({className, children, ...restProps}) => {
-	const [state] = useTestContext();
-	const focus = state.focus ? "focus" : " ";
+	const isTyping = useSelector((state) => state.test.isTyping);
+	const focus = isTyping ? "focus" : " ";
 	return (
 		<div className={`${focus} ${className || ""} fadable`} {...restProps}>
 			{children}

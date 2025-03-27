@@ -4,10 +4,7 @@
 	justify-content: center;
 	transition: opacity 300ms ease;
 }
-.mode-container.invisible {
-	opacity: 0;
-	pointer-events: none;
-}
+
 .mode-ribbon {
 	display: flex;
 	justify-content: center;
