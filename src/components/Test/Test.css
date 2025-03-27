@@ -140,3 +140,29 @@
 .action-button:active {
 	outline: none;
 }
+.error {
+	padding: 1rem 3rem;
+	border: 2px solid rgba(244, 137, 137, 0.493);
+	background-color: rgba(255, 121, 121, 0.169);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1ch;
+	flex-direction: column;
+	width: fit-content;
+	align-self: center;
+	color: rgb(255, 224, 224);
+	border-radius: 10px;
+}
+.error:hover {
+	background-color: rgba(142, 38, 38, 0.169);
+}
+
+.error div {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+.error .small {
+	font-size: 0.8rem;
+}

@@ -11,26 +11,18 @@ import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 
 import {start, reset} from "../Text/textSlice.js";
 import {generateRandomText} from "../../utils/functions.js";
-import {setTyping} from "./testSlice.js";
-import {useGetQuoteQuery} from "../../services/quotes.js";
+import {setTyping, useQuote} from "./testSlice.js";
+import {useGetQuotesQuery} from "../../services/quotes.js";
+import {TiWarning} from "react-icons/ti";
 
 const Test = ({}) => {
 	const dispatch = useDispatch(); // Use dispatch from Redux
 	const testState = useSelector((state) => state.test); // Select the test state
 	const textState = useSelector((state) => state.text); // Select the mode state
 
-	const {
-		data: quoteData,
-		error: quoteError,
-		isLoading: isQuoteLoading,
-		refetch: refetchQuote,
-	} = useGetQuoteQuery({
-		skip: !(testState.mode.type === "quote" && testState.mode.fetchFromApi),
-	});
+	const {isLoading, refetch: refetchQuote} = useGetQuotesQuery({});
 
 	const [text, setText] = useState("");
-
-	const [error, setError] = useState(null);
 	const containerRef = useRef(null);
 	const textRef = useRef(null);
 
@@ -44,11 +36,13 @@ const Test = ({}) => {
 		} else if (testState.mode.type == "custom") {
 			text = generateRandomText();
 		} else if (testState.mode.type == "quote") {
-			text = quoteData ? quoteData[0].text : "";
+			if (testState.quotes.length) {
+				text = testState.quotes[testState.quotes.length - 1].text;
+				dispatch(useQuote());
+			}
 		}
 		setText(text);
 		dispatch(start(text));
-		focus.current = true;
 	};
 
 	const resetTest = (e) => {
@@ -72,7 +66,7 @@ const Test = ({}) => {
 			}
 		}
 		// if you want to take input in any another element then set it onKeydown stopPropagation
-		if (textRef.current != document.activeElement) {
+		if (textRef.current && textRef.current != document.activeElement) {
 			textRef.current.focus();
 		}
 	};
@@ -102,13 +96,15 @@ const Test = ({}) => {
 	// Start new test
 	useEffect(() => {
 		startTest();
-		setError("");
 	}, [testState.mode]);
 
 	useEffect(() => {
-		console.log("QuoteError", quoteError);
-		if (quoteError) setError(quoteError.status);
-	}, [quoteError]);
+		if (testState.mode.type === "quote") {
+			if (testState.quotes.length == 0 && !isLoading) {
+				refetchQuote();
+			}
+		}
+	}, [testState.quotes.length, isLoading]);
 
 	let display = null;
 	if (!text) {
@@ -127,7 +123,11 @@ const Test = ({}) => {
 				<Text
 					ref={textRef}
 					focus={focus}
-					details={error ? error : "Click or press any key to start"}
+					details={
+						testState.error
+							? testState.error
+							: "Click or press any key to start"
+					}
 				/>
 				<div className="actions">
 					<button
@@ -147,12 +147,13 @@ const Test = ({}) => {
 	}
 	return (
 		<div className={`main ${focus ? "focus" : "blur"}`} ref={containerRef}>
-			{error && (
-				<div className="error">
-					<span>{error}</span>{" "}
-					<button className="action-button" onClick={() => refetchQuote()}>
-						Reload
-					</button>
+			{testState.error && (
+				<div className="error" onClick={refetchQuote}>
+					<div>
+						<TiWarning />
+						<span>{testState.error}</span>
+					</div>
+					<span className="small">Click to reload</span>
 				</div>
 			)}
 
