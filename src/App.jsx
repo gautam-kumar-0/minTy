@@ -6,8 +6,8 @@ import {LuKeyboard} from "react-icons/lu";
 import Fadable from "./components/Fadable/Fadable";
 import TestMode from "./components/Test/TestMode";
 const Header = memo(() => (
-	<header>
-		<Fadable>
+	<Fadable>
+		<header>
 			<div className="logo">
 				<h1>TYPING</h1>
 				<LuKeyboard />
@@ -15,8 +15,8 @@ const Header = memo(() => (
 			<nav>
 				<RiSettings4Fill />
 			</nav>
-		</Fadable>
-	</header>
+		</header>
+	</Fadable>
 ));
 
 function App() {

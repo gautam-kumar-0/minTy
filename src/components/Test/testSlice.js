@@ -19,8 +19,11 @@ const testSlice = createSlice({
 		setTyping: (state, action) => {
 			state.isTyping = action.payload;
 		},
-		useQuote: (state, action) => {
+		useQuote: (state) => {
 			state.quotes.length = Math.max(state.quotes.length - 1, 0);
+		},
+		clearQuote: (state) => {
+			state.quotes = [];
 		},
 	},
 	extraReducers: (builder) => {
@@ -32,24 +35,18 @@ const testSlice = createSlice({
 				state.isLoading = false;
 			}
 		);
-		builder.addMatcher(
-			quotesApi.endpoints.getQuotes.matchPending,
-			(state, action) => {
-				state.error = null;
-				state.quotes = [];
-				state.isLoading = true;
-			}
-		);
-		builder.addMatcher(
-			quotesApi.endpoints.getQuotes.matchRejected,
-			(state, action) => {
-				state.error = "Failed to fetch  quotes.";
-				state.quotes = [];
-				state.isLoading = false;
-			}
-		);
+		builder.addMatcher(quotesApi.endpoints.getQuotes.matchPending, (state) => {
+			state.error = null;
+			state.quotes = [];
+			state.isLoading = true;
+		});
+		builder.addMatcher(quotesApi.endpoints.getQuotes.matchRejected, (state) => {
+			state.error = "Failed to fetch  quotes.";
+			state.quotes = [];
+			state.isLoading = false;
+		});
 	},
 });
 
-export const {setMode, setTyping, useQuote} = testSlice.actions;
+export const {setMode, setTyping, useQuote, clearQuote} = testSlice.actions;
 export default testSlice.reducer;

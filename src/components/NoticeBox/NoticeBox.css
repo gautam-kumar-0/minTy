@@ -1,0 +1,15 @@
+.notice-box {
+	padding: 1rem 3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1ch;
+	flex-direction: column;
+	width: fit-content;
+	align-self: center;
+	border-radius: 10px;
+	position: absolute;
+}
+.notice-box:hover {
+	filter: contrast(110%);
+}

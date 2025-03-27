@@ -11,9 +11,11 @@ import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 
 import {start, reset} from "../Text/textSlice.js";
 import {generateRandomText} from "../../utils/functions.js";
-import {setTyping, useQuote} from "./testSlice.js";
+import {clearQuote, setTyping, useQuote} from "./testSlice.js";
 import {useGetQuotesQuery} from "../../services/quotes.js";
 import {TiWarning} from "react-icons/ti";
+import NoticeBox from "../NoticeBox/NoticeBox.jsx";
+import {AiOutlineLoading} from "react-icons/ai";
 
 const Test = ({}) => {
 	const dispatch = useDispatch(); // Use dispatch from Redux
@@ -28,6 +30,8 @@ const Test = ({}) => {
 	const containerRef = useRef(null);
 	const textRef = useRef(null);
 
+	const previousQuoteValue = useRef(testState.mode.value);
+
 	const startTest = async () => {
 		console.log("setText(): ", testState.mode);
 		let text = "";
@@ -41,6 +45,8 @@ const Test = ({}) => {
 			if (testState.quotes.length) {
 				text = testState.quotes[testState.quotes.length - 1].text;
 				dispatch(useQuote());
+			} else {
+				refetchQuote(testState.mode.value);
 			}
 		}
 		setText(text);
@@ -97,17 +103,19 @@ const Test = ({}) => {
 
 	// Start new test
 	useEffect(() => {
+		if (testState.mode.type == "quote") {
+			if (previousQuoteValue.current !== testState.mode.value) {
+				refetchQuote(testState.mode.value);
+			} else {
+				previousQuoteValue.current = testState.mode.value;
+			}
+		}
 		startTest();
 	}, [testState.mode]);
 
 	useEffect(() => {
-		if (testState.mode.type === "quote") {
-			if (testState.quotes.length == 0 && !testState.isLoading) {
-				refetchQuote();
-			}
-		}
-	}, [testState.isLoading]);
-
+		if (testState.quotes.length) startTest();
+	}, [testState.quotes]);
 	let display = null;
 	if (!text) {
 		display = null;
@@ -125,11 +133,7 @@ const Test = ({}) => {
 				<Text
 					ref={textRef}
 					focus={focus}
-					details={
-						testState.error
-							? testState.error
-							: "Click or press any key to start"
-					}
+					details={"Click or press any key to start"}
 				/>
 				<div className="actions">
 					<button
@@ -150,13 +154,21 @@ const Test = ({}) => {
 	return (
 		<div className={`main ${focus ? "focus" : "blur"}`} ref={containerRef}>
 			{testState.error && testState.mode.type == "quote" && (
-				<div className="error" onClick={refetchQuote}>
+				<NoticeBox className="error" onClick={refetchQuote} color={"red"}>
 					<div>
 						<TiWarning />
 						<span>{testState.error}</span>
 					</div>
 					<span className="small">Click to reload</span>
-				</div>
+				</NoticeBox>
+			)}
+			{testState.isLoading && testState.mode.type == "quote" && (
+				<NoticeBox className="loading" color={"#0ff1ce"}>
+					<div>
+						<div className="spin"></div>
+						<span>Loading Quotes</span>
+					</div>
+				</NoticeBox>
 			)}
 
 			{display}
