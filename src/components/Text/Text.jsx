@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {printableCharacterPattern} from "../../utils/config.js";
 import {setTyping} from "../Test/testSlice.js";
 import {space, character, backspace} from "./textSlice.js";
+import {BsCursorFill} from "react-icons/bs";
 const Text = React.forwardRef(({details}, ref) => {
 	const textState = useSelector((state) => state.text);
 	const testState = useSelector((state) => state.test);
@@ -49,13 +50,16 @@ const Text = React.forwardRef(({details}, ref) => {
 	return (
 		<div
 			className="test-container "
-			data-details={details}
 			onKeyDown={handleKeyPress}
 			tabIndex={0}
 			ref={ref}
 		>
 			<div className={`testWindow ${animation}`} ref={testWindow}>
 				{children}
+			</div>
+			<div className="overlay">
+				<BsCursorFill />
+				<span>Click here or press any key to focus</span>
 			</div>
 		</div>
 	);
