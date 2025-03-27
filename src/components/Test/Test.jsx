@@ -12,11 +12,22 @@ import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 import {start, reset} from "../Text/textSlice.js";
 import {generateRandomText} from "../../utils/functions.js";
 import {setTyping} from "./testSlice.js";
+import {useGetQuoteQuery} from "../../services/quotes.js";
 
 const Test = ({}) => {
 	const dispatch = useDispatch(); // Use dispatch from Redux
 	const testState = useSelector((state) => state.test); // Select the test state
 	const textState = useSelector((state) => state.text); // Select the mode state
+
+	const {
+		data: quoteData,
+		error: quoteError,
+		isLoading: isQuoteLoading,
+		refetch: refetchQuote,
+	} = useGetQuoteQuery({
+		skip: !(testState.mode.type === "quote" && testState.mode.fetchFromApi),
+	});
+
 	const [text, setText] = useState("");
 
 	const [error, setError] = useState(null);
@@ -32,6 +43,8 @@ const Test = ({}) => {
 			text = generateRandomText(20);
 		} else if (testState.mode.type == "custom") {
 			text = generateRandomText();
+		} else if (testState.mode.type == "quote") {
+			text = quoteData ? quoteData[0].text : "";
 		}
 		setText(text);
 		dispatch(start(text));
@@ -89,7 +102,13 @@ const Test = ({}) => {
 	// Start new test
 	useEffect(() => {
 		startTest();
+		setError("");
 	}, [testState.mode]);
+
+	useEffect(() => {
+		console.log("QuoteError", quoteError);
+		if (quoteError) setError(quoteError.status);
+	}, [quoteError]);
 
 	let display = null;
 	if (!text) {
@@ -108,7 +127,7 @@ const Test = ({}) => {
 				<Text
 					ref={textRef}
 					focus={focus}
-					details={error ? error.message : "Click or press any key to start"}
+					details={error ? error : "Click or press any key to start"}
 				/>
 				<div className="actions">
 					<button
@@ -130,7 +149,10 @@ const Test = ({}) => {
 		<div className={`main ${focus ? "focus" : "blur"}`} ref={containerRef}>
 			{error && (
 				<div className="error">
-					<span>{error}</span> <button>Refresh</button>
+					<span>{error}</span>{" "}
+					<button className="action-button" onClick={() => refetchQuote()}>
+						Reload
+					</button>
 				</div>
 			)}
 

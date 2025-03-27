@@ -40,7 +40,7 @@ const Text = React.forwardRef(({details}, ref) => {
 			setTimeout(() => {
 				setChildren(<TestContent state={textState} />);
 				setAnimation("appear");
-				ref.current.focus();
+				ref.current?.focus();
 			}, 50);
 		} else if (textState.status == "uncomplete")
 			setChildren(<TestContent state={textState} />);

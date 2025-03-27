@@ -9,6 +9,7 @@ const testSlice = createSlice({
 		},
 		isTyping: false,
 		errors: null,
+		quotes: null,
 	},
 	reducers: {
 		setMode: (state, action) => {
