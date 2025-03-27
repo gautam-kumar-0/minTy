@@ -12,6 +12,7 @@
 	-webkit-user-select: none;
 	user-select: none;
 	padding: 1rem 3rem;
+	position: relative;
 	/* border: 1px solid red; */
 }
 
@@ -153,6 +154,7 @@
 	align-self: center;
 	color: rgb(255, 224, 224);
 	border-radius: 10px;
+	position: absolute;
 }
 .error:hover {
 	background-color: rgba(142, 38, 38, 0.169);

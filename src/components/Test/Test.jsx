@@ -20,7 +20,9 @@ const Test = ({}) => {
 	const testState = useSelector((state) => state.test); // Select the test state
 	const textState = useSelector((state) => state.text); // Select the mode state
 
-	const {isLoading, refetch: refetchQuote} = useGetQuotesQuery({});
+	const {isLoading, refetch: refetchQuote} = useGetQuotesQuery(
+		testState.mode.type == "quote" ? testState.mode.value : "quotes"
+	);
 
 	const [text, setText] = useState("");
 	const containerRef = useRef(null);
@@ -32,7 +34,7 @@ const Test = ({}) => {
 		if (testState.mode.type == "words") {
 			text = generateRandomText(testState.mode.value);
 		} else if (testState.mode.type == "time") {
-			text = generateRandomText(20);
+			text = generateRandomText(50);
 		} else if (testState.mode.type == "custom") {
 			text = generateRandomText();
 		} else if (testState.mode.type == "quote") {
@@ -55,7 +57,7 @@ const Test = ({}) => {
 			return;
 		}
 		if (e.ctrlKey) {
-			if (e.key == "r") {
+			if (e.key == "Enter") {
 				console.log("Restart the test");
 				startTest();
 				return;
@@ -100,11 +102,11 @@ const Test = ({}) => {
 
 	useEffect(() => {
 		if (testState.mode.type === "quote") {
-			if (testState.quotes.length == 0 && !isLoading) {
+			if (testState.quotes.length == 0 && !testState.isLoading) {
 				refetchQuote();
 			}
 		}
-	}, [testState.quotes.length, isLoading]);
+	}, [testState.isLoading]);
 
 	let display = null;
 	if (!text) {
@@ -147,7 +149,7 @@ const Test = ({}) => {
 	}
 	return (
 		<div className={`main ${focus ? "focus" : "blur"}`} ref={containerRef}>
-			{testState.error && (
+			{testState.error && testState.mode.type == "quote" && (
 				<div className="error" onClick={refetchQuote}>
 					<div>
 						<TiWarning />

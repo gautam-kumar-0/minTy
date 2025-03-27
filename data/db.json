@@ -50,5 +50,176 @@
 			"text": "Life is really simple, but we insist on making it complicated. Focus on what truly matters, let go of the unnecessary, and find joy in the present moment.",
 			"source": "Confucius"
 		}
+	],
+	"short": [
+		{
+			"id": 11,
+			"text": "Dream bigger than your fear.",
+			"source": "Unknown"
+		},
+		{
+			"id": 12,
+			"text": "The time is always right to do what is right.",
+			"source": "Martin Luther King Jr."
+		},
+		{
+			"id": 13,
+			"text": "Be the change that you wish to see in the world.",
+			"source": "Mahatma Gandhi"
+		},
+		{
+			"id": 14,
+			"text": "Believe you can and you're halfway there.",
+			"source": "Theodore Roosevelt"
+		},
+		{
+			"id": 15,
+			"text": "Do what you can, with what you have, where you are.",
+			"source": "Theodore Roosevelt"
+		},
+		{
+			"id": 16,
+			"text": "Every day may not be good, but there's good in every day.",
+			"source": "Unknown"
+		},
+		{
+			"id": 17,
+			"text": "Happiness is not by chance, but by choice.",
+			"source": "Jim Rohn"
+		},
+		{
+			"id": 18,
+			"text": "Keep your face always toward the sunshine.",
+			"source": "Walt Whitman"
+		},
+		{
+			"id": 19,
+			"text": "The only way to do great work is to love what you do.",
+			"source": "Steve Jobs"
+		},
+		{
+			"id": 20,
+			"text": "Strive for progress, not perfection.",
+			"source": "Unknown"
+		},
+		{
+			"id": 21,
+			"text": "The future belongs to those who believe.",
+			"source": "Eleanor Roosevelt"
+		}
+	],
+	"medium": [
+		{
+			"id": 22,
+			"text": "The best way to predict the future is to create it. Your actions today shape the world of tomorrow.",
+			"source": "Peter Drucker"
+		},
+		{
+			"id": 23,
+			"text": "It does not matter how slowly you go as long as you do not stop. Persistence is key to achieving your goals.",
+			"source": "Confucius"
+		},
+		{
+			"id": 24,
+			"text": "The mind is everything. What you think you become. Choose your thoughts wisely and shape your destiny.",
+			"source": "Buddha"
+		},
+		{
+			"id": 25,
+			"text": "Two roads diverged in a wood, and I—I took the one less traveled by, And that has made all the difference.",
+			"source": "Robert Frost"
+		},
+		{
+			"id": 26,
+			"text": "Challenges are what make life interesting and overcoming them is what makes life meaningful. Embrace the obstacles in your path.",
+			"source": "Joshua Marine"
+		},
+		{
+			"id": 27,
+			"text": "The only limit to our realization of tomorrow will be our doubts of today. Believe in yourself and your potential.",
+			"source": "Franklin D. Roosevelt"
+		},
+		{
+			"id": 28,
+			"text": "Don't watch the clock; do what it does. Keep going. Time waits for no one, so make the most of every moment.",
+			"source": "Sam Levenson"
+		},
+		{
+			"id": 29,
+			"text": "The greatest discovery of all time is that a person can change his future by merely changing his attitude. Your attitude determines your altitude.",
+			"source": "Oprah Winfrey"
+		},
+		{
+			"id": 30,
+			"text": "Our lives begin to end the day we become silent about things that matter. Speak up for what you believe in and make your voice heard.",
+			"source": "Martin Luther King Jr."
+		},
+		{
+			"id": 31,
+			"text": "The happiness of your life depends upon the quality of your thoughts. Guard your thoughts carefully and cultivate positivity.",
+			"source": "Marcus Aurelius"
+		},
+		{
+			"id": 32,
+			"text": "If you want to live a happy life, tie it to a goal, not to people or things. Find purpose in your actions.",
+			"source": "Albert Einstein"
+		}
+	],
+	"long": [
+		{
+			"id": 33,
+			"text": "It is not our abilities that show what we truly are. It is our choices. Remember that even in the face of adversity, you have the power to choose your path and define your character through your actions.",
+			"source": "Albus Dumbledore (J.K. Rowling)"
+		},
+		{
+			"id": 34,
+			"text": "The future rewards those who press on. I don't have time to feel sorry for myself. I don't have time to complain. I'm going to press on. When life knocks you down, try to land on your back. Because if you can look up, you can get up. Let your reason get you back up.",
+			"source": "Les Brown"
+		},
+		{
+			"id": 35,
+			"text": "You have power over your mind, not outside events. Realize this, and you will find strength. External things are not the problem. It's your assessment of them. Which you can erase right now. Focus on what you can control: your thoughts and actions.",
+			"source": "Marcus Aurelius"
+		},
+		{
+			"id": 36,
+			"text": "The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking. We must learn to see the world anew. Open your mind to new possibilities and challenge your existing beliefs to create a better reality.",
+			"source": "Albert Einstein"
+		},
+		{
+			"id": 37,
+			"text": "I've learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel. Treat everyone with kindness and empathy, as your impact on their emotions will last far longer than your words or deeds.",
+			"source": "Maya Angelou"
+		},
+		{
+			"id": 38,
+			"text": "The only person you are destined to become is the person you decide to be. Take ownership of your life, make conscious choices, and actively shape the individual you aspire to be. Your potential is limitless.",
+			"source": "Ralph Waldo Emerson"
+		},
+		{
+			"id": 39,
+			"text": "We may encounter many defeats but we must not be defeated. Remember that setbacks are temporary and resilience is key. Learn from your mistakes, adapt to challenges, and never lose sight of your ultimate goals.",
+			"source": "Maya Angelou"
+		},
+		{
+			"id": 40,
+			"text": "Don't be afraid to give up the good to go for the great. Sometimes, holding onto something comfortable prevents you from reaching your full potential. Embrace change and step outside your comfort zone to achieve extraordinary things.",
+			"source": "John D. Rockefeller"
+		},
+		{
+			"id": 41,
+			"text": "The best time to plant a tree was 20 years ago. The second best time is now. Don't procrastinate on your dreams and goals. Take action today, no matter how small, to start building the future you envision for yourself.",
+			"source": "Chinese Proverb"
+		},
+		{
+			"id": 42,
+			"text": "Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle. Tap into your inner strength, trust your instincts, and have the courage to pursue your passions relentlessly.",
+			"source": "Christian D. Larson"
+		},
+		{
+			"id": 43,
+			"text": "The greatest glory in living lies not in never failing, but in rising every time we fail. Failure is not the opposite of success; it's a part of it. Embrace your mistakes as learning opportunities and use them to fuel your growth and progress.",
+			"source": "Nelson Mandela"
+		}
 	]
 }

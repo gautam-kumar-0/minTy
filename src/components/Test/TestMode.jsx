@@ -10,7 +10,7 @@ const ModeValue = ({value, handleSelect}) => {
 	const mode = useSelector((state) => state.test.mode); // Select the mode state
 	return (
 		<div
-			className={`mode-value ${parseInt(mode.value) == value ? "active" : ""}`}
+			className={`mode-value ${mode.value == value ? "active" : ""}`}
 			onClick={(e) => {
 				handleSelect(value);
 			}}
@@ -226,11 +226,11 @@ const TestMode = ({}) => {
 	const dispatch = useDispatch(); // Use dispatch from Redux
 	const mode = useSelector((state) => state.test.mode); // Select the mode state
 	const handleModeChange = (key) => {
-		dispatch(setMode({type: key}));
+		dispatch(setMode({type: key, value: MODE[key][1].value}));
 	};
 	const handleValueChange = (value) => {
 		console.log(value);
-		dispatch(setMode({value}));
+		dispatch(setMode({value: value}));
 	};
 
 	return (

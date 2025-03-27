@@ -7,7 +7,7 @@ export const quotesApi = createApi({
 	baseQuery: fetchBaseQuery({baseUrl: "http://localhost:3000/"}),
 	endpoints: (builder) => ({
 		getQuotes: builder.query({
-			query: () => "quotes",
+			query: (quotes) => `${quotes || "quotes"}`,
 		}),
 	}),
 });

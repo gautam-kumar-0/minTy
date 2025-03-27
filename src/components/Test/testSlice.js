@@ -9,6 +9,7 @@ const testSlice = createSlice({
 		},
 		isTyping: false,
 		error: null,
+		isLoading: false,
 		quotes: [],
 	},
 	reducers: {
@@ -28,6 +29,7 @@ const testSlice = createSlice({
 			(state, action) => {
 				state.quotes = action.payload;
 				state.error = null;
+				state.isLoading = false;
 			}
 		);
 		builder.addMatcher(
@@ -35,6 +37,7 @@ const testSlice = createSlice({
 			(state, action) => {
 				state.error = null;
 				state.quotes = [];
+				state.isLoading = true;
 			}
 		);
 		builder.addMatcher(
@@ -42,6 +45,7 @@ const testSlice = createSlice({
 			(state, action) => {
 				state.error = "Failed to fetch  quotes.";
 				state.quotes = [];
+				state.isLoading = false;
 			}
 		);
 	},
