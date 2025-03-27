@@ -6,11 +6,10 @@ import "./Test.css";
 import TestResult from "./TestResult.jsx";
 import LiveStats from "./LiveStats.jsx";
 import {RiRestartLine} from "react-icons/ri";
-import TestMode from "./TestMode.jsx";
 
 import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 
-import {start, reset, character, space, backspace} from "../Text/textSlice.js";
+import {start, reset} from "../Text/textSlice.js";
 import {generateRandomText} from "../../utils/functions.js";
 import {setTyping} from "./testSlice.js";
 
@@ -22,6 +21,7 @@ const Test = ({}) => {
 
 	const [error, setError] = useState(null);
 	const containerRef = useRef(null);
+	const textRef = useRef(null);
 
 	const startTest = async () => {
 		console.log("setText(): ", testState.mode);
@@ -58,13 +58,13 @@ const Test = ({}) => {
 				return;
 			}
 		}
+		// if you want to take input in any another element then set it onKeydown stopPropagation
+		if (textRef.current != document.activeElement) {
+			textRef.current.focus();
+		}
 	};
 
-	const handleClick = (e) => {
-		console.log(e);
-	};
-
-	const handleMouseMove = () => {
+	const debounceMouseMove = () => {
 		let timeOut;
 		return (...args) => {
 			clearTimeout(timeOut);
@@ -74,15 +74,15 @@ const Test = ({}) => {
 			}, 300);
 		};
 	};
+	const handleMouseMove = debounceMouseMove();
 	useEffect(() => {
 		startTest();
 
-		window.addEventListener("mousemove", handleMouseMove());
-		window.addEventListener("click", handleClick, {capture: true});
+		window.addEventListener("mousemove", handleMouseMove);
 		window.addEventListener("keydown", handleKeyDown); // Attach the event listener
 		return () => {
 			window.removeEventListener("keydown", handleKeyDown); // Cleanup the event listener
-			window.removeEventListener("click", handleClick, {capture: true});
+			window.removeEventListener("mousemove", handleMouseMove);
 		};
 	}, []);
 
@@ -106,6 +106,7 @@ const Test = ({}) => {
 				</div>
 
 				<Text
+					ref={textRef}
 					focus={focus}
 					details={error ? error.message : "Click or press any key to start"}
 				/>

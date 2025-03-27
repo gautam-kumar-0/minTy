@@ -51,6 +51,9 @@
 	opacity: 1;
 	filter: none;
 }
+.test-container:focus {
+	outline: none;
+}
 @keyframes appear {
 	0% {
 		opacity: 0;
@@ -121,3 +124,7 @@
 .current {
 	color: rgba(182, 182, 182, 0.479);
 }
+
+/* AI */
+
+/* gradient-glass-border.css */

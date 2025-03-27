@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {printableCharacterPattern} from "../../utils/config.js";
 import {setTyping} from "../Test/testSlice.js";
 import {space, character, backspace} from "./textSlice.js";
-const Text = ({details}) => {
+const Text = React.forwardRef(({details}, ref) => {
 	const textState = useSelector((state) => state.text);
 	const testState = useSelector((state) => state.test);
 	const dispatch = useDispatch();
@@ -14,7 +14,6 @@ const Text = ({details}) => {
 
 	const [animation, setAnimation] = useState("");
 	const testWindow = useRef(null);
-	const containerRef = useRef(null);
 
 	// Handle Input
 	const handleKeyPress = (e) => {
@@ -41,7 +40,7 @@ const Text = ({details}) => {
 			setTimeout(() => {
 				setChildren(<TestContent state={textState} />);
 				setAnimation("appear");
-				containerRef.current.focus();
+				ref.current.focus();
 			}, 50);
 		} else if (textState.status == "uncomplete")
 			setChildren(<TestContent state={textState} />);
@@ -53,13 +52,13 @@ const Text = ({details}) => {
 			data-details={details}
 			onKeyDown={handleKeyPress}
 			tabIndex={0}
-			ref={containerRef}
+			ref={ref}
 		>
 			<div className={`testWindow ${animation}`} ref={testWindow}>
 				{children}
 			</div>
 		</div>
 	);
-};
+});
 
 export default Text;

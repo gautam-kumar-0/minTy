@@ -13,8 +13,6 @@ const ModeValue = ({value, handleSelect}) => {
 			className={`mode-value ${parseInt(mode.value) == value ? "active" : ""}`}
 			onClick={(e) => {
 				handleSelect(value);
-
-				// e.stopPropagation();
 			}}
 		>
 			<span>{value}</span>
@@ -68,6 +66,7 @@ const CustomValue = ({label, handleSelect}) => {
 							type="number"
 							id="custom"
 							value={value}
+							onKeyDown={(e) => e.stopPropagation()}
 							onChange={(e) => {
 								setValue(e.target.value);
 							}}
