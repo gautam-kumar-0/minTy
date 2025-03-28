@@ -13,14 +13,14 @@ import {
 
 const chartConfig = {
 	colors: {
-		primary: "#0ff1ce88",
-		grid: "#eeeeee17",
-		scatter: "tomato",
-		lineAverage: "springgreen",
-		lineRaw: "rgba(216, 234, 219, 0.35)",
-		areaFill: "rgba(13, 52, 35, 0.48)",
-		tooltipBackground: "rgba(0, 0, 0, 0.7)",
-		tooltipText: "#ffffff",
+		primary: "var(--tint-20)",
+		grid: "var(--tint-5)",
+		scatter: "var(--warn)",
+		lineAverage: "var(--primary-color)",
+		lineRaw: "var(--tint-10)",
+		areaFill: "var(--tint-5)",
+		tooltipBackground: "var(--primary-background)",
+		tooltipText: "var(--text-color-subtle)",
 	},
 	fontSize: 12,
 	strokeWidth: {
@@ -132,7 +132,7 @@ const TwoYAxisChart = ({result}) => {
 				/>
 				<Tooltip
 					cursor={{
-						stroke: "rgba(52, 255, 143, 0.36)",
+						stroke: "var(--primary-color-light)",
 						strokeWidth: 1,
 						strokeDasharray: "3 3",
 					}} // Custom cursor
@@ -151,14 +151,14 @@ const TwoYAxisChart = ({result}) => {
 					}}
 					formatter={(value, name) => [`${value}`, name]}
 				/>
-				{/* <Area
+				<Area
 					yAxisId="left"
 					type="monotone"
 					dataKey="raw"
 					stroke={chartConfig.colors.lineRaw}
 					fill={chartConfig.colors.areaFill}
 					{...animationConfig}
-				/> */}
+				/>
 				<Line
 					yAxisId="left"
 					type="monotone"

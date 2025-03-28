@@ -1,40 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Orbitron:wght@400..900&family=VT323&display=swap");
+
 :root {
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-family: "IBM Plex Mono", Inter, system-ui, Avenir, Helvetica, Arial,
+		sans-serif;
 	line-height: 1.5;
 	font-weight: 400;
-
-	color-scheme: light dark;
-	color: rgba(255, 255, 255, 0.87);
-	background-color: #242424;
+	font-size: 16px;
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-}
 
-a {
-	font-weight: 500;
-	color: #646cff;
-	text-decoration: inherit;
-}
-a:hover {
-	color: #535bf2;
+	/*transitions*/
+	--transition-slow: 600ms;
+	--transition-mid: 300ms;
+	--transition-fast: 150ms;
+
+	/* Color from theme
+	--primary-background: hsl(0, 0%, 3%);
+	--primary-foreground: hsl(0, 0%, 100%);
+	--primary-color: hsl(157, 100%, 40%);
+	--accent-color: hsl(200, 100%, 40%); */
+
+	/*Color from theme*/
+	/* --primary-background: hsl(0, 0%, 12%);
+	--primary-foreground: hsl(0, 0%, 96%);
+	--primary-color: hsl(190, 87%, 58%);
+	--accent-color: hsl(200, 66%, 59%);
+	*/
+	--warn: hsl(0, 91%, 55%);
+
+	/*Color from theme*/
+	--primary-background: hsl(0, 0%, 100%);
+	--primary-foreground: hsl(0, 0%, 0%);
+	--primary-color: hsl(213, 100%, 66%);
+
+	--base-white: 0, 0, 0;
+	--base-black: 255, 255, 255;
+
+	/*Derived Colors*/
+	--text-color: color-mix(
+		in srgb,
+		var(--primary-color) 10%,
+		var(--primary-foreground)
+	);
+	--text-color-subtle: color-mix(
+		in srgb,
+		var(--primary-color) 25%,
+		var(--primary-foreground)
+	);
+	--primary-color-dark: color-mix(
+		in srgb,
+		var(--primary-color) 30%,
+		var(--primary-background)
+	);
+	--primary-color-light: color-mix(
+		in srgb,
+		var(--primary-color) 30%,
+		var(--primary-foreground)
+	);
+	/* 
+	--base-white: 255, 255, 255;
+	--base-black: 0, 0, 0; */
+
+	--tint-5: rgba(var(--base-white), 0.05); /* Example: 5% opacity white */
+	--tint-10: rgba(var(--base-white), 0.1);
+	--tint-20: rgba(var(--base-white), 0.2);
+	--tint-30: rgba(var(--base-white), 0.3);
+	--tint-60: rgba(var(--base-white), 0.6);
+
+	--shade-5: rgba(var(--base-black), 0.05); /* Example: 5% opacity black */
+	--shade-10: rgba(var(--base-black), 0.1);
+	--shade-20: rgba(var(--base-black), 0.2);
+	--shade-30: rgba(var(--base-black), 0.3);
+	--shade-50: rgba(var(--base-black), 0.5);
+
+	color: var(--text-color);
 }
 
 button {
 	cursor: pointer;
-}
-
-@media (prefers-color-scheme: light) {
-	:root {
-		color: #213547;
-		background-color: #ffffff;
-	}
-	a:hover {
-		color: #747bff;
-	}
-	button {
-		background-color: #f9f9f9;
-	}
 }

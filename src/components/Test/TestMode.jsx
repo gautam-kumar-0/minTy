@@ -236,7 +236,6 @@ const TestMode = ({}) => {
 	return (
 		<Fadable className="mode-container">
 			<div className="mode-ribbon">
-				<div className="additional"></div>
 				<div className="mode-type">
 					{Object.keys(MODE).map((key, i) => (
 						<div

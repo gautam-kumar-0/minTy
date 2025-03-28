@@ -1,59 +1,59 @@
-@import url("https://fonts.googleapis.com/css2?family=Oxygen+Mono&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 .key {
-	background-color: rgba(100, 100, 100, 0.1);
-	box-shadow: 0 0 0 transparent;
-	color: rgba(255, 255, 255, 0.571);
-	border: 0.5px solid rgba(83, 83, 83, 0.5);
+	--key-bg-active: var(--primary-color);
+	--key-bg-inactive: var(--tint-5);
+	--key-border-active: 1px solid var(--primary-color);
+	--key-border-inactive: 1px solid transparent;
+	--key-shadow-active: 0 0 1rem var(--primary-color);
+	--key-shadow-inactive: 1px 1px 0.1rem hsla(0, 0%, 0%, 0.1),
+		-1px -1px 0.1rem hsla(0, 0%, 100%, 0.1);
+
+	/* background-color: var(--tint-30); Subtle white tint on background */
+	color: var(--primary-color-light); /* Slightly transparent white text */
+	/* Semi-transparent dark gray border */
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	aspect-ratio: 1/1;
-	width: clamp(2em, 4vw, 3em);
-	border-radius: 0.8em;
-	font-family: "Oxygen Mono", monospace;
-	transition: background-color cubic-bezier(0.25, 0.1, 0.25, 1);
+	min-width: 2lh;
+	min-height: 2lh;
+	padding: 1ch 2ch;
+	border-radius: 0.8em; /* Slightly smaller border-radius for a more modern feel */
+	transition: background-color var(--transition-fast) ease-in-out; /* Smoother, more standard transition */
 }
 
 .keyboard {
-	border-radius: 0.5em;
-	width: clamp(600px, 70vw, 750px);
-	-webkit-backdrop-filter: blur(10px);
-	backdrop-filter: blur(10px);
-	border: rgba(100, 100, 100, 0.2) 2px solid;
-	background-color: transparent;
-	padding: 1.5rem 1rem 1rem 1rem;
+	border-radius: 1rem; /* Slightly smaller border-radius */
+	border: 1px solid var(--tint-5); /* Lighter, thinner border */
+	background-color: var(--shade-5); /* Very subtle dark background */
+	padding: 1.2rem 0.8rem 0.8rem 0.8rem; /* Adjusted padding */
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
 	justify-content: space-around;
-	gap: 0.75rem;
-	scale: 80%;
+	gap: 1.5ch; /* Slightly smaller gap */
+	box-shadow: 0 4px 12px rgba(var(--base-black), 0.1); /* Subtle shadow for depth */
 }
 
 .keyboard.shifted {
 	text-transform: uppercase;
 }
+
 .row {
-	display: flex;
+	display: grid;
 	align-items: center;
-	justify-content: space-evenly;
+	justify-content: center;
+	gap: 1.5ch;
+	grid-auto-flow: column;
 }
-
+.row-1 {
+}
 .row-2 {
-	margin-inline: 1.2vw;
-}
-.row-3 {
-	margin-inline: 3vw;
 }
 
+.row-3 {
+}
 .row-4 {
-	margin-inline: 4vw;
+	grid-template-columns: auto 0.4fr auto;
 }
 .row-4 > * {
-	height: 2.5rem;
-	width: auto;
-	aspect-ratio: 5/1;
-	letter-spacing: 3px;
-	color: rgba(255, 255, 255, 0.3);
-	text-transform: lowercase;
+	min-height: 1.8lh;
 }

@@ -13,13 +13,13 @@ const Key = ({keyName, isActive}) => {
 				console.dir(keyRef.current);
 				// the reason for using harcoding style instead of class is to
 				// get control of transition duration to create the effect
-				keyRef.current.style.backgroundColor = `rgba(85,250,173,0.7)`;
-				keyRef.current.style.boxShadow = `0 0 1rem rgba(85,250,173,0.4)`;
+				keyRef.current.style.backgroundColor = `var(--key-bg-active)`;
+				keyRef.current.style.boxShadow = `var(--key-shadow-active)`;
 				keyRef.current.style.transitionDuration = `0s`;
 			} else {
-				keyRef.current.style.backgroundColor = `rgba(100,100,100,0.1)`;
-				keyRef.current.style.boxShadow = `0 0 0 transparent`;
-				keyRef.current.style.transitionDuration = `300ms`;
+				keyRef.current.style.backgroundColor = `var(--key-bg-inactive)`;
+				keyRef.current.style.boxShadow = `var(--key-shadow-inactive)`;
+				keyRef.current.style.transitionDuration = `var(--transition-fast)`;
 			}
 		}
 	}, [isActive]);

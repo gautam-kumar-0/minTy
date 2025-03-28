@@ -2,38 +2,45 @@
 	display: flex;
 	flex-direction: column;
 	align-items: start;
-	/* justify-content: center; */
-	font-size: 1.8rem; /*should be controlled by settings*/
-	height: 4.8lh; /*each line is 1.2 * 4 = 4.8*/
+	font-size: 1.8rem;
+	height: 4.6lh;
 	position: relative;
+	padding: 0.5lh;
+	background: transparent;
+	border-radius: 1rem;
+	overflow: hidden;
+	transition: background var(--transition-fast);
 }
 
 .testWindow {
 	overflow: hidden;
 	position: relative;
-	transition: opacity 3000ms ease;
+	transition: opacity var(--transition-mid) ease,
+		filter var(--transition-mid) ease;
+
 	opacity: 0;
-	padding: 1rem;
+	/* margin: 1.5rem; */
 }
 .appear {
-	animation: appear 300ms ease forwards;
+	animation: appear var(--transition-mid) ease forwards;
 }
 
 .test-container .overlay {
 	position: absolute;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	gap: 1ch;
 	align-items: center;
 	width: 100%;
 	height: 100%;
-	background: transparent;
+	/* background: var(--shade-20); */
 	top: 0;
 	left: 0;
 	font-size: 1.2rem;
 	visibility: visible;
 	opacity: 1;
-	transition: opacity 200ms 300ms ease;
+	transition: opacity var(--transition-fast) ease;
 }
 
 .test-container:focus .overlay {
@@ -41,8 +48,7 @@
 	visibility: hidden;
 }
 .test-container .testWindow {
-	opacity: 0.5;
-	filter: blur(8px);
+	filter: opacity(0.5) blur(4px);
 }
 .test-container:focus .testWindow {
 	opacity: 1;
@@ -50,13 +56,16 @@
 }
 .test-container:focus {
 	outline: none;
+	background-color: var(--tint-5);
 }
 @keyframes appear {
 	0% {
 		opacity: 0;
+		translate: 0 100px;
 	}
 	100% {
 		opacity: 1;
+		translate: 0 0;
 	}
 }
 
@@ -65,31 +74,38 @@
 	flex-wrap: wrap;
 	align-items: stretch;
 	position: relative;
-	transition: translate 200ms ease 200ms;
+	transition: transform var(--transition-fast) ease 200ms;
 	column-gap: 1ch;
 }
 
 .cursor {
-	color: #2dff57;
+	color: var(--primary-color);
 	background-color: currentColor;
 	position: absolute;
-	height: 1.1lh;
-	width: 3px;
-
-	transition: transform 150ms ease-out;
+	border-radius: 1rem;
+	transition: transform var(--transition-fast) ease-out;
+}
+.cursor.underline {
+	height: 2px;
+	width: 1ch;
+	translate: 0 1lh;
+}
+.cursor.bar {
+	height: 0.9lh;
+	width: 0.2rem;
 }
 .blink {
-	animation: 1s linear 3s infinite alternate blink;
+	animation: 1.5s linear 3s infinite alternate blink;
 }
 @keyframes blink {
 	0% {
-		background-color: #2dff57;
+		background-color: currentColor;
 	}
 	50% {
 		background-color: transparent;
 	}
 	100% {
-		background-color: #2dff57;
+		background-color: currentColor;
 	}
 }
 
@@ -112,16 +128,12 @@
 	position: absolute;
 }
 .valid {
-	color: whitesmoke;
+	color: var(--text-color);
 }
 .invalid {
-	color: rgb(192, 0, 0);
+	color: var(--warn);
 }
 .unprocessed,
 .current {
-	color: rgba(182, 182, 182, 0.479);
+	color: var(--tint-30);
 }
-
-/* AI */
-
-/* gradient-glass-border.css */

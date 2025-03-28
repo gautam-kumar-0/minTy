@@ -1,8 +1,8 @@
 import React, {useState, useEffect, memo} from "react";
 import "./Keyboard.css";
 import Row from "./Row";
-import {convertToKey} from "../../utils/keys";
-import {keyArray} from "./config";
+
+import {convertToKey, keyArray} from "./config";
 
 const Keyboard = () => {
 	const [activeKey, setActiveKey] = useState("");
@@ -10,8 +10,10 @@ const Keyboard = () => {
 
 	useEffect(() => {
 		const handleKeyDown = (e) => {
+			console.log("KeyBoard", e);
 			setActiveKey(convertToKey(e));
-			setShifted(e.shiftKey);
+			setShifted(e.shiftKey || e.getModifierState("CapsLock"));
+			console.log("activekey", activeKey);
 		};
 
 		const handleKeyUp = (e) => {

@@ -2,19 +2,23 @@ import React, {memo} from "react";
 import Test from "./components/Test/Test";
 import {RiSettings4Fill} from "react-icons/ri";
 import "./App.css";
-import {LuKeyboard} from "react-icons/lu";
+
 import Fadable from "./components/Fadable/Fadable";
 import TestMode from "./components/Test/TestMode";
+import {PiKeyboardLight} from "react-icons/pi";
 const Header = memo(() => (
 	<Fadable>
 		<header>
-			<div className="logo">
-				<h1>TYPING</h1>
-				<LuKeyboard />
+			<div>
+				<div className="logo">
+					<h1>minTY</h1>
+					<PiKeyboardLight />
+				</div>
+				<nav>
+					<RiSettings4Fill />
+				</nav>
 			</div>
-			<nav>
-				<RiSettings4Fill />
-			</nav>
+			<div className="">User Profile</div>
 		</header>
 	</Fadable>
 ));
@@ -22,7 +26,6 @@ const Header = memo(() => (
 function App() {
 	return (
 		<div className="app">
-			<div className="starfall"></div>
 			<Header />
 			<TestMode />
 			<Test />

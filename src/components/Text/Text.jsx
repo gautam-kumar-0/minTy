@@ -18,6 +18,7 @@ const Text = React.forwardRef((props, ref) => {
 
 	// Handle Input
 	const handleKeyPress = (e) => {
+		console.log("Handle Key Press", e);
 		if (!(e.key == "Backspace" || printableCharacterPattern.test(e.key)))
 			return;
 		if (!testState.isTyping) dispatch(setTyping(true));

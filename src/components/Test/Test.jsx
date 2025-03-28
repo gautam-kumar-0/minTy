@@ -15,6 +15,7 @@ import {clearQuote, setTyping, useQuote} from "./testSlice.js";
 import {useGetQuotesQuery} from "../../services/quotes.js";
 import {TiWarning} from "react-icons/ti";
 import NoticeBox from "../NoticeBox/NoticeBox.jsx";
+import {GrRefresh} from "react-icons/gr";
 
 const Test = ({}) => {
 	const dispatch = useDispatch(); // Use dispatch from Redux
@@ -82,8 +83,8 @@ const Test = ({}) => {
 		let isExecuted = false;
 		return (...args) => {
 			if (isExecuted) return;
-			console.log("MouseMove Throttle");
-			if (testState.isTyping) dispatch(setTyping(false));
+			console.log("MouseMove Throttle: ");
+			dispatch(setTyping(false));
 			isExecuted = true;
 			setTimeout(() => (isExecuted = false), 2000);
 		};
@@ -137,7 +138,7 @@ const Test = ({}) => {
 						onClick={() => resetTest()}
 						data-action="Restart"
 					>
-						<RiRestartLine />
+						<GrRefresh />
 					</button>
 				</div>
 				<div className="keyboard-wrapper">
@@ -149,7 +150,11 @@ const Test = ({}) => {
 	return (
 		<div className={`main ${focus ? "focus" : "blur"}`} ref={containerRef}>
 			{testState.error && testState.mode.type == "quote" && (
-				<NoticeBox className="error" onClick={refetchQuote} color={"red"}>
+				<NoticeBox
+					className="error"
+					onClick={refetchQuote}
+					color={"var(--warn)"}
+				>
 					<div>
 						<TiWarning />
 						<span>{testState.error}</span>
@@ -158,7 +163,7 @@ const Test = ({}) => {
 				</NoticeBox>
 			)}
 			{testState.isLoading && testState.mode.type == "quote" && (
-				<NoticeBox className="loading" color={"#0ff1ce"}>
+				<NoticeBox className="loading" color={"var(--accent-color)"}>
 					<div>
 						<div className="spin"></div>
 						<span>Loading Quotes</span>

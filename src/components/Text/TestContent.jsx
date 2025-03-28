@@ -23,10 +23,7 @@ const TestContent = memo(({state}, ref) => {
 		if (!next) {
 			return;
 		}
-		if (
-			next.offsetTop <
-			testText.current.offsetHeight - 2 * next.offsetHeight
-		) {
+		if (next.offsetTop < testText.current.offsetHeight - next.offsetHeight) {
 			offset.current = next.offsetTop - next.offsetHeight;
 		}
 
@@ -41,7 +38,7 @@ const TestContent = memo(({state}, ref) => {
 
 	return (
 		<div className={`testText `} ref={testText}>
-			<span className="cursor" ref={cursor}></span>
+			<span className="cursor bar" ref={cursor}></span>
 			{state.words.map(renderWord)}
 		</div>
 	);
