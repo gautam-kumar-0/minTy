@@ -7,6 +7,7 @@ import Fadable from "./components/Fadable/Fadable";
 import {PiKeyboardLight} from "react-icons/pi";
 import {Link, Route, Routes} from "react-router-dom";
 import Main from "./pages/Main";
+import Setting from "./pages/Setting";
 const Header = memo(() => (
 	<Fadable>
 		<header>
@@ -32,6 +33,7 @@ function App() {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Main />} />
+				<Route path="/setting" element={<Setting />} />
 			</Routes>
 		</div>
 	);
