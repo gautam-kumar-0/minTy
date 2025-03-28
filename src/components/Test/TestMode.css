@@ -18,7 +18,7 @@
 }
 
 /* Container for mode types */
-.mode-type,
+.mode-types,
 .mode-values {
 	display: flex;
 	justify-content: space-around;
@@ -27,16 +27,16 @@
 }
 
 /* Individual mode type and value elements */
-.mode-type > div,
-.mode-values > div {
+.mode,
+.mode-value {
 	cursor: pointer;
 	padding: 0.6rem 1rem; /* Add some padding to make them feel more clickable */
 	border-radius: 6px; /* Slightly rounded corners for individual elements */
 	transition: background-color var(--transition-slow) ease; /* Smooth hover transition */
 }
 
-.mode-type > div:hover,
-.mode-values > div:hover {
+.mode:hover,
+.mode-value:hover {
 	background-color: var(--tint-5); /* Subtle background on hover */
 }
 
@@ -58,26 +58,33 @@
 .pop-up {
 	position: absolute;
 	display: flex;
-	gap: 1.2rem; /* Increased gap between elements in the pop-up */
+	gap: 1.2rem;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background-color: color-mix(
-		in srgb,
-		var(--primary-background),
-		var(--tint-50)
-	); /* Slightly lighter pop-up background */
-	color: var(--text-color); /* Slightly lighter text in pop-up */
-	border-radius: 1rem; /* Slightly more rounded corners for pop-up */
-
+	background-color: var(--primary-background);
+	color: var(--text-color);
+	border-radius: 1rem;
 	box-shadow: 0 4px 6px var(--shade-10);
-	padding: 1.5rem; /* Increased padding for more space inside pop-up */
+	padding: 1.5rem;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 10;
 }
+.pop-overlay {
+	position: absolute;
+	display: inline-block;
 
+	width: 100vw;
+	height: 100vh;
+	/* pointer-events: none; */
+	background-color: rgba(0, 0, 0, 0.7);
+	backdrop-filter: blur(2px);
+	top: 0;
+	left: 0;
+	z-index: 5;
+}
 /* Form inside the pop-up */
 .pop-up form {
 	display: flex;
@@ -141,5 +148,5 @@
 }
 
 .pop-up input:focus {
-	border-color: var(--primary-color);
+	border-color: var(--tint-30);
 }

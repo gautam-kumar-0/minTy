@@ -40,7 +40,7 @@ const chartConfig = {
 
 const animationConfig = {
 	isAnimationActive: true,
-	animationDuration: 1000,
+	animationDuration: 300,
 	animationEasing: "ease-in-out",
 };
 
@@ -156,14 +156,6 @@ const TwoYAxisChart = ({result}) => {
 					type="monotone"
 					dataKey="raw"
 					stroke={chartConfig.colors.lineRaw}
-					fill={chartConfig.colors.areaFill}
-					{...animationConfig}
-				/>
-				<Line
-					yAxisId="left"
-					type="monotone"
-					dataKey="raw"
-					stroke={chartConfig.colors.lineRaw}
 					strokeWidth={chartConfig.strokeWidth.line}
 					dot={{
 						strokeWidth: chartConfig.strokeWidth.dot,
@@ -174,8 +166,10 @@ const TwoYAxisChart = ({result}) => {
 						fill: chartConfig.colors.lineRaw,
 						r: chartConfig.strokeWidth.activeDot,
 					}}
+					fill={chartConfig.colors.areaFill}
 					{...animationConfig}
 				/>
+
 				<Line
 					isAnimationActive={false}
 					yAxisId="left"

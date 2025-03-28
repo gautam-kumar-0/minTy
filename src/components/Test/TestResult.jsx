@@ -1,17 +1,18 @@
 import React, {useEffect, useState, useMemo, useRef} from "react";
 
-import {FcNext} from "react-icons/fc";
-import {RiRestartLine} from "react-icons/ri";
 import TwoYAxisChart from "./TwoYAxisChart.jsx";
-import {useSelector} from "react-redux"; // Import useSelector from Redux
+import {useSelector} from "react-redux";
+import {FaChevronRight} from "react-icons/fa";
+import {FaArrowRotateRight} from "react-icons/fa6";
 
 const TestResult = ({startTest, resetTest}) => {
-	const state = useSelector((state) => state.text); // Select the test state
+	const state = useSelector((state) => state.text);
 	const averageAcc = useRef(0);
 	const result = useMemo(() => {
 		if (state.status === "complete") {
 			let totalwpm = 0;
 			let totalacc = 0;
+
 			let r = state.words.map((word, i) => {
 				totalwpm += word.wpm;
 				totalacc += word.accuracy;
@@ -66,14 +67,14 @@ const TestResult = ({startTest, resetTest}) => {
 					className="action-button"
 					data-action="Next"
 				>
-					<FcNext />
+					<FaChevronRight />
 				</button>
 				<button
 					onClick={handleRestart}
 					className="action-button"
 					data-action="Restart"
 				>
-					<RiRestartLine />
+					<FaArrowRotateRight />
 				</button>
 			</div>
 		</div>

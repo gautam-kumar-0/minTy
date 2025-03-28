@@ -40,8 +40,8 @@ const Text = React.forwardRef((props, ref) => {
 		if (textState.status == "ready") {
 			setAnimation("");
 			setTimeout(() => {
-				setChildren(<TestContent state={textState} />);
 				setAnimation("appear");
+				setChildren(<TestContent state={textState} />);
 				ref.current?.focus();
 			}, 50);
 		} else if (textState.status == "uncomplete")
@@ -55,12 +55,14 @@ const Text = React.forwardRef((props, ref) => {
 			tabIndex={0}
 			ref={ref}
 		>
-			<div className={`testWindow ${animation}`} ref={testWindow}>
-				{children}
-			</div>
-			<div className="overlay">
-				<BsCursorFill />
-				<span>Click here or press any key to focus</span>
+			<div className="testBg">
+				<div className={`testWindow ${animation}`} ref={testWindow}>
+					{children}
+				</div>
+				<div className="overlay">
+					<BsCursorFill />
+					<span>Click here or press any key to focus</span>
+				</div>
 			</div>
 		</div>
 	);

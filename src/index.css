@@ -17,12 +17,6 @@
 	--transition-mid: 300ms;
 	--transition-fast: 150ms;
 
-	/* Color from theme
-	--primary-background: hsl(0, 0%, 3%);
-	--primary-foreground: hsl(0, 0%, 100%);
-	--primary-color: hsl(157, 100%, 40%);
-	--accent-color: hsl(200, 100%, 40%); */
-
 	/*Color from theme*/
 	/* --primary-background: hsl(0, 0%, 12%);
 	--primary-foreground: hsl(0, 0%, 96%);
@@ -32,12 +26,12 @@
 	--warn: hsl(0, 91%, 55%);
 
 	/*Color from theme*/
-	--primary-background: hsl(0, 0%, 100%);
-	--primary-foreground: hsl(0, 0%, 0%);
-	--primary-color: hsl(213, 100%, 66%);
+	--primary-background: hwb(0 3% 97%);
+	--primary-foreground: hsl(203, 100%, 89%);
+	--primary-color: hsl(143, 100%, 66%);
 
-	--base-white: 0, 0, 0;
-	--base-black: 255, 255, 255;
+	--base-white: 255, 255, 255;
+	--base-black: 0, 0, 0;
 
 	/*Derived Colors*/
 	--text-color: color-mix(

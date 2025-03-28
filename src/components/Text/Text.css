@@ -1,14 +1,16 @@
 .test-container {
-	display: flex;
-	flex-direction: column;
-	align-items: start;
 	font-size: 1.8rem;
 	height: 4.6lh;
 	position: relative;
-	padding: 0.5lh;
-	background: transparent;
+}
+.testBg {
 	border-radius: 1rem;
+	padding: 0.5lh 0.7lh;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
 	overflow: hidden;
+	max-height: 4.6lh;
 	transition: background var(--transition-fast);
 }
 
@@ -17,10 +19,9 @@
 	position: relative;
 	transition: opacity var(--transition-mid) ease,
 		filter var(--transition-mid) ease;
-
 	opacity: 0;
-	/* margin: 1.5rem; */
 }
+
 .appear {
 	animation: appear var(--transition-mid) ease forwards;
 }
@@ -56,6 +57,8 @@
 }
 .test-container:focus {
 	outline: none;
+}
+.test-container:focus .testBg {
 	background-color: var(--tint-5);
 }
 @keyframes appear {

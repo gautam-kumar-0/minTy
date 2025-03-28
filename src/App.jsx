@@ -1,17 +1,20 @@
 import React, {memo} from "react";
-import Test from "./components/Test/Test";
 import {RiSettings4Fill} from "react-icons/ri";
 import "./App.css";
 
 import Fadable from "./components/Fadable/Fadable";
-import TestMode from "./components/Test/TestMode";
+
 import {PiKeyboardLight} from "react-icons/pi";
+import {Link, Route, Routes} from "react-router-dom";
+import Main from "./pages/Main";
 const Header = memo(() => (
 	<Fadable>
 		<header>
 			<div>
 				<div className="logo">
-					<h1>minTY</h1>
+					<Link to="/">
+						<h1>minTY</h1>
+					</Link>
 					<PiKeyboardLight />
 				</div>
 				<nav>
@@ -27,8 +30,9 @@ function App() {
 	return (
 		<div className="app">
 			<Header />
-			<TestMode />
-			<Test />
+			<Routes>
+				<Route path="/" element={<Main />} />
+			</Routes>
 		</div>
 	);
 }

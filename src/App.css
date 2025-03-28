@@ -46,6 +46,6 @@ header .logo h1 {
 header nav {
 	display: flex;
 	gap: 1rem;
-	color: var(--tint-30);
+	color: var(--text-color-subtle);
 	/* border: 1px solid red; */
 }

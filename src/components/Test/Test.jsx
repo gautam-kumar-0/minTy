@@ -5,7 +5,6 @@ import Text from "../Text/Text";
 import "./Test.css";
 import TestResult from "./TestResult.jsx";
 import LiveStats from "./LiveStats.jsx";
-import {RiRestartLine} from "react-icons/ri";
 
 import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 
@@ -15,7 +14,7 @@ import {clearQuote, setTyping, useQuote} from "./testSlice.js";
 import {useGetQuotesQuery} from "../../services/quotes.js";
 import {TiWarning} from "react-icons/ti";
 import NoticeBox from "../NoticeBox/NoticeBox.jsx";
-import {GrRefresh} from "react-icons/gr";
+import {FaArrowRotateRight} from "react-icons/fa6";
 
 const Test = ({}) => {
 	const dispatch = useDispatch(); // Use dispatch from Redux
@@ -138,7 +137,7 @@ const Test = ({}) => {
 						onClick={() => resetTest()}
 						data-action="Restart"
 					>
-						<GrRefresh />
+						<FaArrowRotateRight />
 					</button>
 				</div>
 				<div className="keyboard-wrapper">
