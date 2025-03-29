@@ -4,9 +4,9 @@ const settingSlice = createSlice({
 	name: "test",
 	initialState: {
 		theme: {
-			bg: "hsl()",
-			fg: "hsl()",
-			primary: "hsl()",
+			bg: "hsl(0,0%,0%)",
+			fg: "hsl(0,0%,100%)",
+			primary: "hsl(57,100%,40%)",
 		},
 		freedom: false,
 		confidence: false,

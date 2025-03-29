@@ -17,7 +17,7 @@
 	--transition-mid: 300ms;
 	--transition-fast: 150ms;
 
-	/*Color from theme*/
+	/*Base Colors from Theme*/
 	/* --primary-background: hsl(0, 0%, 12%);
 	--primary-foreground: hsl(0, 0%, 96%);
 	--primary-color: hsl(190, 87%, 58%);
@@ -25,54 +25,196 @@
 	*/
 	--warn: hsl(0, 91%, 55%);
 
-	/*Color from theme*/
+	/*Base Colors from Theme*/
 	--primary-background: hwb(0 3% 97%);
 	--primary-foreground: hsl(203, 100%, 89%);
 	--primary-color: hsl(143, 100%, 66%);
 
+	/* RGB Values for Mixing */
 	--base-white: 255, 255, 255;
 	--base-black: 0, 0, 0;
 
-	/*Derived Colors*/
-	--text-color: color-mix(
+	/* Text Colors */
+	--text-primary: var(--primary-foreground);
+	--text-secondary: color-mix(
+		in srgb,
+		var(--primary-foreground) 85%,
+		var(--primary-background)
+	);
+	--text-tertiary: color-mix(
+		in srgb,
+		var(--primary-foreground) 70%,
+		var(--primary-background)
+	);
+	--text-muted: color-mix(
+		in srgb,
+		var(--primary-foreground) 50%,
+		var(--primary-background)
+	);
+	--text-inverse: var(--primary-background);
+
+	/* Typing Text Colors */
+	--text-unprocessed: color-mix(
+		in srgb,
+		var(--primary-foreground) 30%,
+		var(--primary-background)
+	);
+	--text-processed: color-mix(
+		in srgb,
+		var(--primary-foreground) 90%,
+		var(--primary-background)
+	);
+
+	/* Background Colors */
+	--bg-primary: var(--primary-background);
+	--bg-secondary: color-mix(
+		in srgb,
+		var(--primary-background) 95%,
+		var(--primary-foreground)
+	);
+	--bg-tertiary: color-mix(
+		in srgb,
+		var(--primary-background) 90%,
+		var(--primary-foreground)
+	);
+	--bg-hover: color-mix(
+		in srgb,
+		var(--primary-background) 85%,
+		var(--primary-color)
+	);
+	--bg-active: color-mix(
+		in srgb,
+		var(--primary-background) 80%,
+		var(--primary-foreground)
+	);
+	--bg-overlay: rgba(var(--base-black), 0.5);
+	--bg-keyboard: color-mix(
+		in srgb,
+		var(--primary-background) 95%,
+		var(--primary-foreground)
+	);
+
+	/* Primary Color Variants */
+	--primary-50: color-mix(
 		in srgb,
 		var(--primary-color) 10%,
-		var(--primary-foreground)
+		var(--primary-background)
 	);
-	--text-color-subtle: color-mix(
+	--primary-100: color-mix(
 		in srgb,
-		var(--primary-color) 25%,
-		var(--primary-foreground)
+		var(--primary-color) 20%,
+		var(--primary-background)
 	);
-	--primary-color-dark: color-mix(
+	--primary-200: color-mix(
 		in srgb,
 		var(--primary-color) 30%,
 		var(--primary-background)
 	);
-	--primary-color-light: color-mix(
+	--primary-300: color-mix(
+		in srgb,
+		var(--primary-color) 40%,
+		var(--primary-background)
+	);
+	--primary-400: color-mix(
+		in srgb,
+		var(--primary-color) 50%,
+		var(--primary-background)
+	);
+	--primary-500: var(--primary-color);
+	--primary-600: color-mix(
+		in srgb,
+		var(--primary-color) 50%,
+		var(--primary-foreground)
+	);
+	--primary-700: color-mix(
+		in srgb,
+		var(--primary-color) 40%,
+		var(--primary-foreground)
+	);
+	--primary-800: color-mix(
 		in srgb,
 		var(--primary-color) 30%,
 		var(--primary-foreground)
 	);
-	/* 
-	--base-white: 255, 255, 255;
-	--base-black: 0, 0, 0; */
+	--primary-900: color-mix(
+		in srgb,
+		var(--primary-color) 20%,
+		var(--primary-foreground)
+	);
 
-	--tint-5: rgba(var(--base-white), 0.05); /* Example: 5% opacity white */
-	--tint-10: rgba(var(--base-white), 0.1);
-	--tint-20: rgba(var(--base-white), 0.2);
-	--tint-30: rgba(var(--base-white), 0.3);
-	--tint-60: rgba(var(--base-white), 0.6);
+	/* Border Colors */
+	--border-light: color-mix(
+		in srgb,
+		var(--primary-foreground) 10%,
+		var(--primary-background)
+	);
+	--border-medium: color-mix(
+		in srgb,
+		var(--primary-foreground) 20%,
+		var(--primary-background)
+	);
+	--border-strong: color-mix(
+		in srgb,
+		var(--primary-foreground) 30%,
+		var(--primary-background)
+	);
 
-	--shade-5: rgba(var(--base-black), 0.05); /* Example: 5% opacity black */
-	--shade-10: rgba(var(--base-black), 0.1);
-	--shade-20: rgba(var(--base-black), 0.2);
-	--shade-30: rgba(var(--base-black), 0.3);
-	--shade-50: rgba(var(--base-black), 0.5);
+	/* Shadow Colors */
+	--shadow-sm: rgba(var(--base-black), 0.05);
+	--shadow-md: rgba(var(--base-black), 0.1);
+	--shadow-lg: rgba(var(--base-black), 0.2);
+	--shadow-xl: rgba(var(--base-black), 0.3);
 
-	color: var(--text-color);
+	/* Status Colors */
+	--success: hsl(142, 76%, 36%);
+	--success-light: color-mix(
+		in srgb,
+		var(--success) 30%,
+		var(--primary-background)
+	);
+	--warning: hsl(38, 92%, 50%);
+	--warning-light: color-mix(
+		in srgb,
+		var(--warning) 30%,
+		var(--primary-background)
+	);
+	--error: hsl(0, 84%, 60%);
+	--error-light: color-mix(
+		in srgb,
+		var(--error) 30%,
+		var(--primary-background)
+	);
+	--info: hsl(200, 98%, 39%);
+	--info-light: color-mix(in srgb, var(--info) 30%, var(--primary-background));
+
+	/* Focus and Selection */
+	--focus-ring: color-mix(in srgb, var(--primary-color) 30%, transparent);
+	--selection-bg: color-mix(
+		in srgb,
+		var(--primary-color) 20%,
+		var(--primary-background)
+	);
+	--selection-text: var(--primary-foreground);
+
+	/* Default Text Color */
+	color: var(--text-primary);
+}
+
+/* Selection Styles */
+::selection {
+	background-color: var(--selection-bg);
+	color: var(--selection-text);
+}
+
+/* Focus Styles */
+:focus-visible {
+	outline: 2px solid var(--focus-ring);
+	outline-offset: 2px;
 }
 
 button {
 	cursor: pointer;
+}
+a {
+	color: inherit;
 }

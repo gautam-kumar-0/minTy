@@ -1,36 +1,68 @@
 .key {
-	--key-bg-active: var(--primary-color);
-	--key-bg-inactive: var(--tint-5);
-	--key-border-active: 1px solid var(--primary-color);
-	--key-border-inactive: 1px solid transparent;
-	--key-shadow-active: 0 0 1rem var(--primary-color);
-	--key-shadow-inactive: 1px 1px 0.1rem hsla(0, 0%, 0%, 0.1),
-		-1px -1px 0.1rem hsla(0, 0%, 100%, 0.1);
+	--key-bg-active: var(--primary-500);
+	--key-bg-inactive: color-mix(
+		in srgb,
+		var(--primary-foreground) 2%,
+		var(--primary-background)
+	);
+	--key-shadow-active: 0 0 1rem
+		color-mix(in srgb, var(--primary-500) 40%, transparent);
+	--key-shadow-inactive: 1px 1px 0.1rem
+			color-mix(in srgb, var(--shadow-lg) 10%, transparent),
+		-1px -1px 0.1rem
+			color-mix(in srgb, var(--primary-foreground) 5%, transparent);
 
-	/* background-color: var(--tint-30); Subtle white tint on background */
-	color: var(--primary-color-light); /* Slightly transparent white text */
-	/* Semi-transparent dark gray border */
+	background-color: var(--key-bg-inactive);
+	color: var(--text-processed);
+	border: none;
+	box-shadow: var(--key-shadow-inactive);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	min-width: 2lh;
 	min-height: 2lh;
 	padding: 1ch 2ch;
-	border-radius: 0.8em; /* Slightly smaller border-radius for a more modern feel */
-	transition: background-color var(--transition-fast) ease-in-out; /* Smoother, more standard transition */
+	border-radius: 0.8em;
+	transition: all var(--transition-fast);
+}
+
+.key:hover {
+	background-color: color-mix(
+		in srgb,
+		var(--primary-500) 5%,
+		var(--key-bg-inactive)
+	);
+	color: var(--primary-500);
+	box-shadow: 2px 2px 0.2rem
+			color-mix(in srgb, var(--shadow-lg) 15%, transparent),
+		-2px -2px 0.2rem
+			color-mix(in srgb, var(--primary-foreground) 8%, transparent);
+}
+
+.key.active {
+	background-color: color-mix(
+		in srgb,
+		var(--primary-500) 10%,
+		var(--key-bg-inactive)
+	);
+	color: var(--primary-500);
+	box-shadow: var(--key-shadow-active);
 }
 
 .keyboard {
-	border-radius: 1rem; /* Slightly smaller border-radius */
-	border: 1px solid var(--tint-5); /* Lighter, thinner border */
-	background-color: var(--shade-5); /* Very subtle dark background */
-	padding: 1.2rem 0.8rem 0.8rem 0.8rem; /* Adjusted padding */
+	border-radius: 1rem;
+	border: none;
+	background-color: color-mix(
+		in srgb,
+		var(--primary-foreground) 1.5%,
+		var(--primary-background)
+	);
+	padding: 1.2rem 0.8rem;
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
 	justify-content: space-around;
-	gap: 1.5ch; /* Slightly smaller gap */
-	box-shadow: 0 4px 12px rgba(var(--base-black), 0.1); /* Subtle shadow for depth */
+	gap: 1.5ch;
 }
 
 .keyboard.shifted {
@@ -44,16 +76,11 @@
 	gap: 1.5ch;
 	grid-auto-flow: column;
 }
-.row-1 {
-}
-.row-2 {
-}
 
-.row-3 {
-}
 .row-4 {
 	grid-template-columns: auto 0.4fr auto;
 }
+
 .row-4 > * {
 	min-height: 1.8lh;
 }

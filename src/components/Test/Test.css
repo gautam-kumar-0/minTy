@@ -28,8 +28,9 @@
 	justify-self: stretch;
 	justify-content: stretch;
 	align-items: center;
-	color: var(--tint-60);
+	color: var(--text-tertiary);
 	padding-inline: 1rem;
+	margin: 1rem 0;
 }
 
 .live-stats {
@@ -54,7 +55,7 @@
 }
 
 .progress .subtle {
-	color: var(--tin-30);
+	color: var(--bg-tertiary);
 }
 
 .stats-desc {
@@ -67,6 +68,7 @@
 	min-width: 3ch;
 	display: flex;
 	place-content: center;
+	opacity: 0.6;
 }
 
 .result {
@@ -193,4 +195,10 @@
 	100% {
 		transform: rotate(360deg);
 	}
+}
+
+.test-info {
+	display: flex;
+	gap: 2rem;
+	border: 1px solid var(--primary-300);
 }

@@ -11,6 +11,7 @@
 	align-items: start;
 	overflow: hidden;
 	max-height: 4.6lh;
+
 	transition: background var(--transition-fast);
 }
 
@@ -59,7 +60,7 @@
 	outline: none;
 }
 .test-container:focus .testBg {
-	background-color: var(--tint-5);
+	background-color: var(--bg-secondary);
 }
 @keyframes appear {
 	0% {
@@ -138,5 +139,5 @@
 }
 .unprocessed,
 .current {
-	color: var(--tint-30);
+	color: var(--text-unprocessed);
 }

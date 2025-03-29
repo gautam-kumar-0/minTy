@@ -1,0 +1,38 @@
+.settingsPanel {
+	padding: 2rem;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.title {
+	font-size: 2rem;
+	font-weight: 500;
+	margin-bottom: 2rem;
+	color: var(--text-tertiary);
+	letter-spacing: -0.02em;
+}
+
+.section {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+	margin-bottom: 3rem;
+	padding: 1.5rem;
+	background: var(--bg-keyboard);
+	border-radius: 12px;
+	box-shadow: 0 2px 4px var(--shadow-sm);
+	border: 1px solid var(--border-light);
+}
+
+.section:last-child {
+	margin-bottom: 0;
+}
+
+.sectionTitle {
+	font-size: 1.25rem;
+	font-weight: 500;
+	color: var(--text-muted);
+	letter-spacing: -0.01em;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid var(--border-medium);
+}

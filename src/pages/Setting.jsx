@@ -1,19 +1,12 @@
 import React, {useState} from "react";
-import {HexColorPicker} from "react-colorful";
-import ThemeSettings from "../components/features/Setting/ThemeSetting";
-// Optional: Default styles for react-colorful
+
+import SettingsPanel from "../components/features/Setting/SettingsPanel";
 
 const Setting = () => {
 	return (
-		<div className="main">
+		<div className="">
 			<div>
-				<h1>Hello, Gautam</h1>
-			</div>
-			<div>
-				<h3>Look and Feel</h3>
-				<div className="div">
-					<ThemeSettings />
-				</div>
+				<SettingsPanel />
 			</div>
 		</div>
 	);

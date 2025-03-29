@@ -42,23 +42,13 @@ function ColorPicker({label, initialColor, onChange}) {
 
 	return (
 		<div className={styles.colorPickerContainer}>
-			<label className={styles.label}>{label}:</label>
-			<button
+			<div
 				ref={buttonRef}
 				className={styles.colorButton}
 				onClick={handleClick}
-			>
-				<div
-					style={{
-						width: "30px",
-						height: "30px",
-						backgroundColor: color,
-						display: "inline-block",
-						marginLeft: "10px",
-						border: "1px solid #ccc",
-					}}
-				></div>
-			</button>
+				style={{backgroundColor: color}}
+			></div>
+			<label className={styles.label}>{label}</label>
 
 			{isVisible && (
 				<div ref={pickerRef} className={styles.pickerContainer}>
@@ -84,25 +74,46 @@ function ThemeSetting() {
 
 	return (
 		<div className={styles.container}>
-			<h3 className={styles.heading}>Theme Settings</h3>
+			<h3 className={styles.heading}>Theme</h3>
+			<div className={styles.colorPickersSection}>
+				<ColorPicker
+					label="Background Color"
+					initialColor={bg}
+					onChange={setBg}
+				/>
+				<ColorPicker
+					label="Foreground Color"
+					initialColor={fg}
+					onChange={setFg}
+				/>
+				<ColorPicker
+					label="Primary Color"
+					initialColor={primary}
+					onChange={setPrimary}
+				/>{" "}
+			</div>
 
-			<ColorPicker
-				label="Background Color"
-				initialColor={bg}
-				onChange={setBg}
-			/>
-
-			<ColorPicker
-				label="Foreground Color"
-				initialColor={fg}
-				onChange={setFg}
-			/>
-
-			<ColorPicker
-				label="Primary Color"
-				initialColor={primary}
-				onChange={setPrimary}
-			/>
+			<div className={styles.previewSection}>
+				<h4>Preview</h4>
+				<div
+					className={styles.preview}
+					style={{
+						"--preview-bg": bg,
+						"--preview-fg": fg,
+						"--preview-primary": primary,
+					}}
+				>
+					<div className={styles.previewBgFg}>
+						<span>Background + Foreground</span>
+					</div>
+					<div className={styles.previewBgPrimary}>
+						<span>Background + Primary</span>
+					</div>
+					<div className={styles.previewPrimaryBg}>
+						<span>Primary + Background</span>
+					</div>
+				</div>
+			</div>
 
 			<button className={styles.saveButton} onClick={handleSaveTheme}>
 				Save Theme

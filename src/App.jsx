@@ -1,6 +1,7 @@
 import React, {memo} from "react";
 import {RiSettings4Fill} from "react-icons/ri";
 import "./App.css";
+import {Toaster} from "react-hot-toast";
 
 import Fadable from "./components/Fadable/Fadable";
 
@@ -8,6 +9,8 @@ import {PiKeyboardLight} from "react-icons/pi";
 import {Link, Route, Routes} from "react-router-dom";
 import Main from "./pages/Main";
 import Setting from "./pages/Setting";
+import useTheme from "./hooks/useTheme";
+
 const Header = memo(() => (
 	<Fadable>
 		<header>
@@ -19,7 +22,9 @@ const Header = memo(() => (
 					<PiKeyboardLight />
 				</div>
 				<nav>
-					<RiSettings4Fill />
+					<Link to="/setting">
+						<RiSettings4Fill />
+					</Link>
 				</nav>
 			</div>
 			<div className="">User Profile</div>
@@ -28,6 +33,7 @@ const Header = memo(() => (
 ));
 
 function App() {
+	useTheme();
 	return (
 		<div className="app">
 			<Header />
@@ -35,6 +41,7 @@ function App() {
 				<Route path="/" element={<Main />} />
 				<Route path="/setting" element={<Setting />} />
 			</Routes>
+			<Toaster position="top-right" />
 		</div>
 	);
 }

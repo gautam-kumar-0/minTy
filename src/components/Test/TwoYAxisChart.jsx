@@ -13,14 +13,14 @@ import {
 
 const chartConfig = {
 	colors: {
-		primary: "var(--tint-20)",
-		grid: "var(--tint-5)",
-		scatter: "var(--warn)",
-		lineAverage: "var(--primary-color)",
-		lineRaw: "var(--tint-10)",
-		areaFill: "var(--tint-5)",
-		tooltipBackground: "var(--primary-background)",
-		tooltipText: "var(--text-color-subtle)",
+		primary: "var(--text-muted)",
+		grid: "var(--primary-50)",
+		scatter: "var(--error)",
+		lineAverage: "var(--primary-500)",
+		lineRaw: "var(--text-unprocessed)",
+		areaFill: "var(--bg-keyboard)",
+		tooltipBackground: "var(--bg-keyboard)",
+		tooltipText: "var(--text-tertiary)",
 	},
 	fontSize: 12,
 	strokeWidth: {
@@ -52,7 +52,6 @@ const CustomScatterShape = (props) => {
 			y={cy}
 			textAnchor="middle"
 			dominantBaseline="middle"
-			// fontFamily="VT323"
 			fontSize={10}
 			fill={chartConfig.colors.scatter}
 		>
@@ -131,15 +130,12 @@ const TwoYAxisChart = ({result}) => {
 					tickLine={{strokeWidth: chartConfig.strokeWidth.tickLine}}
 				/>
 				<Tooltip
-					cursor={{
-						stroke: "var(--primary-color-light)",
-						strokeWidth: 1,
-						strokeDasharray: "3 3",
-					}} // Custom cursor
+					cursor={false}
 					contentStyle={{
 						backgroundColor: chartConfig.colors.tooltipBackground,
-						border: "none",
-						borderRadius: "5px",
+						border: "2px solid",
+						borderColor: "var(--border-medium)",
+						borderRadius: "8px",
 					}}
 					itemStyle={{
 						color: chartConfig.colors.tooltipText,

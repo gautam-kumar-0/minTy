@@ -1,0 +1,74 @@
+.selectContainer {
+	margin-bottom: 1.5rem;
+}
+
+.selectContainer:last-child {
+	margin-bottom: 0;
+}
+
+.labelContainer {
+	margin-bottom: 0.75rem;
+}
+
+.label {
+	font-size: 1.125rem;
+	font-weight: 500;
+	color: var(--text-processed);
+	margin-bottom: 0.5rem;
+	display: block;
+	letter-spacing: -0.01em;
+}
+
+.description {
+	font-size: 0.875rem;
+	color: var(--text-muted);
+	margin: 0;
+	line-height: 1.4;
+	margin-bottom: 1rem;
+}
+
+.optionsContainer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+}
+
+.optionCard {
+	flex: 1;
+	min-width: 120px;
+	max-width: calc(33.33% - 0.5rem);
+	padding: 0.75rem 1rem;
+	background-color: var(--bg-keyboard);
+	border: 2px solid var(--border-light);
+	border-radius: 8px;
+	color: var(--text-processed);
+	font-size: 1rem;
+	cursor: pointer;
+	transition: all var(--transition-fast);
+	text-align: center;
+	user-select: none;
+}
+
+.optionCard:hover {
+	background-color: color-mix(
+		in srgb,
+		var(--primary-500) 5%,
+		var(--bg-keyboard)
+	);
+	border-color: var(--primary-500);
+}
+
+.optionCard.selected {
+	background-color: color-mix(
+		in srgb,
+		var(--primary-500) 10%,
+		var(--bg-keyboard)
+	);
+	border-color: var(--primary-500);
+	color: var(--primary-500);
+}
+
+/* Hide the native select element */
+.select {
+	display: none;
+}
