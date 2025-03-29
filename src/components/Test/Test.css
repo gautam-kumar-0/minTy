@@ -73,18 +73,17 @@
 
 .result {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(max-content, 1fr));
-	justify-items: center;
-	align-items: center;
-	gap: 1lh;
-	padding-top: 4lh;
+	grid-template-columns: 1fr;
+	grid-auto-flow: row;
+	gap: 2rem;
 }
 
 .result-values {
+	margin-block: 4rem 2rem;
 	display: flex;
 	align-items: center;
-	justify-content: space-around;
-	column-gap: 3rem;
+	justify-content: center;
+	column-gap: 5rem;
 }
 .result-values > div {
 	display: flex;
@@ -114,8 +113,8 @@
 
 .actions {
 	display: flex;
-	justify-content: space-around;
-	column-gap: 2rem;
+	justify-content: center;
+	column-gap: 3rem;
 }
 
 .action-button {
@@ -137,7 +136,7 @@
 .action-button:focus,
 .action-button:active {
 	outline: none;
-	background-color: var(--tint-5);
+	background-color: var(--bg-keyboard);
 }
 
 .action-button::after {
@@ -199,6 +198,55 @@
 
 .test-info {
 	display: flex;
-	gap: 2rem;
-	border: 1px solid var(--primary-300);
+	justify-content: space-around;
+	gap: 4rem;
+	text-align: center;
+}
+.test-info-item {
+	display: flex;
+	flex-direction: column;
+	gap: 1ch;
+}
+
+.mode-info {
+}
+.summary {
+	display: flex;
+	align-items: baseline;
+	position: relative;
+	flex-wrap: wrap;
+}
+
+.summary .info {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+	background: var(--primary-background);
+	color: var(--primary-foreground);
+	top: 120%;
+	scale: 1 0;
+	transform-origin: top;
+	transition: opacity var(--transition-mid) var(--transition-fast) ease,
+		scale var(--transition-fast) ease;
+}
+.summary:hover .info {
+	opacity: 1;
+	scale: 1 1;
+}
+.duration {
+}
+
+.test-info .primary {
+	color: var(--primary-color);
+	font-size: 1.3rem;
+}
+.test-info .secondary {
+	color: var(--text-secondary);
+	font-size: 1.1rem;
+	font-weight: 500;
+}
+.test-info .muted {
+	color: var(--text-muted);
 }

@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useEffect, useState} from "react";
+import React, {useRef, useEffect, useState} from "react";
 import "./Text.css";
 
 import TestContent from "./TestContent.jsx"; // Import the new component
@@ -7,6 +7,7 @@ import {printableCharacterPattern} from "../../utils/config.js";
 import {setTyping} from "../Test/testSlice.js";
 import {space, character, backspace} from "./textSlice.js";
 import {BsCursorFill} from "react-icons/bs";
+
 const Text = React.forwardRef((props, ref) => {
 	const textState = useSelector((state) => state.text);
 	const testState = useSelector((state) => state.test);

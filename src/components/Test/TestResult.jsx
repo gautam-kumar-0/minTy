@@ -70,19 +70,43 @@ const TestResult = ({startTest, resetTest}) => {
 					</div>
 					<div className="test-info">
 						<div className="test-info-item mode-info">
-							<span>Mode </span>
-							<span>{mode.type}</span>
-							<span>{mode.value}</span>
+							<div>
+								<span className="primary">{mode.type} : </span>
+								<span className="secondary">{mode.value}</span>
+							</div>
+
+							<span className="muted">mode</span>
 						</div>
-						<div className="test-info-item summary">
-							<span>{result.characters}/</span>
-							<span>{result.errors}/</span>
-							<span>{result.missed}/</span>
-							<span>{result.extra}</span>
+						<div className="test-info-item">
+							<div className=" summary">
+								<div>
+									<span className="primary">{result.characters}</span>
+									<span className="muted">/</span>
+								</div>
+								<div>
+									<span className="secondary">{result.errors}</span>
+									<span className="muted">/</span>
+								</div>
+								<div>
+									<span className="secondary">{result.missed}</span>
+									<span className="muted">/</span>
+								</div>
+								<div>
+									<span className="secondary">{result.extra}</span>
+									<span className="muted">/</span>
+								</div>
+								<div className="info">
+									<span>characters/</span>
+									<span>errors/</span>
+									<span>missed/</span>
+									<span>extra</span>
+								</div>
+							</div>
+							<span className="muted">summary</span>
 						</div>
 						<div className="test-info-item duration">
-							<span>Duration </span>
-							<span>{result.duration}</span>
+							<span className="primary">{result.duration}</span>
+							<span className="muted">duration </span>
 						</div>
 					</div>
 				</>

@@ -40,7 +40,7 @@ const chartConfig = {
 
 const animationConfig = {
 	isAnimationActive: true,
-	animationDuration: 300,
+	animationDuration: 600,
 	animationEasing: "ease-in-out",
 };
 

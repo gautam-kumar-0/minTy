@@ -75,6 +75,8 @@ function ThemeSetting() {
 		<div className={styles.container}>
 			<h3 className={styles.heading}>Theme</h3>
 			<div className={styles.colorPickersSection}>
+				<h4>Change Colors</h4>
+
 				<ColorPicker
 					label="Background Color"
 					initialColor={bg}
@@ -89,28 +91,27 @@ function ThemeSetting() {
 					label="Primary Color"
 					initialColor={primary}
 					onChange={setPrimary}
-				/>{" "}
+				/>
 			</div>
 
-			<div className={styles.previewSection}>
+			<div
+				className={styles.previewSection}
+				style={{
+					"--preview-bg": bg,
+					"--preview-fg": fg,
+					"--preview-primary": primary,
+				}}
+			>
 				<h4>Preview</h4>
-				<div
-					className={styles.preview}
-					style={{
-						"--preview-bg": bg,
-						"--preview-fg": fg,
-						"--preview-primary": primary,
-					}}
-				>
-					<div className={styles.previewBgFg}>
-						<span>Background + Foreground</span>
-					</div>
-					<div className={styles.previewBgPrimary}>
-						<span>Background + Primary</span>
-					</div>
-					<div className={styles.previewPrimaryBg}>
-						<span>Primary + Background</span>
-					</div>
+
+				<div className={styles.previewBgFg}>
+					<span>Background + Foreground</span>
+				</div>
+				<div className={styles.previewBgPrimary}>
+					<span>Background + Primary</span>
+				</div>
+				<div className={styles.previewPrimaryBg}>
+					<span>Primary + Background</span>
 				</div>
 			</div>
 

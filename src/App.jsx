@@ -41,7 +41,17 @@ function App() {
 				<Route path="/" element={<Main />} />
 				<Route path="/setting" element={<Setting />} />
 			</Routes>
-			<Toaster position="top-right" />
+			<Toaster
+				position="top-right"
+				toastOptions={{
+					className: "toast",
+					style: {
+						background: "var(--bg-tertiary)",
+						color: "var(--text-color)",
+						border: "2px solid var(--primary-300)",
+					},
+				}}
+			/>
 		</div>
 	);
 }
