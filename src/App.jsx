@@ -9,8 +9,9 @@ import {PiKeyboardLight} from "react-icons/pi";
 import {Link, Route, Routes} from "react-router-dom";
 import Main from "./pages/Main";
 import Setting from "./pages/Setting";
-import useTheme from "./hooks/useTheme";
+import useAppearance from "./hooks/useAppearance";
 import useLocalSetting from "./hooks/useLocalSetting";
+
 const Header = memo(() => (
 	<Fadable>
 		<header>
@@ -34,7 +35,7 @@ const Header = memo(() => (
 
 function App() {
 	useLocalSetting();
-	useTheme();
+	useAppearance();
 	return (
 		<div className="app">
 			<Header />

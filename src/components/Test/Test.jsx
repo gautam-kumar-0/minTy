@@ -17,6 +17,7 @@ import NoticeBox from "../NoticeBox/NoticeBox.jsx";
 import {FaArrowRotateRight} from "react-icons/fa6";
 
 const Test = ({}) => {
+	const {keyboard, liveStats} = useSelector((state) => state.settings);
 	const dispatch = useDispatch(); // Use dispatch from Redux
 	const testState = useSelector((state) => state.test); // Select the test state
 	const textState = useSelector((state) => state.text); // Select the mode state
@@ -121,7 +122,7 @@ const Test = ({}) => {
 		display = (
 			<>
 				<div className="stats-box">
-					{textState.status == "uncomplete" ? <LiveStats /> : ""}
+					{liveStats && textState.status == "uncomplete" ? <LiveStats /> : ""}
 				</div>
 
 				<Text ref={textRef} />
@@ -135,9 +136,11 @@ const Test = ({}) => {
 						<FaArrowRotateRight />
 					</button>
 				</div>
-				<div className="keyboard-wrapper">
-					<Keyboard />
-				</div>
+				{keyboard && (
+					<div className="keyboard-wrapper">
+						<Keyboard />
+					</div>
+				)}
 			</>
 		);
 	}

@@ -1,7 +1,9 @@
-import React, {useRef, useLayoutEffect, memo} from "react";
+import React, {useRef, useLayoutEffect, memo, useEffect} from "react";
 import Word from "./Word";
+import {useSelector} from "react-redux";
 
 const TestContent = memo(({state}, ref) => {
+	const cursorType = useSelector((state) => state.settings.cursor);
 	const testText = useRef(null);
 	const cursor = useRef(null);
 	const offset = useRef(0);
@@ -17,7 +19,20 @@ const TestContent = memo(({state}, ref) => {
 			/>
 		);
 	};
-	useLayoutEffect(() => {
+
+	useEffect(() => {
+		if (state.status == "ready") {
+			testText.current.style.transition = "";
+			offset.current = 0;
+			testText.current.style.transform = "";
+			cursor.current.style.transform = "";
+		} else {
+			testText.current.style.transition =
+				"transform var(--transition-mid) ease var(--transition-fast)";
+		}
+	}, [state.status]);
+
+	useEffect(() => {
 		cursor.current.classList.remove("blink");
 		const next = document.querySelector(".current");
 		if (!next) {
@@ -38,7 +53,7 @@ const TestContent = memo(({state}, ref) => {
 
 	return (
 		<div className={`testText `} ref={testText}>
-			<span className="cursor bar" ref={cursor}></span>
+			<span className={`cursor ${cursorType}`} ref={cursor}></span>
 			{state.words.map(renderWord)}
 		</div>
 	);

@@ -1,34 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Orbitron:wght@400..900&family=VT323&display=swap");
 
 :root {
-	font-family: "IBM Plex Mono", Inter, system-ui, Avenir, Helvetica, Arial,
-		sans-serif;
-	line-height: 1.5;
-	font-weight: 400;
-	font-size: 16px;
-
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-
 	/*transitions*/
 	--transition-slow: 600ms;
 	--transition-mid: 300ms;
 	--transition-fast: 150ms;
 
-	/*Base Colors from Theme*/
-	/* --primary-background: hsl(0, 0%, 12%);
-	--primary-foreground: hsl(0, 0%, 96%);
-	--primary-color: hsl(190, 87%, 58%);
-	--accent-color: hsl(200, 66%, 59%);
-	*/
 	--warn: hsl(0, 91%, 55%);
 
-	/*Base Colors from Theme*/
+	/*Base Setting */
 	--primary-background: hwb(0 3% 97%);
 	--primary-foreground: hsl(203, 100%, 89%);
 	--primary-color: hsl(143, 100%, 66%);
+	--setting-fontFamily: "IBM Plex Mono";
+	--setting-fontSize: 16px;
 
 	/* RGB Values for Mixing */
 	--base-white: 255, 255, 255;
@@ -198,6 +183,17 @@
 
 	/* Default Text Color */
 	color: var(--text-primary);
+
+	font-family: var(--setting-fontFamily), "IBM Plex Mono", Inter, system-ui,
+		Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+	font-size: var(--setting-fontSize);
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 /* Selection Styles */

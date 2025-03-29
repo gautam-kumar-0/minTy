@@ -25,7 +25,7 @@ function ConfidenceSetting() {
 				label="Confidence Mode"
 				value={value}
 				onChange={handleChange}
-				description="Show confidence level while typing"
+				description="Disable showing typing error"
 			/>
 		</div>
 	);

@@ -25,7 +25,7 @@ function FreedomSetting() {
 				label="Freedom Mode"
 				value={value}
 				onChange={handleChange}
-				description="Allow typing without restrictions"
+				description="Allow deleting correctly typed words"
 			/>
 		</div>
 	);

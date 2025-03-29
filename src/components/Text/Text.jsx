@@ -9,6 +9,7 @@ import {space, character, backspace} from "./textSlice.js";
 import {BsCursorFill} from "react-icons/bs";
 
 const Text = React.forwardRef((props, ref) => {
+	const {freedom} = useSelector((state) => state.settings);
 	const textState = useSelector((state) => state.text);
 	const testState = useSelector((state) => state.test);
 	const dispatch = useDispatch();
@@ -24,9 +25,9 @@ const Text = React.forwardRef((props, ref) => {
 		if (!testState.isTyping) dispatch(setTyping(true));
 		if (e.key == "Backspace") {
 			if (e.ctrlKey) {
-				dispatch(backspace({ctrl: true, timeStamp: e.timeStamp}));
+				dispatch(backspace({ctrl: true, timeStamp: e.timeStamp, freedom}));
 			} else {
-				dispatch(backspace({timeStamp: e.timeStamp}));
+				dispatch(backspace({timeStamp: e.timeStamp, freedom}));
 			}
 		} else if (e.key === " ") {
 			dispatch(space({timeStamp: e.timeStamp, mode: testState.mode.type}));

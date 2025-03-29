@@ -4,6 +4,7 @@ import {HexColorPicker} from "react-colorful";
 import styles from "./ThemeSetting.module.css"; // Import CSS module
 
 import {setTheme} from "./settingSlice"; // Adjust the import path
+import {RiSave2Line} from "react-icons/ri";
 
 // Reusable Color Picker Component
 function ColorPicker({label, initialColor, onChange}) {
@@ -122,6 +123,7 @@ function ThemeSetting() {
 			</div>
 
 			<button className={styles.saveButton} onClick={handleSaveTheme}>
+				<RiSave2Line />
 				Save Theme
 			</button>
 		</div>

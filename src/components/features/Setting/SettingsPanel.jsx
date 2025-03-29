@@ -8,6 +8,8 @@ import SoundSetting from "./SoundSetting";
 import FontSetting from "./FontSetting";
 import KeyboardSetting from "./KeyboardSetting";
 import LiveStatsSetting from "./LiveStatsSetting";
+import {PiSparkle} from "react-icons/pi";
+import {FaKeyboard, FaMusic} from "react-icons/fa6";
 
 function SettingsPanel() {
 	return (
@@ -15,14 +17,18 @@ function SettingsPanel() {
 			<h2 className={styles.title}>Settings</h2>
 
 			<div className={styles.section}>
-				<h3 className={styles.sectionTitle}>Appearance</h3>
+				<h3 className={styles.sectionTitle}>
+					Appearance <PiSparkle />
+				</h3>
 				<ThemeSetting />
 				<FontSetting />
 				<CursorSetting />
 			</div>
 
 			<div className={styles.section}>
-				<h3 className={styles.sectionTitle}>Behavior</h3>
+				<h3 className={styles.sectionTitle}>
+					Behavior <FaKeyboard />
+				</h3>
 				<FreedomSetting />
 				<ConfidenceSetting />
 				<KeyboardSetting />
@@ -30,7 +36,9 @@ function SettingsPanel() {
 			</div>
 
 			<div className={styles.section}>
-				<h3 className={styles.sectionTitle}>Audio</h3>
+				<h3 className={styles.sectionTitle}>
+					Audio <FaMusic />
+				</h3>
 				<SoundSetting />
 			</div>
 		</div>

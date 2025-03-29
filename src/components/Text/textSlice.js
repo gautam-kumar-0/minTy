@@ -47,7 +47,6 @@ export const textSlice = createSlice({
 			state.status = Status.READY;
 		},
 		backspace: (state, action) => {
-			action.payload.freedom = false; // remove this
 			const word = state.words[state.index];
 			if (word.typed)
 				word.typed = action.payload.ctrl ? "" : word.typed.slice(0, -1);

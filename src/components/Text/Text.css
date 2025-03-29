@@ -1,6 +1,7 @@
 .test-container {
 	font-size: 1.8rem;
 	height: 4.6lh;
+	width: clamp(50vw, 70ch, 1000px);
 	position: relative;
 	align-self: stretch;
 }
@@ -12,7 +13,7 @@
 	align-items: start;
 	overflow: hidden;
 	max-height: 4.6lh;
-
+	box-shadow: 0 0 5rem var(--shadow-md);
 	transition: background var(--transition-fast);
 }
 
@@ -80,7 +81,7 @@
 	flex-wrap: wrap;
 	align-items: stretch;
 	position: relative;
-	transition: transform var(--transition-fast) ease 200ms;
+	transition: transform var(--transition-fast) ease;
 	column-gap: 1ch;
 }
 
@@ -100,18 +101,28 @@
 	height: 0.9lh;
 	width: 0.2rem;
 }
+.cursor.block {
+	border-radius: 0;
+	height: 0.9lh;
+	width: 0.95ch;
+	background: var(--primary-200) !important;
+	z-index: -1;
+}
+.testText:has(.cursor.block) .current {
+	color: var(--primary-color);
+}
 .blink {
 	animation: 1.5s linear 3s infinite alternate blink;
 }
 @keyframes blink {
 	0% {
-		background-color: currentColor;
+		opacity: 1;
 	}
 	50% {
-		background-color: transparent;
+		opacity: 0;
 	}
 	100% {
-		background-color: currentColor;
+		opacity: 1;
 	}
 }
 

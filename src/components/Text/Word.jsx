@@ -1,11 +1,13 @@
 import React, {memo} from "react";
+import {useSelector} from "react-redux";
 
 const Letter = memo(({letter}) => {
+	const {confidence} = useSelector((state) => state.settings);
 	const {value, isTyped, isCurrent, isValid} = letter;
 	let className = "letter ";
 	if (isCurrent) className += " current";
 	else if (isTyped) {
-		if (isValid) {
+		if (isValid || confidence) {
 			className += " valid";
 		} else className += " invalid";
 	} else className += " unprocessed";
