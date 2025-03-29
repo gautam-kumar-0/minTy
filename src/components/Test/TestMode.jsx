@@ -233,7 +233,6 @@ const TestMode = ({}) => {
 		dispatch(setMode({type: key, value: MODE[key][1].value}));
 	};
 	const handleValueChange = (value) => {
-		console.log(value);
 		dispatch(setMode({value: value}));
 	};
 

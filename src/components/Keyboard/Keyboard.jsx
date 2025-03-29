@@ -10,10 +10,8 @@ const Keyboard = () => {
 
 	useEffect(() => {
 		const handleKeyDown = (e) => {
-			console.log("KeyBoard", e);
 			setActiveKey(convertToKey(e));
 			setShifted(e.shiftKey || e.getModifierState("CapsLock"));
-			console.log("activekey", activeKey);
 		};
 
 		const handleKeyUp = (e) => {

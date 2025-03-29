@@ -29,7 +29,7 @@ export const keyArray = [
 	[keys.Control, keys[" "], keys.Alt],
 ];
 
-// makes sures that space and shift are handled consistently
+// makes sure that space and shift are handled consistently
 export const convertToKey = (e) => {
 	if (keys[e.key]) return keys[e.key];
 	if (e.shiftKey || e.getModifierState("CapsLock")) return e.key.toLowerCase();

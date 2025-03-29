@@ -8,7 +8,7 @@ const calculateAccuracy = (state) => {
 	let errors = 0;
 	state.words.some((w) => {
 		if (w.start) {
-			if (w.errors > 0) errors++;
+			if (w.errors.filter((e) => e).length > 0) errors++;
 			return false;
 		} else return true;
 	});

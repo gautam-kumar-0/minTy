@@ -5,6 +5,7 @@ import {useSelector} from "react-redux";
 import {FaChevronRight} from "react-icons/fa";
 import {FaArrowRotateRight} from "react-icons/fa6";
 import {formatMsConcise} from "../../utils/functions";
+
 const TestResult = ({startTest, resetTest}) => {
 	const state = useSelector((state) => state.text);
 	const mode = useSelector((state) => state.test.mode);
@@ -29,7 +30,7 @@ const TestResult = ({startTest, resetTest}) => {
 				return {
 					name: i + 1,
 					raw: Math.round(word.wpm),
-					errors: word.errors,
+					errors: word.errors.filter((e) => e).length,
 					average: Math.round(totalwpm / (i + 1)),
 				};
 			});

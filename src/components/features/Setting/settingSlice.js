@@ -21,9 +21,6 @@ const settingSlice = createSlice({
 	reducers: {
 		setTheme: (state, action) => {
 			state.theme = action.payload;
-
-			console.log("Theme set");
-			return state;
 		},
 		setFreedom: (state, action) => {
 			state.freedom = action.payload;

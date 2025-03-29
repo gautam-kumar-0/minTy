@@ -32,7 +32,6 @@ const Test = ({}) => {
 	const previousQuoteValue = useRef(testState.mode.value);
 
 	const startTest = async () => {
-		console.log("setText(): ", testState.mode);
 		let text = "";
 		if (testState.mode.type == "words") {
 			text = generateRandomText(testState.mode.value);
@@ -57,17 +56,14 @@ const Test = ({}) => {
 	};
 
 	const handleKeyDown = (e) => {
-		console.log("HandleKeyDown", e.key);
 		if (e.key === "Escape") {
 			return;
 		}
 		if (e.ctrlKey) {
 			if (e.key == "Enter") {
-				console.log("Restart the test");
 				startTest();
 				return;
 			} else if (e.key == "c") {
-				console.log("Reset the test");
 				resetTest();
 				return;
 			}
@@ -80,9 +76,8 @@ const Test = ({}) => {
 
 	const throttleMouseMove = () => {
 		let isExecuted = false;
-		return (...args) => {
+		return () => {
 			if (isExecuted) return;
-			console.log("MouseMove Throttle: ");
 			dispatch(setTyping(false));
 			isExecuted = true;
 			setTimeout(() => (isExecuted = false), 2000);

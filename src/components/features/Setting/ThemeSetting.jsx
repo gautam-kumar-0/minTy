@@ -68,7 +68,6 @@ function ThemeSetting() {
 	const [primary, setPrimary] = useState(theme.primary);
 
 	const handleSaveTheme = () => {
-		console.log(fg, bg, primary);
 		dispatch(setTheme({bg, fg, primary}));
 	};
 

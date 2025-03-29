@@ -21,7 +21,7 @@ function convertToWordObject(word) {
 		start: null,
 		end: null,
 		wpm: null,
-		errors: 0,
+		errors: Array(word.length).fill(0),
 		accuracy: 0,
 	};
 }
@@ -32,7 +32,12 @@ function helperCalculateWPM(state, action) {
 	const delta = Math.max(currentWord.end - currentWord.start, 10); // keyboard latency
 	state.words[state.index].wpm = (currentWord.typed.length * 12000) / delta;
 	state.words[state.index].accuracy =
-		100 - Math.round((currentWord.errors / currentWord.original.length) * 100);
+		100 -
+		Math.round(
+			(currentWord.errors.reduce((acc, a) => (a ? 1 : 0), 0) /
+				currentWord.original.length) *
+				100
+		);
 }
 
 export const textSlice = createSlice({
@@ -74,10 +79,11 @@ export const textSlice = createSlice({
 			if (!temp.typed.length) temp.start = action.payload.timeStamp;
 
 			// check for errors
+			let currentIndex = temp.typed.length;
 			if (
 				action.payload.character !== temp.original.charAt(temp.typed.length)
 			) {
-				temp.errors++;
+				currentIndex <= temp.errors.length ? temp.errors[currentIndex]++ : "";
 			}
 			// add character
 			temp.typed = `${temp.typed}${action.payload.character}`;
