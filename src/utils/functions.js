@@ -1,12 +1,9 @@
 import {wordList} from "./config";
-export const generateRandomWord = () => {
-	return wordList[Math.floor(Math.random() * 1000)];
-};
+export const generateRandomWord = () =>
+	wordList[Math.floor(Math.random() * 1000)];
 
-export const generateRandomText = (words) => {
-	let arr = Array.from({length: parseInt(words)}, generateRandomWord);
-	return arr.join(" ");
-};
+export const generateRandomText = (words) =>
+	Array.from({length: parseInt(words)}, generateRandomWord);
 
 export const formatMsConcise = (ms) => {
 	const seconds = Math.floor((ms / 1000) % 60);

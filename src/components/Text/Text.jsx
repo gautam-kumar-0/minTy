@@ -39,13 +39,16 @@ const Text = React.forwardRef((props, ref) => {
 		if (textState.status == "ready") {
 			setAnimation("");
 			setTimeout(() => {
+				ref.current?.focus();
 				setAnimation("appear");
 				setChildren(<TestContent state={textState} />);
-				ref.current?.focus();
 			}, 50);
 		} else if (textState.status == "uncomplete")
 			setChildren(<TestContent state={textState} />);
 	}, [textState]);
+	useEffect(() => {
+		ref.current?.focus();
+	}, []);
 
 	return (
 		<div

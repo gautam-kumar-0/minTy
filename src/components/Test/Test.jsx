@@ -41,7 +41,7 @@ const Test = ({}) => {
 			text = generateRandomText();
 		} else if (testState.mode.type == "quote") {
 			if (testState.quotes.length) {
-				text = testState.quotes[testState.quotes.length - 1].text;
+				text = testState.quotes[testState.quotes.length - 1].text.split(" ");
 				dispatch(useQuote());
 			} else {
 				refetchQuote(testState.mode.value);

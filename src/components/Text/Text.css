@@ -2,6 +2,7 @@
 	font-size: 1.8rem;
 	height: 4.6lh;
 	position: relative;
+	align-self: stretch;
 }
 .testBg {
 	border-radius: 1rem;
@@ -28,6 +29,7 @@
 }
 
 .test-container .overlay {
+	color: var(--primary-300);
 	position: absolute;
 	display: flex;
 	flex-direction: column;

@@ -1,15 +1,10 @@
-import React, {useState} from "react";
-
+import React from "react";
 import SettingsPanel from "../components/features/Setting/SettingsPanel";
 
-const Setting = () => {
-	return (
-		<div className="">
-			<div>
-				<SettingsPanel />
-			</div>
-		</div>
-	);
-};
+const Setting = () => (
+	<div>
+		<SettingsPanel />
+	</div>
+);
 
 export default Setting;
