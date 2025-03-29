@@ -4,9 +4,9 @@ const settingSlice = createSlice({
 	name: "test",
 	initialState: {
 		theme: {
-			bg: "hsl(0,0%,0%)",
-			fg: "hsl(0,0%,100%)",
-			primary: "hsl(57,100%,40%)",
+			bg: "black",
+			fg: "white",
+			primary: "green",
 		},
 		freedom: false,
 		confidence: false,
@@ -66,7 +66,7 @@ export const {
 	setFontFamily,
 	setKeyboard,
 	setLiveStats,
-	setEntireSetting,
+	setSetting,
 } = settingSlice.actions;
 
 export default settingSlice.reducer;

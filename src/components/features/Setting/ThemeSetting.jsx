@@ -71,6 +71,12 @@ function ThemeSetting() {
 		dispatch(setTheme({bg, fg, primary}));
 	};
 
+	useEffect(() => {
+		setBg(theme.bg);
+		setFg(theme.fg);
+		setPrimary(theme.primary);
+	}, [theme]);
+
 	return (
 		<div className={styles.container}>
 			<h3 className={styles.heading}>Theme</h3>
