@@ -127,7 +127,7 @@ const Test = ({}) => {
 	useEffect(() => {
 		modeRef.current = testState.mode;
 		console.log("StartTest because testState.mode");
-		if (testState.mode == "quote" || testState.quotes.length == 0) {
+		if (testState.mode.type == "quote" && testState.quotes.length == 0) {
 			refetchQuote(testState.mode.value, {force: true});
 		}
 		startTest();

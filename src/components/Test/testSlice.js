@@ -11,6 +11,7 @@ const testSlice = createSlice({
 		error: null,
 		isLoading: false,
 		quotes: [],
+		messageE: null,
 	},
 	reducers: {
 		setMode: (state, action) => {
@@ -50,11 +51,15 @@ const testSlice = createSlice({
 			state.quotes = [];
 			state.isLoading = true;
 		});
-		builder.addMatcher(quotesApi.endpoints.getQuotes.matchRejected, (state) => {
-			state.error = "Failed to fetch  quotes.";
-			state.quotes = [];
-			state.isLoading = false;
-		});
+		builder.addMatcher(
+			quotesApi.endpoints.getQuotes.matchRejected,
+			(state, action) => {
+				state.error = "Failed to fetch  quotes.";
+				state.quotes = [];
+				state.isLoading = false;
+				messageE = action.error;
+			}
+		);
 	},
 });
 
