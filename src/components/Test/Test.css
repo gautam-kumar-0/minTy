@@ -179,7 +179,7 @@
 }
 
 .spin {
-	border: 3px solid var(--shade-30); /* Light grey border */
+	border: 3px solid var(--shadow-xl); /* Light grey border */
 	border-top: 3px solid currentColor; /* Blue border on top */
 	border-radius: 50%;
 	width: 1lh;

@@ -11,7 +11,7 @@ const testSlice = createSlice({
 		error: null,
 		isLoading: false,
 		quotes: [],
-		messageE: null,
+		message: null,
 	},
 	reducers: {
 		setMode: (state, action) => {
@@ -57,7 +57,7 @@ const testSlice = createSlice({
 				state.error = "Failed to fetch  quotes.";
 				state.quotes = [];
 				state.isLoading = false;
-				messageE = action.error;
+				state.message = action.error;
 			}
 		);
 	},

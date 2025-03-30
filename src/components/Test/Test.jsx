@@ -29,10 +29,7 @@ const Test = ({}) => {
 		refetch: refetchQuote,
 		isFetching,
 		isSuccess,
-	} = useGetQuotesQuery(testState.mode.value, {
-		skip: testState.mode.type !== "quote",
-		skipCache: true,
-	});
+	} = useGetQuotesQuery(testState.mode.value);
 
 	const navigate = useNavigate();
 	const [text, setText] = useState("");
