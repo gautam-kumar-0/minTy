@@ -6,7 +6,7 @@ const settingSlice = createSlice({
 		theme: {
 			bg: "black",
 			fg: "white",
-			primary: "green",
+			primary: "seagreen",
 		},
 		freedom: false,
 		confidence: false,

@@ -23,7 +23,7 @@ const Test = ({}) => {
 	const dispatch = useDispatch();
 	const testState = useSelector((state) => state.test);
 	const textState = useSelector((state) => state.text);
-	const soundRef = useSound();
+	const playSound = useSound();
 	const modeRef = useRef(testState.mode);
 	const [fetchQuotes, {isFetching}] = useLazyGetQuotesQuery();
 
@@ -55,16 +55,6 @@ const Test = ({}) => {
 
 	const resetTest = (e) => {
 		dispatch(reset());
-	};
-
-	const playSound = () => {
-		console.log(soundRef.current);
-		if (!soundRef.current) return;
-		if (!soundRef.current.paused) {
-			soundRef.current.pause();
-			soundRef.current.currentTime = 0;
-		}
-		soundRef.current.play();
 	};
 
 	const handleKeyDown = (e) => {

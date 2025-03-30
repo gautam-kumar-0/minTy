@@ -3,7 +3,7 @@ import {RiSettings4Fill} from "react-icons/ri";
 import "./App.css";
 import {Toaster} from "react-hot-toast";
 
-import Fadable from "./components/Fadable/Fadable";
+import Fadable from "./features/Fadable/Fadable";
 
 import {PiKeyboardLight} from "react-icons/pi";
 import {Link, Route, Routes} from "react-router-dom";
@@ -14,7 +14,7 @@ import useLocalSetting from "./hooks/useLocalSetting";
 import {FaGithub, FaHeart} from "react-icons/fa";
 
 const Header = memo(() => (
-	<Fadable>
+	<Fadable className="header">
 		<header>
 			<div>
 				<Link to="/" className="logo">

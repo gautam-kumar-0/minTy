@@ -14,11 +14,20 @@ body {
 	min-width: 100vw;
 	height: auto;
 }
-div:has(header) {
+
+.header {
 	position: sticky;
 	top: 0;
 	left: 0;
+	background-color: color-mix(
+		in srgb,
+		var(--primary-background) 70%,
+		transparent
+	);
+	backdrop-filter: blur(4px);
+	z-index: 10;
 }
+
 header {
 	font-size: 1.6rem;
 	padding: 2rem 4rem;

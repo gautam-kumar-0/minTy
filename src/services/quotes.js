@@ -13,6 +13,6 @@ export const quotesApi = createApi({
 	}),
 });
 
-// Export hooks for usage in functional components, which are
+// Export hooks for usage in functional features, which are
 // auto-generated based on the defined endpoints
 export const {useGetQuotesQuery, useLazyGetQuotesQuery} = quotesApi;

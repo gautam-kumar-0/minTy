@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setSetting} from "../components/features/Setting/settingSlice";
+import {setSetting} from "../features/Setting/settingSlice";
 
 const settingKey = "minty-setting";
 const useLocalSetting = () => {

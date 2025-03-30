@@ -8,18 +8,12 @@ import {RiSave2Line} from "react-icons/ri";
 
 // Reusable Color Picker Component
 function ColorPicker({label, initialColor, onChange}) {
-	const [color, setColor] = useState(initialColor);
 	const [isVisible, setIsVisible] = useState(false);
 	const pickerRef = useRef(null);
 	const buttonRef = useRef(null);
 
 	const handleClick = () => {
 		setIsVisible(!isVisible);
-	};
-
-	const handleChange = (newColor) => {
-		setColor(newColor);
-		onChange(newColor);
 	};
 
 	useEffect(() => {
@@ -47,15 +41,13 @@ function ColorPicker({label, initialColor, onChange}) {
 				ref={buttonRef}
 				className={styles.colorButton}
 				onClick={handleClick}
-				style={{backgroundColor: color}}
+				style={{backgroundColor: initialColor}}
 			></div>
-			<label className={styles.label}>
-				{color} {label}
-			</label>
+			<label className={styles.label}>{label}</label>
 
 			{isVisible && (
 				<div ref={pickerRef} className={styles.pickerContainer}>
-					<HexColorPicker color={color} onChange={handleChange} />
+					<HexColorPicker color={initialColor} onChange={onChange} />
 				</div>
 			)}
 		</div>
@@ -78,7 +70,6 @@ function ThemeSetting() {
 		setBg(theme.bg);
 		setFg(theme.fg);
 		setPrimary(theme.primary);
-		console.log("Theme effect", theme);
 	}, [theme]);
 
 	return (

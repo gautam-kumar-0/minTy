@@ -7,16 +7,36 @@ const useSound = () => {
 	const {enableSound, sound} = useSelector((state) => state.settings);
 
 	const ref = useRef(null);
+
+	const playSound = () => {
+		if (ref.current) {
+			if (!ref.current.paused) {
+				ref.current.pause();
+				ref.current.currentTime = 0;
+			}
+			ref.current.play();
+		}
+	};
+
 	useEffect(() => {
 		if (enableSound) {
 			ref.current =
-				sound == "mechanical"
+				sound === "mechanical"
 					? new Audio(mechanicalSound)
 					: new Audio(typeWriterSound);
+			ref.current.load();
 		}
+
+		// Cleanup on unmount
+		return () => {
+			if (ref.current) {
+				ref.current.pause();
+				ref.current = null;
+			}
+		};
 	}, [sound, enableSound]);
 
-	return ref;
+	return playSound;
 };
 
 export default useSound;

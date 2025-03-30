@@ -1,5 +1,5 @@
 import React from "react";
-import SettingsPanel from "../components/features/Setting/SettingsPanel";
+import SettingsPanel from "../features/Setting/SettingsPanel";
 
 const Setting = () => (
 	<div>
