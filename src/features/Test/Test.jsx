@@ -59,6 +59,7 @@ const Test = ({}) => {
 
 	const handleKeyDown = (e) => {
 		console.log("HandleKeyDown, Intercept Shortcuts", e);
+		if (e.repeat) return;
 		playSound();
 		if (e.key === "Escape") {
 			if (Number(modeRef.current.value) == Infinity) dispatch(completed());
