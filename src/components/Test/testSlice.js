@@ -12,12 +12,16 @@ const testSlice = createSlice({
 		isLoading: false,
 		quotes: [],
 		message: null,
+		shouldFetch: false,
 	},
 	reducers: {
 		setMode: (state, action) => {
 			const newMode = {...state.mode, ...action.payload};
 			if (newMode.type == "quote" && state.mode.value != newMode.value) {
 				state.quotes = [];
+				state.shouldFetch = true;
+			} else {
+				state.shouldFetch = false;
 			}
 			state.error = null;
 			state.isTyping = false;
@@ -29,9 +33,12 @@ const testSlice = createSlice({
 		},
 		useQuote: (state) => {
 			state.quotes.length = Math.max(state.quotes.length - 1, 0);
+			if (state.quotes.length == 0) state.shouldFetch = true;
+			else state.shouldFetch = false;
 		},
 		clearQuote: (state) => {
 			state.quotes = [];
+			state.shouldFetch = true;
 		},
 		// setQuotes: (state, action) => {
 		// 	state.quotes =

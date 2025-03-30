@@ -11,7 +11,7 @@ import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 import {start, reset, completed} from "../Text/textSlice.js";
 import {generateRandomText} from "../../utils/functions.js";
 import {clearQuote, setTyping, useQuote} from "./testSlice.js";
-import {useGetQuotesQuery} from "../../services/quotes.js";
+import {useLazyGetQuotesQuery} from "../../services/quotes.js";
 import {TiWarning} from "react-icons/ti";
 import NoticeBox from "../NoticeBox/NoticeBox.jsx";
 import {FaArrowRotateRight} from "react-icons/fa6";
@@ -25,11 +25,7 @@ const Test = ({}) => {
 	const textState = useSelector((state) => state.text); // Select the mode state
 	const soundRef = useSound();
 	const modeRef = useRef(testState.mode);
-	const {
-		refetch: refetchQuote,
-		isFetching,
-		isSuccess,
-	} = useGetQuotesQuery(testState.mode.value);
+	const [fetchQuotes, {isFetching, isSuccess}] = useLazyGetQuotesQuery();
 
 	const navigate = useNavigate();
 	const [text, setText] = useState("");
@@ -123,13 +119,13 @@ const Test = ({}) => {
 	// Start new test whenever test mode is changed
 	useEffect(() => {
 		modeRef.current = testState.mode;
-		console.log("StartTest because testState.mode");
-		if (testState.mode.type == "quote" && testState.quotes.length == 0) {
-			refetchQuote(testState.mode.value, {force: true});
-		}
 		startTest();
 	}, [testState.mode]);
 
+	useEffect(() => {
+		if (testState.shouldFetch) fetchQuotes(modeRef.current.value);
+	}, [testState.shouldFetch]);
+	// Start the test after fetching
 	useEffect(() => {
 		if (!isFetching) startTest();
 	}, [isFetching]);
