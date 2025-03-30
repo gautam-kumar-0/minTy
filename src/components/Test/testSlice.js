@@ -32,6 +32,9 @@ const testSlice = createSlice({
 		clearQuote: (state) => {
 			state.quotes = [];
 		},
+		// setQuotes: (state, action) => {
+		// 	state.quotes =
+		// }
 	},
 	extraReducers: (builder) => {
 		builder.addMatcher(

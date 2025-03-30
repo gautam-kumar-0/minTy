@@ -8,6 +8,7 @@ export const quotesApi = createApi({
 	endpoints: (builder) => ({
 		getQuotes: builder.query({
 			query: (quotes) => `${quotes || "quotes"}`,
+			keepUnusedDataFor: 0,
 		}),
 	}),
 });

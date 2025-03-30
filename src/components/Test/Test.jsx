@@ -26,12 +26,13 @@ const Test = ({}) => {
 	const soundRef = useSound();
 	const modeRef = useRef(testState.mode);
 	const {
-		isLoading,
 		refetch: refetchQuote,
-		fulfilledTimeStamp,
-	} = useGetQuotesQuery(
-		testState.mode.type == "quote" ? testState.mode.value : "quotes"
-	);
+		isFetching,
+		isSuccess,
+	} = useGetQuotesQuery(testState.mode.value, {
+		skip: testState.mode.type !== "quote",
+		skipCache: true,
+	});
 
 	const navigate = useNavigate();
 	const [text, setText] = useState("");
@@ -39,8 +40,8 @@ const Test = ({}) => {
 	const textRef = useRef(null);
 
 	const startTest = async () => {
-		console.log("startTest", testState.mode, testState.quotes);
-		let text = "";
+		console.log("startTest Inside", testState.mode, testState.quotes);
+		let text = [];
 		if (testState.mode.type == "words") {
 			text = generateRandomText(
 				testState.mode.value != Infinity ? testState.mode.value : 100
@@ -53,8 +54,6 @@ const Test = ({}) => {
 			if (testState.quotes.length) {
 				text = testState.quotes[testState.quotes.length - 1].text.split(" ");
 				dispatch(useQuote());
-			} else {
-				await refetchQuote(testState.mode.value);
 			}
 		}
 		setText(text);
@@ -115,8 +114,6 @@ const Test = ({}) => {
 
 	//When test is loaded
 	useEffect(() => {
-		startTest();
-
 		window.addEventListener("mousemove", handleMouseMove);
 		window.addEventListener("keydown", handleKeyDown, {capture: true});
 		window.addEventListener("keydown", handleFocus); // Attach the event listener
@@ -129,14 +126,16 @@ const Test = ({}) => {
 	// Start new test whenever test mode is changed
 	useEffect(() => {
 		modeRef.current = testState.mode;
+		console.log("StartTest because testState.mode");
+		if (testState.mode == "quote" || testState.quotes.length == 0) {
+			refetchQuote(testState.mode.value, {force: true});
+		}
 		startTest();
 	}, [testState.mode]);
 
 	useEffect(() => {
-		if (!testState.isLoading) {
-			startTest();
-		}
-	}, [testState.isLoading, fulfilledTimeStamp]);
+		if (!isFetching) startTest();
+	}, [isFetching]);
 
 	let display = null;
 	if (!text) {
