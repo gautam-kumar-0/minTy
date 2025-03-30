@@ -11,7 +11,7 @@ const testSlice = createSlice({
 		error: null,
 		isLoading: false,
 		quotes: [],
-		message: null,
+		message: null, // for testing
 		shouldFetch: false,
 	},
 	reducers: {
@@ -36,13 +36,6 @@ const testSlice = createSlice({
 			if (state.quotes.length == 0) state.shouldFetch = true;
 			else state.shouldFetch = false;
 		},
-		clearQuote: (state) => {
-			state.quotes = [];
-			state.shouldFetch = true;
-		},
-		// setQuotes: (state, action) => {
-		// 	state.quotes =
-		// }
 	},
 	extraReducers: (builder) => {
 		builder.addMatcher(

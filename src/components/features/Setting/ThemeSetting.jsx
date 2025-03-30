@@ -49,7 +49,9 @@ function ColorPicker({label, initialColor, onChange}) {
 				onClick={handleClick}
 				style={{backgroundColor: color}}
 			></div>
-			<label className={styles.label}>{label}</label>
+			<label className={styles.label}>
+				{color} {label}
+			</label>
 
 			{isVisible && (
 				<div ref={pickerRef} className={styles.pickerContainer}>
@@ -76,6 +78,7 @@ function ThemeSetting() {
 		setBg(theme.bg);
 		setFg(theme.fg);
 		setPrimary(theme.primary);
+		console.log("Theme effect", theme);
 	}, [theme]);
 
 	return (

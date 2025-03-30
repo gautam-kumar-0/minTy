@@ -1,7 +1,7 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import {useSelector} from "react-redux";
-import typeWriterSound from "../assests/typewritter.wav";
-import mechanicalSound from "../assests/mech.mp3";
+import typeWriterSound from "../asset/typewritter.wav";
+import mechanicalSound from "../asset/mech.mp3";
 
 const useSound = () => {
 	const {enableSound, sound} = useSelector((state) => state.settings);
@@ -9,9 +9,10 @@ const useSound = () => {
 	const ref = useRef(null);
 	useEffect(() => {
 		if (enableSound) {
-			sound == "mechanical"
-				? (ref.current = new Audio(mechanicalSound))
-				: (ref.current = new Audio(typeWriterSound));
+			ref.current =
+				sound == "mechanical"
+					? new Audio(mechanicalSound)
+					: new Audio(typeWriterSound);
 		}
 	}, [sound, enableSound]);
 

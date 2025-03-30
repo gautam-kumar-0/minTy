@@ -10,7 +10,7 @@ import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 
 import {start, reset, completed} from "../Text/textSlice.js";
 import {generateRandomText} from "../../utils/functions.js";
-import {clearQuote, setTyping, useQuote} from "./testSlice.js";
+import {setTyping, useQuote} from "./testSlice.js";
 import {useLazyGetQuotesQuery} from "../../services/quotes.js";
 import {TiWarning} from "react-icons/ti";
 import NoticeBox from "../NoticeBox/NoticeBox.jsx";
@@ -20,12 +20,12 @@ import {useNavigate} from "react-router-dom";
 
 const Test = ({}) => {
 	const {keyboard, liveStats} = useSelector((state) => state.settings);
-	const dispatch = useDispatch(); // Use dispatch from Redux
-	const testState = useSelector((state) => state.test); // Select the test state
-	const textState = useSelector((state) => state.text); // Select the mode state
+	const dispatch = useDispatch();
+	const testState = useSelector((state) => state.test);
+	const textState = useSelector((state) => state.text);
 	const soundRef = useSound();
 	const modeRef = useRef(testState.mode);
-	const [fetchQuotes, {isFetching, isSuccess}] = useLazyGetQuotesQuery();
+	const [fetchQuotes, {isFetching}] = useLazyGetQuotesQuery();
 
 	const navigate = useNavigate();
 	const [text, setText] = useState("");
@@ -103,6 +103,7 @@ const Test = ({}) => {
 			setTimeout(() => (isExecuted = false), 2000);
 		};
 	};
+
 	const handleMouseMove = throttleMouseMove();
 
 	//When test is loaded
@@ -125,6 +126,7 @@ const Test = ({}) => {
 	useEffect(() => {
 		if (testState.shouldFetch) fetchQuotes(modeRef.current.value);
 	}, [testState.shouldFetch]);
+
 	// Start the test after fetching
 	useEffect(() => {
 		if (!isFetching) startTest();
@@ -163,12 +165,13 @@ const Test = ({}) => {
 			</>
 		);
 	}
+
 	return (
 		<div className={`main ${focus ? "focus" : "blur"}`} ref={containerRef}>
 			{testState.error && testState.mode.type == "quote" && (
 				<NoticeBox
 					className="error"
-					onClick={refetchQuote}
+					onClick={fetchQuotes(testState.mode.value)}
 					color={"var(--warn)"}
 				>
 					<div>
@@ -178,6 +181,7 @@ const Test = ({}) => {
 					<span className="small">Click to reload</span>
 				</NoticeBox>
 			)}
+
 			{testState.isLoading && testState.mode.type == "quote" && (
 				<NoticeBox className="loading" color={"var(--accent-color)"}>
 					<div>
