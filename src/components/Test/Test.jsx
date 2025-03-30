@@ -25,7 +25,11 @@ const Test = ({}) => {
 	const textState = useSelector((state) => state.text); // Select the mode state
 	const soundRef = useSound();
 	const modeRef = useRef(testState.mode);
-	const {isLoading, refetch: refetchQuote} = useGetQuotesQuery(
+	const {
+		isLoading,
+		refetch: refetchQuote,
+		fulfilledTimeStamp,
+	} = useGetQuotesQuery(
 		testState.mode.type == "quote" ? testState.mode.value : "quotes"
 	);
 
@@ -35,6 +39,7 @@ const Test = ({}) => {
 	const textRef = useRef(null);
 
 	const startTest = async () => {
+		console.log("startTest", testState.mode, testState.quotes);
 		let text = "";
 		if (testState.mode.type == "words") {
 			text = generateRandomText(
@@ -49,7 +54,7 @@ const Test = ({}) => {
 				text = testState.quotes[testState.quotes.length - 1].text.split(" ");
 				dispatch(useQuote());
 			} else {
-				refetchQuote(testState.mode.value);
+				await refetchQuote(testState.mode.value);
 			}
 		}
 		setText(text);
@@ -59,6 +64,7 @@ const Test = ({}) => {
 	const resetTest = (e) => {
 		dispatch(reset());
 	};
+
 	const playSound = () => {
 		console.log(soundRef.current);
 		if (!soundRef.current) return;
@@ -68,6 +74,7 @@ const Test = ({}) => {
 		}
 		soundRef.current.play();
 	};
+
 	const handleKeyDown = (e) => {
 		console.log("HandleKeyDown, Intercept Shortcuts", e);
 		playSound();
@@ -105,6 +112,8 @@ const Test = ({}) => {
 		};
 	};
 	const handleMouseMove = throttleMouseMove();
+
+	//When test is loaded
 	useEffect(() => {
 		startTest();
 
@@ -117,20 +126,17 @@ const Test = ({}) => {
 		};
 	}, []);
 
-	// Start new test
+	// Start new test whenever test mode is changed
 	useEffect(() => {
-		if (testState.mode.type == "quote") {
-			if (modeRef.current.value !== testState.mode.value) {
-				refetchQuote(testState.mode.value);
-			}
-		}
 		modeRef.current = testState.mode;
 		startTest();
 	}, [testState.mode]);
 
 	useEffect(() => {
-		if (testState.quotes.length) startTest();
-	}, [testState.quotes]);
+		if (!testState.isLoading) {
+			startTest();
+		}
+	}, [testState.isLoading, fulfilledTimeStamp]);
 
 	let display = null;
 	if (!text) {

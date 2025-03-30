@@ -14,7 +14,14 @@ const testSlice = createSlice({
 	},
 	reducers: {
 		setMode: (state, action) => {
-			state.mode = {...state.mode, ...action.payload};
+			const newMode = {...state.mode, ...action.payload};
+			if (newMode.type == "quote" && state.mode.value != newMode.value) {
+				state.quotes = [];
+			}
+			state.error = null;
+			state.isTyping = false;
+			state.isLoading = false;
+			state.mode = newMode;
 		},
 		setTyping: (state, action) => {
 			state.isTyping = action.payload;
