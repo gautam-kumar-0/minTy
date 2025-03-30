@@ -57,6 +57,7 @@ const CustomValue = ({label, handleSelect}) => {
 							onSubmit={(e) => {
 								e.preventDefault();
 								setShow(false);
+								console.log("Custom Value", value);
 								if (value == 0) handleSelect(Infinity);
 								else handleSelect(value);
 							}}
@@ -74,6 +75,7 @@ const CustomValue = ({label, handleSelect}) => {
 								max={1000}
 								min={0}
 								placeholder="0"
+								required
 							/>
 							<label htmlFor="custom">
 								<span>{label}</span>
@@ -233,6 +235,7 @@ const TestMode = ({}) => {
 		dispatch(setMode({type: key, value: MODE[key][1].value}));
 	};
 	const handleValueChange = (value) => {
+		console.log("handle value Change", value);
 		dispatch(setMode({value: value}));
 	};
 

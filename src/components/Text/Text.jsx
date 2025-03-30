@@ -30,7 +30,12 @@ const Text = React.forwardRef((props, ref) => {
 				dispatch(backspace({timeStamp: e.timeStamp, freedom}));
 			}
 		} else if (e.key === " ") {
-			dispatch(space({timeStamp: e.timeStamp, mode: testState.mode.type}));
+			dispatch(
+				space({
+					timeStamp: e.timeStamp,
+					mode: testState.mode,
+				})
+			);
 		} else {
 			dispatch(character({character: e.key, timeStamp: e.timeStamp}));
 		}

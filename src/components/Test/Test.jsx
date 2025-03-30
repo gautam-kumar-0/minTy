@@ -8,34 +8,38 @@ import LiveStats from "./LiveStats.jsx";
 
 import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 
-import {start, reset} from "../Text/textSlice.js";
+import {start, reset, completed} from "../Text/textSlice.js";
 import {generateRandomText} from "../../utils/functions.js";
 import {clearQuote, setTyping, useQuote} from "./testSlice.js";
 import {useGetQuotesQuery} from "../../services/quotes.js";
 import {TiWarning} from "react-icons/ti";
 import NoticeBox from "../NoticeBox/NoticeBox.jsx";
 import {FaArrowRotateRight} from "react-icons/fa6";
+import useSound from "../../hooks/useSound.js";
+import {useNavigate} from "react-router-dom";
 
 const Test = ({}) => {
 	const {keyboard, liveStats} = useSelector((state) => state.settings);
 	const dispatch = useDispatch(); // Use dispatch from Redux
 	const testState = useSelector((state) => state.test); // Select the test state
 	const textState = useSelector((state) => state.text); // Select the mode state
-
+	const soundRef = useSound();
+	const modeRef = useRef(testState.mode);
 	const {isLoading, refetch: refetchQuote} = useGetQuotesQuery(
 		testState.mode.type == "quote" ? testState.mode.value : "quotes"
 	);
 
+	const navigate = useNavigate();
 	const [text, setText] = useState("");
 	const containerRef = useRef(null);
 	const textRef = useRef(null);
 
-	const previousQuoteValue = useRef(testState.mode.value);
-
 	const startTest = async () => {
 		let text = "";
 		if (testState.mode.type == "words") {
-			text = generateRandomText(testState.mode.value);
+			text = generateRandomText(
+				testState.mode.value != Infinity ? testState.mode.value : 100
+			);
 		} else if (testState.mode.type == "time") {
 			text = generateRandomText(50);
 		} else if (testState.mode.type == "custom") {
@@ -55,21 +59,37 @@ const Test = ({}) => {
 	const resetTest = (e) => {
 		dispatch(reset());
 	};
-
-	const handleKeyDown = (e) => {
-		if (e.key === "Escape") {
-			return;
+	const playSound = () => {
+		console.log(soundRef.current);
+		if (!soundRef.current) return;
+		if (!soundRef.current.paused) {
+			soundRef.current.pause();
+			soundRef.current.currentTime = 0;
 		}
-		if (e.ctrlKey) {
+		soundRef.current.play();
+	};
+	const handleKeyDown = (e) => {
+		console.log("HandleKeyDown, Intercept Shortcuts", e);
+		playSound();
+		if (e.key === "Escape") {
+			if (Number(modeRef.current.value) == Infinity) dispatch(completed());
+			else textRef.current.blur();
+			e.stopPropagation();
+		} else if (e.ctrlKey) {
 			if (e.key == "Enter") {
 				startTest();
-				return;
-			} else if (e.key == "c") {
+			} else if (e.key == "ArrowLeft") {
 				resetTest();
-				return;
+			} else if (e.key == "i") {
+				navigate("/setting");
 			}
+			if (e.key != "Backspace") e.stopPropagation();
 		}
 		// if you want to take input in any another element then set it onKeydown stopPropagation
+	};
+
+	const handleFocus = (e) => {
+		// If element is not focus make it focus
 		if (textRef.current && textRef.current != document.activeElement) {
 			textRef.current.focus();
 		}
@@ -89,7 +109,8 @@ const Test = ({}) => {
 		startTest();
 
 		window.addEventListener("mousemove", handleMouseMove);
-		window.addEventListener("keydown", handleKeyDown); // Attach the event listener
+		window.addEventListener("keydown", handleKeyDown, {capture: true});
+		window.addEventListener("keydown", handleFocus); // Attach the event listener
 		return () => {
 			window.removeEventListener("keydown", handleKeyDown); // Cleanup the event listener
 			window.removeEventListener("mousemove", handleMouseMove);
@@ -99,18 +120,18 @@ const Test = ({}) => {
 	// Start new test
 	useEffect(() => {
 		if (testState.mode.type == "quote") {
-			if (previousQuoteValue.current !== testState.mode.value) {
+			if (modeRef.current.value !== testState.mode.value) {
 				refetchQuote(testState.mode.value);
-			} else {
-				previousQuoteValue.current = testState.mode.value;
 			}
 		}
+		modeRef.current = testState.mode;
 		startTest();
 	}, [testState.mode]);
 
 	useEffect(() => {
 		if (testState.quotes.length) startTest();
 	}, [testState.quotes]);
+
 	let display = null;
 	if (!text) {
 		display = null;

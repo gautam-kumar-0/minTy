@@ -1,7 +1,8 @@
 .test-container {
+	line-height: 1.5;
 	font-size: 1.8rem;
 	height: 4.6lh;
-	width: clamp(50vw, 70ch, 1000px);
+	width: clamp(50vw, 60ch, 1000px);
 	position: relative;
 	align-self: stretch;
 }

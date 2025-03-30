@@ -37,6 +37,7 @@ export const textSlice = createSlice({
 	initialState,
 	reducers: {
 		start: (state, action) => {
+			console.log("Start Test", action.payload);
 			state.words = action.payload.map(convertToWordObject);
 			state.index = 0;
 			state.status = Status.READY;
@@ -100,8 +101,11 @@ export const textSlice = createSlice({
 				state.status = Status.COMPLETE;
 			}
 
-			// keep adding words for time mode
-			if (action.payload.mode == "time") {
+			// keep adding words for time mode and infinite mode
+			if (
+				action.payload.mode.type == "time" ||
+				action.payload.mode.value == Infinity
+			) {
 				state.words.push(convertToWordObject(generateRandomWord()));
 			}
 		},

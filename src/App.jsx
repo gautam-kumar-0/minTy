@@ -11,24 +11,30 @@ import Main from "./pages/Main";
 import Setting from "./pages/Setting";
 import useAppearance from "./hooks/useAppearance";
 import useLocalSetting from "./hooks/useLocalSetting";
+import {FaGithub, FaHeart} from "react-icons/fa";
 
 const Header = memo(() => (
 	<Fadable>
 		<header>
 			<div>
-				<div className="logo">
-					<Link to="/">
-						<h1>minTY</h1>
-					</Link>
+				<Link to="/" className="logo">
+					<h1>minTY</h1>
 					<PiKeyboardLight />
-				</div>
+				</Link>
 				<nav>
 					<Link to="/setting">
 						<RiSettings4Fill />
 					</Link>
 				</nav>
 			</div>
-			<div className="">User Profile</div>
+			<div className="project-info">
+				<a href="https://github.com/gautam-kumar-0/minTy">
+					&lt;View Source/&gt;
+				</a>
+				<span>
+					Made with <FaHeart />
+				</span>
+			</div>
 		</header>
 	</Fadable>
 ));

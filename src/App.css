@@ -14,25 +14,33 @@ body {
 	min-width: 100vw;
 	height: auto;
 }
-
+div:has(header) {
+	position: sticky;
+	top: 0;
+	left: 0;
+}
 header {
 	font-size: 1.6rem;
 	padding: 2rem 4rem;
 	display: flex;
 	justify-content: space-between;
-	align-items: baseline;
+	align-items: flex-end;
 }
 
 header > div {
 	display: flex;
-	align-items: baseline;
+	align-items: flex-end;
 	gap: 3rem;
 }
 
-header .logo {
+header .logo,
+header nav a {
 	display: flex;
-	align-items: baseline;
+	align-items: flex-end;
 	gap: 1rem;
+}
+header .logo:hover {
+	color: var(--primary-500);
 }
 
 header .logo h1 {
@@ -58,8 +66,30 @@ header nav {
 	color: var(--text-tertiary);
 	font-size: 1.4rem;
 	transition: color var(--transition-fast);
+	vertical-align: bottom;
 }
 
 header nav:hover {
 	color: var(--primary-500);
+}
+a {
+	text-decoration: none;
+}
+.project-info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	font-size: 0.8rem;
+	color: var(--text-unprocessed);
+	align-items: center;
+}
+
+.project-info a:hover {
+	color: var(--primary-500);
+	text-decoration: underline;
+}
+
+.project-info a {
+	cursor: pointer;
+	color: var(--text-muted);
 }

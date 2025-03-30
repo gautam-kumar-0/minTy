@@ -19,8 +19,7 @@ function SoundSetting() {
 
 	const soundOptions = [
 		{value: "mechanical", label: "Mechanical"},
-		{value: "membrane", label: "Membrane"},
-		{value: "silent", label: "Silent"},
+		{value: "typewriter", label: "TypeWriter"},
 	];
 
 	const handleEnableChange = (newValue) => {

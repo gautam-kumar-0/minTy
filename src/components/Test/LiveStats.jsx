@@ -33,7 +33,7 @@ const LiveStats = () => {
 	const [avgWPM, setAvgWPM] = useState(0);
 	const [accuracy, setAccuracy] = useState(0);
 	const [timeLeft, setTimeLeft] = useState(
-		mode.type === "time" ? parseInt(mode.value) : null
+		mode.type === "time" ? Number(mode.value) : null
 	);
 	const stateRef = useRef(context);
 	const liveRef = useRef(null);
@@ -82,7 +82,9 @@ const LiveStats = () => {
 				isTimed={mode.type === "time"}
 				timeLeft={timeLeft}
 				index={context.index}
+				isQuote={mode.type === "quote"}
 				length={context.words.length}
+				value={mode.value}
 			/>
 			<div className="data">
 				<div className="live-wpm">

@@ -27,7 +27,7 @@ const chartConfig = {
 		grid: 1,
 		line: 2,
 		dot: 0,
-		activeDot: 5,
+		activeDot: 4,
 		tickLine: 0.5,
 	},
 	chartDimensions: {
@@ -176,6 +176,7 @@ const TwoYAxisChart = ({result}) => {
 					dot={{
 						strokeWidth: chartConfig.strokeWidth.dot,
 						fill: chartConfig.colors.lineAverage,
+						r: 2,
 					}}
 					activeDot={{
 						strokeWidth: chartConfig.strokeWidth.dot,
