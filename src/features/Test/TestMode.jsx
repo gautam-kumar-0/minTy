@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from "react";
 import "./TestMode.css";
-import Fadable from "../Fadable/Fadable";
+import Fadable from "../../components/Fadable/Fadable";
 import {BsWrench} from "react-icons/bs";
 import {BiFile} from "react-icons/bi";
 import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks

@@ -3,7 +3,7 @@ import {RiSettings4Fill} from "react-icons/ri";
 import "./App.css";
 import {Toaster} from "react-hot-toast";
 
-import Fadable from "./features/Fadable/Fadable";
+import Fadable from "./components/Fadable/Fadable";
 
 import {PiKeyboardLight} from "react-icons/pi";
 import {Link, Route, Routes} from "react-router-dom";

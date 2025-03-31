@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useRef, useEffect} from "react";
-import Keyboard from "../Keyboard/Keyboard";
+import Keyboard from "../../components/Keyboard/Keyboard.jsx";
 import Text from "../Text/Text";
 import "./Test.css";
 import TestResult from "./TestResult.jsx";
@@ -13,7 +13,7 @@ import {generateRandomText} from "../../utils/functions.js";
 import {setTyping, useQuote} from "./testSlice.js";
 import {useLazyGetQuotesQuery} from "../../services/quotes.js";
 import {TiWarning} from "react-icons/ti";
-import NoticeBox from "../NoticeBox/NoticeBox.jsx";
+import NoticeBox from "../../components/NoticeBox/NoticeBox.jsx";
 import {FaArrowRotateRight} from "react-icons/fa6";
 import useSound from "../../hooks/useSound.js";
 import {useNavigate} from "react-router-dom";
