@@ -16,7 +16,8 @@ body {
 }
 
 .header {
-	position: sticky;
+	position: fixed;
+	width: 100vw;
 	top: 0;
 	left: 0;
 	background-color: color-mix(
@@ -26,11 +27,17 @@ body {
 	);
 	backdrop-filter: blur(4px);
 	z-index: 10;
+	translate: 0 -100%;
+	transition: translate var(--transition-mid) ease;
+}
+
+.header.show {
+	translate: 0 0;
 }
 
 header {
 	font-size: 1.6rem;
-	padding: 2rem 4rem;
+	padding: 1rem 2rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-end;

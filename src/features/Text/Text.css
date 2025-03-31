@@ -46,6 +46,7 @@
 	font-size: 1.2rem;
 	visibility: visible;
 	opacity: 1;
+	border-radius: 1rem;
 	transition: opacity var(--transition-fast) ease;
 }
 

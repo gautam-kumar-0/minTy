@@ -1,17 +1,20 @@
+/* Import Fonts */
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Orbitron:wght@400..900&family=VT323&display=swap");
 
+/* Root Variables */
 :root {
-	/*transitions*/
+	/* Transitions */
 	--transition-slow: 600ms;
 	--transition-mid: 300ms;
 	--transition-fast: 150ms;
 
+	/* Colors */
 	--warn: hsl(0, 91%, 55%);
-
-	/*Base Setting */
 	--primary-background: hwb(0 3% 97%);
 	--primary-foreground: hsl(203, 100%, 89%);
 	--primary-color: hsl(143, 100%, 66%);
+
+	/* Font Settings */
 	--setting-fontFamily: "IBM Plex Mono";
 	--setting-fontSize: 16px;
 
@@ -37,8 +40,6 @@
 		var(--primary-background)
 	);
 	--text-inverse: var(--primary-background);
-
-	/* Typing Text Colors */
 	--text-unprocessed: color-mix(
 		in srgb,
 		var(--primary-foreground) 30%,
@@ -188,11 +189,13 @@
 	/* Default Text Color */
 	color: var(--text-primary);
 
+	/* Font Settings */
 	font-family: var(--setting-fontFamily), "IBM Plex Mono", Inter, system-ui,
 		Avenir, Helvetica, Arial, sans-serif;
 	font-weight: 400;
 	font-size: var(--setting-fontSize);
 
+	/* Font Rendering */
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -211,9 +214,11 @@
 	outline-offset: 2px;
 }
 
+/* Global Styles */
 button {
 	cursor: pointer;
 }
+
 a {
 	color: inherit;
 }
