@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useRef, useState} from "react";
+import React, {memo, useEffect, useRef, useState, useCallback} from "react";
 import {RiSettings4Fill} from "react-icons/ri";
 import {PiKeyboardLight} from "react-icons/pi";
 import {FaHeart} from "react-icons/fa";
@@ -12,24 +12,48 @@ import Setting from "./pages/Setting";
 import useAppearance from "./hooks/useAppearance";
 import useLocalSetting from "./hooks/useLocalSetting";
 
+const Logo = memo(() => (
+	<Link to="/" className="logo">
+		<h1>minTY</h1>
+		<PiKeyboardLight />
+	</Link>
+));
+
+const Navigation = memo(() => (
+	<nav>
+		<Link to="/setting">
+			<RiSettings4Fill />
+		</Link>
+	</nav>
+));
+
+const ProjectInfo = memo(() => (
+	<div className="project-info">
+		<a href="https://github.com/gautam-kumar-0/minTy">&lt;View Source/&gt;</a>
+		<span>
+			Made with <FaHeart />
+		</span>
+	</div>
+));
+
 const Header = memo(() => {
 	const headerRef = useRef(null);
 	const [prevScroll, setPrevScroll] = useState(window.scrollY);
 
-	useEffect(() => {
-		const handleScroll = () => {
-			const currentScroll = window.scrollY;
-			if (currentScroll < prevScroll) {
-				headerRef.current.classList.add("show");
-			} else {
-				headerRef.current.classList.remove("show");
-			}
-			setPrevScroll(currentScroll);
-		};
+	const handleScroll = useCallback(() => {
+		const currentScroll = window.scrollY;
+		if (currentScroll < prevScroll) {
+			headerRef.current?.classList.add("show");
+		} else {
+			headerRef.current?.classList.remove("show");
+		}
+		setPrevScroll(currentScroll);
+	}, [prevScroll]);
 
+	useEffect(() => {
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
-	}, [prevScroll]);
+	}, [handleScroll]);
 
 	return (
 		<Fadable>
@@ -44,31 +68,7 @@ const Header = memo(() => {
 	);
 });
 
-const Logo = () => (
-	<Link to="/" className="logo">
-		<h1>minTY</h1>
-		<PiKeyboardLight />
-	</Link>
-);
-
-const Navigation = () => (
-	<nav>
-		<Link to="/setting">
-			<RiSettings4Fill />
-		</Link>
-	</nav>
-);
-
-const ProjectInfo = () => (
-	<div className="project-info">
-		<a href="https://github.com/gautam-kumar-0/minTy">&lt;View Source/&gt;</a>
-		<span>
-			Made with <FaHeart />
-		</span>
-	</div>
-);
-
-function App() {
+const App = () => {
 	useLocalSetting();
 	useAppearance();
 
@@ -92,6 +92,6 @@ function App() {
 			/>
 		</div>
 	);
-}
+};
 
-export default App;
+export default memo(App);

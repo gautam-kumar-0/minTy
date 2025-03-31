@@ -12,6 +12,9 @@ export const initialState = {
 	words: [],
 	index: 0,
 	status: Status.NOTREADY,
+	currentAccuracy: 0,
+	errors: 0,
+	typedCharacters: 0,
 };
 
 function convertToWordObject(word) {
@@ -32,6 +35,10 @@ function helperCalculateWPM(state, action) {
 	state.words[state.index].wpm = (currentWord.typed.length * 12000) / delta;
 }
 
+function calculateAccuracy(state) {
+	return ((state.typedCharacters - state.errors) / state.typedCharacters) * 100;
+}
+
 export const textSlice = createSlice({
 	name: "text",
 	initialState,
@@ -39,13 +46,19 @@ export const textSlice = createSlice({
 		start: (state, action) => {
 			console.log("Start Test", action.payload);
 			state.words = action.payload.map(convertToWordObject);
-			state.index = 0;
 			state.status = Status.READY;
+			state.index = 0;
+			state.currentAccuracy = 0;
+			state.errors = 0;
+			state.typedCharacters = 0;
 		},
 		reset: (state) => {
 			state.words = state.words.map((w) => convertToWordObject(w.original));
-			state.index = 0;
 			state.status = Status.UNCOMPLETE;
+			state.index = 0;
+			state.currentAccuracy = 0;
+			state.errors = 0;
+			state.typedCharacters = 0;
 		},
 		backspace: (state, action) => {
 			const word = state.words[state.index];
@@ -75,8 +88,11 @@ export const textSlice = createSlice({
 			if (
 				action.payload.character !== temp.original.charAt(temp.typed.length)
 			) {
+				state.errors++;
+				// condition to check for additional typed characters
 				currentIndex <= temp.errors.length ? temp.errors[currentIndex]++ : "";
 			}
+
 			// add character
 			temp.typed = `${temp.typed}${action.payload.character}`;
 
@@ -88,10 +104,19 @@ export const textSlice = createSlice({
 				helperCalculateWPM(state, action);
 				state.status = Status.COMPLETE;
 			}
+
+			// calculate accuracy //simple version
+			state.typedCharacters++;
+			state.currentAccuracy = calculateAccuracy(state);
 		},
 		space: (state, action) => {
 			if (state.status == Status.READY) state.status = Status.UNCOMPLETE;
 			if (!state.words[state.index].typed) return; // stop skipping words
+
+			if (state.words[state.index].original != state.words[state.index].typed) {
+				state.errors++;
+				state.currentAccuracy = calculateAccuracy(state);
+			}
 
 			helperCalculateWPM(state, action);
 			state.index += 1;

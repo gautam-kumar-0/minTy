@@ -77,7 +77,7 @@ const Test = ({}) => {
 		// if you want to take input in any another element then set it onKeydown stopPropagation
 	};
 
-	const handleFocus = (e) => {
+	const handleFocus = () => {
 		// If element is not focus make it focus
 		if (textRef.current && textRef.current != document.activeElement) {
 			textRef.current.focus();
@@ -102,8 +102,9 @@ const Test = ({}) => {
 		window.addEventListener("keydown", handleKeyDown, {capture: true});
 		window.addEventListener("keydown", handleFocus); // Attach the event listener
 		return () => {
-			window.removeEventListener("keydown", handleKeyDown); // Cleanup the event listener
 			window.removeEventListener("mousemove", handleMouseMove);
+			window.removeEventListener("keydown", handleKeyDown); // Cleanup the event listener
+			window.removeEventListener("keydown", handleFocus); // Attach the event listener
 		};
 	}, []);
 

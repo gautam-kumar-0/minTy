@@ -1,11 +1,10 @@
 import React from "react";
+const format = (n) => (n != Infinity ? n : "∞ ");
 
-const TestProgress = ({isTimed, timeLeft, index, isQuote, length, value}) => {
-	const format = (n) => (n != Infinity ? n : "∞ ");
-
+const TestProgress = ({type, timeLeft, index, length, value}) => {
 	return (
 		<div className="test-progress progress">
-			{isTimed ? (
+			{type === "time" ? (
 				<div className="time">
 					<span>{format(timeLeft)}</span>
 					<span className="subtle">s</span>
@@ -13,7 +12,9 @@ const TestProgress = ({isTimed, timeLeft, index, isQuote, length, value}) => {
 			) : (
 				<div className="number">
 					<span>{index + 1}</span>
-					<span className="subtle">/{isQuote ? length : format(value)}</span>
+					<span className="subtle">
+						/{type === "quote" ? length : format(value)}
+					</span>
 				</div>
 			)}
 		</div>
