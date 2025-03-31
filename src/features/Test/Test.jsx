@@ -147,6 +147,12 @@ const Test = ({}) => {
 						<FaArrowRotateRight />
 					</button>
 				</div>
+
+				{keyboard && (
+					<div className="keyboard-wrapper">
+						<Keyboard />
+					</div>
+				)}
 				<div className="shortcuts">
 					<div>
 						<span>
@@ -161,11 +167,6 @@ const Test = ({}) => {
 						<span>Restart</span>
 					</div>
 				</div>
-				{keyboard && (
-					<div className="keyboard-wrapper">
-						<Keyboard />
-					</div>
-				)}
 			</>
 		);
 	}

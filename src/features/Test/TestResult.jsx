@@ -129,6 +129,20 @@ const TestResult = ({startTest, resetTest}) => {
 					<FaArrowRotateRight />
 				</button>
 			</div>
+			<div className="shortcuts">
+				<div>
+					<span>
+						<code>ctrl</code> + <code>enter</code>
+					</span>
+					<span>New Test</span>
+				</div>
+				<div>
+					<span>
+						<code>ctrl</code> + <code>left</code>
+					</span>
+					<span>Restart</span>
+				</div>
+			</div>
 		</div>
 	);
 };
