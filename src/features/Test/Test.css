@@ -208,8 +208,6 @@
 	gap: 1ch;
 }
 
-.mode-info {
-}
 .summary {
 	display: flex;
 	align-items: baseline;
@@ -231,22 +229,43 @@
 	transition: opacity var(--transition-mid) var(--transition-fast) ease,
 		scale var(--transition-fast) ease;
 }
+
 .summary:hover .info {
 	opacity: 1;
 	scale: 1 1;
-}
-.duration {
 }
 
 .test-info .primary {
 	color: var(--primary-color);
 	font-size: 1.3rem;
 }
+
 .test-info .secondary {
 	color: var(--text-secondary);
 	font-size: 1.1rem;
 	font-weight: 500;
 }
+
 .test-info .muted {
 	color: var(--text-muted);
+}
+
+.shortcuts {
+	font-size: 0.8rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1ch;
+	color: var(--text-muted);
+	margin-bottom: 1rem;
+}
+
+.shortcuts > div {
+	display: flex;
+	gap: 1ch;
+}
+
+.shortcuts code {
+	background-color: var(--bg-tertiary);
+	padding: 2px 4px;
+	border-radius: 2px;
 }

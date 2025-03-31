@@ -53,6 +53,7 @@ const Text = React.forwardRef((props, ref) => {
 		} else if (textState.status == "uncomplete")
 			setChildren(<TestContent state={textState} />);
 	}, [textState]);
+
 	useEffect(() => {
 		ref.current?.focus();
 	}, []);

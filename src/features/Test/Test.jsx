@@ -4,8 +4,7 @@ import Keyboard from "../../components/Keyboard/Keyboard.jsx";
 import Text from "../Text/Text";
 import "./Test.css";
 import TestResult from "./TestResult.jsx";
-import LiveStats from "./LiveStats.jsx";
-
+import TestStats from "./TestStats.jsx";
 import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 
 import {start, reset, completed} from "../Text/textSlice.js";
@@ -134,7 +133,7 @@ const Test = ({}) => {
 		display = (
 			<>
 				<div className="stats-box">
-					{liveStats && textState.status == "uncomplete" ? <LiveStats /> : ""}
+					{liveStats && textState.status == "uncomplete" ? <TestStats /> : ""}
 				</div>
 
 				<Text ref={textRef} />
@@ -142,11 +141,25 @@ const Test = ({}) => {
 					<button
 						tabIndex={1}
 						className="action-button"
-						onClick={() => resetTest()}
-						data-action="Restart"
+						onClick={() => startTest()}
+						data-action="New Test"
 					>
 						<FaArrowRotateRight />
 					</button>
+				</div>
+				<div className="shortcuts">
+					<div>
+						<span>
+							<code>ctrl</code> + <code>enter</code>
+						</span>
+						<span>New Test</span>
+					</div>
+					<div>
+						<span>
+							<code>ctrl</code> + <code>left</code>
+						</span>
+						<span>Restart</span>
+					</div>
 				</div>
 				{keyboard && (
 					<div className="keyboard-wrapper">

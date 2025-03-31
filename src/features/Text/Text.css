@@ -14,7 +14,8 @@
 	align-items: start;
 	overflow: hidden;
 	max-height: 4.6lh;
-	box-shadow: 0 0 5rem var(--shadow-md);
+	box-shadow: -2px -2px 0.2rem rgba(255, 255, 255, 0.1),
+		2px 2px 0.2rem rgba(0, 0, 0, 0.1);
 	transition: background var(--transition-fast);
 }
 
@@ -40,7 +41,6 @@
 	align-items: center;
 	width: 100%;
 	height: 100%;
-	/* background: var(--shade-20); */
 	top: 0;
 	left: 0;
 	font-size: 1.2rem;

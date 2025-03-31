@@ -45,7 +45,7 @@ export const textSlice = createSlice({
 		reset: (state) => {
 			state.words = state.words.map((w) => convertToWordObject(w.original));
 			state.index = 0;
-			state.status = Status.READY;
+			state.status = Status.UNCOMPLETE;
 		},
 		backspace: (state, action) => {
 			const word = state.words[state.index];
