@@ -15,6 +15,7 @@ export const initialState = {
 	currentAccuracy: 0,
 	errors: 0,
 	typedCharacters: 0,
+	// todo Improve the calculation of live wpm and average wpm
 };
 
 function convertToWordObject(word) {
@@ -29,10 +30,11 @@ function convertToWordObject(word) {
 }
 
 function helperCalculateWPM(state, action) {
-	state.words[state.index].end = action.payload.timeStamp;
+	state.words[state.index].end = performance.now();
 	const currentWord = state.words[state.index];
-	const delta = Math.max(currentWord.end - currentWord.start, 10); // keyboard latency
-	state.words[state.index].wpm = (currentWord.typed.length * 12000) / delta;
+	const delta = Math.max(currentWord.end - currentWord.start, 20); // keyboard latency
+	state.words[state.index].wpm =
+		((currentWord.typed.length + 1) * 12000) / delta;
 }
 
 function calculateAccuracy(state) {
@@ -81,7 +83,7 @@ export const textSlice = createSlice({
 			if (temp.typed.length > temp.original.length + 5) return;
 
 			// set start time
-			if (!temp.typed.length) temp.start = action.payload.timeStamp;
+			if (!temp.typed.length) temp.start = performance.now();
 
 			// check for errors
 			let currentIndex = temp.typed.length;
@@ -101,8 +103,7 @@ export const textSlice = createSlice({
 				state.index === state.words.length - 1 && temp.typed === temp.original;
 
 			if (isLastWord) {
-				helperCalculateWPM(state, action);
-				state.status = Status.COMPLETE;
+				textSlice.caseReducers.space(state, action);
 			}
 
 			// calculate accuracy //simple version
@@ -117,6 +118,7 @@ export const textSlice = createSlice({
 				state.errors++;
 				state.currentAccuracy = calculateAccuracy(state);
 			}
+			state.typedCharacters++;
 
 			helperCalculateWPM(state, action);
 			state.index += 1;
@@ -128,8 +130,8 @@ export const textSlice = createSlice({
 
 			// keep adding words for time mode and infinite mode
 			if (
-				action.payload.mode.type == "time" ||
-				action.payload.mode.value == Infinity
+				action.payload?.mode?.type == "time" ||
+				action.payload?.mode?.value == Infinity
 			) {
 				state.words.push(convertToWordObject(generateRandomWord()));
 			}

@@ -5,13 +5,9 @@ import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 import {completed} from "../Text/textSlice";
 
 const calculateAvgWPM = (state) => {
-	if (state.status !== "uncomplete") return 0;
+	if (state.index == 0 && state.lastTimestamp == 0) return 0;
 	const timeElapsed = performance.now() - state.words[0].start;
-	let characterCount = 0;
-	for (let i = 0; i <= state.index; i++) {
-		characterCount += state.words[i].typed.length;
-	}
-	return (characterCount * 12000) / timeElapsed;
+	return (state.typedCharacters * 12000) / timeElapsed;
 };
 
 const TestStats = () => {
@@ -41,7 +37,7 @@ const TestStats = () => {
 		liveRef.current.style.opacity = "1";
 
 		const updateStats = debounce(() => {
-			setAvgWPM(calculateAvgWPM(stateRef.current));
+			setAvgWPM((prev) => calculateAvgWPM(stateRef.current));
 		}, 500);
 
 		let liveUpdateInterval = null;
