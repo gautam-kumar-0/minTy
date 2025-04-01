@@ -11,7 +11,7 @@ const TestProgress = ({type, timeLeft, index, length, value}) => {
 				</div>
 			) : (
 				<div className="number">
-					<span>{index + 1}</span>
+					<span>{index}</span>
 					<span className="subtle">
 						/{type === "quote" ? length : format(value)}
 					</span>

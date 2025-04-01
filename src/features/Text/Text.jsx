@@ -15,7 +15,7 @@ const Text = React.forwardRef((props, ref) => {
 	const dispatch = useDispatch();
 	const [children, setChildren] = useState(null);
 
-	const [animation, setAnimation] = useState("");
+	const [animation, setAnimation] = useState("appear");
 	const testWindow = useRef(null);
 
 	const handleKeyPress = (e) => {
@@ -49,8 +49,10 @@ const Text = React.forwardRef((props, ref) => {
 				setAnimation("appear");
 				setChildren(<TestContent state={textState} />);
 			}, 200);
-		} else if (textState.status == "uncomplete")
+		} else if (textState.status == "uncomplete") {
+			setAnimation("appear");
 			setChildren(<TestContent state={textState} />);
+		}
 	}, [textState.status, textState.words]);
 
 	useEffect(() => {
