@@ -14,6 +14,7 @@
 	position: relative;
 	width: min-content;
 	margin: auto;
+	/* min-height: max-content; */
 }
 
 .keyboard-wrapper {
@@ -30,7 +31,7 @@
 	align-items: center;
 	color: var(--text-tertiary);
 	padding-inline: 1rem;
-	margin: 1rem 0;
+	margin-top: 1rem;
 }
 
 .live-stats {

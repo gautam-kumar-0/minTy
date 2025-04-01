@@ -18,7 +18,6 @@ const Text = React.forwardRef((props, ref) => {
 	const [animation, setAnimation] = useState("");
 	const testWindow = useRef(null);
 
-	// Handle Input
 	const handleKeyPress = (e) => {
 		if (!(e.key == "Backspace" || printableCharacterPattern.test(e.key)))
 			return;
@@ -49,7 +48,7 @@ const Text = React.forwardRef((props, ref) => {
 				ref.current?.focus();
 				setAnimation("appear");
 				setChildren(<TestContent state={textState} />);
-			}, 20);
+			}, 200);
 		} else if (textState.status == "uncomplete")
 			setChildren(<TestContent state={textState} />);
 	}, [textState.status, textState.words]);
@@ -65,8 +64,8 @@ const Text = React.forwardRef((props, ref) => {
 			tabIndex={0}
 			ref={ref}
 		>
-			<div className="testBg">
-				<div className={`testWindow ${animation}`} ref={testWindow}>
+			<div className={`testBg ${animation}`}>
+				<div className={`testWindow `} ref={testWindow}>
 					{children}
 				</div>
 				<div className="overlay">

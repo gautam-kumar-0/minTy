@@ -36,28 +36,41 @@ const ProjectInfo = memo(() => (
 	</div>
 ));
 
-const Header = memo(() => {
-	const headerRef = useRef(null);
-	const [prevScroll, setPrevScroll] = useState(window.scrollY);
+const throttle = (fn, wait) => {
+	let isExecuted = false;
+	return () => {
+		if (isExecuted) return;
+		isExecuted = true;
+		fn();
+		setTimeout(() => (isExecuted = false), wait);
+	};
+};
 
-	const handleScroll = useCallback(() => {
-		const currentScroll = window.scrollY;
-		if (currentScroll < prevScroll) {
-			headerRef.current?.classList.add("show");
-		} else {
-			headerRef.current?.classList.remove("show");
-		}
-		setPrevScroll(currentScroll);
-	}, [prevScroll]);
+const Header = memo(() => {
+	const [visible, setVisible] = useState(true);
+	const prevScrollRef = useRef(0);
+
+	const handleScroll = throttle(() => {
+		const currentScrollPos = window.pageYOffset;
+		const isVisible = prevScrollRef.current > currentScrollPos;
+		setVisible(isVisible);
+		prevScrollRef.current = currentScrollPos;
+	}, 500);
 
 	useEffect(() => {
 		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, [handleScroll]);
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
+
+	const headerStyle = {
+		transform: visible ? "translateY(0)" : "translateY(-100%)",
+	};
 
 	return (
 		<Fadable>
-			<header className="header" ref={headerRef}>
+			<header className={`header`} style={headerStyle}>
 				<div>
 					<Logo />
 					<Navigation />

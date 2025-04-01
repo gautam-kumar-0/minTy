@@ -48,8 +48,10 @@ const Test = ({}) => {
 				dispatch(useQuote());
 			}
 		}
-		setText(text);
-		dispatch(start(text));
+		if (text) {
+			setText(text);
+			dispatch(start(text));
+		}
 	};
 
 	const resetTest = (e) => {

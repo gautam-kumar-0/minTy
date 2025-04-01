@@ -14,9 +14,4 @@ const Fadable = memo(({className = "", children, ...restProps}) => {
 	);
 });
 
-Fadable.propTypes = {
-	className: PropTypes.string,
-	children: PropTypes.node.isRequired,
-};
-
 export default Fadable;

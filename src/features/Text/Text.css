@@ -1,7 +1,7 @@
 .test-container {
 	line-height: 1.5;
 	font-size: 1.8rem;
-	max-height: 4.6lh;
+	height: 4.6lh;
 	width: clamp(50vw, 60ch, 1000px);
 	position: relative;
 	align-self: stretch;
@@ -18,18 +18,24 @@
 	box-shadow: -1px -1px 0.1rem rgba(255, 255, 255, 0.1),
 		1px 1px 0.1rem rgba(0, 0, 0, 0.1);
 	background-color: var(--bg-secondary);
+	opacity: 0;
+	transition: opacity var(--transition-mid) ease;
 }
 
 .testWindow {
 	overflow: hidden;
 	position: relative;
 	transition: opacity var(--transition-mid) ease,
-		filter var(--transition-mid) ease;
-	opacity: 0;
+		translate var(--transition-mid) ease;
+
+	translate: 0 1lh;
 }
 
-.appear {
-	animation: appear var(--transition-mid) ease forwards;
+.appear .testWindow {
+	translate: 0 0;
+}
+.appear.testBg {
+	opacity: 1;
 }
 
 .test-container .overlay {
@@ -61,7 +67,7 @@
 	outline: none;
 }
 
-@keyframes appear {
+/* @keyframes appear {
 	0% {
 		opacity: 0;
 		translate: 0 100px;
@@ -70,7 +76,7 @@
 		opacity: 1;
 		translate: 0 0;
 	}
-}
+} */
 
 .testText {
 	display: flex;

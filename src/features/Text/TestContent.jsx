@@ -2,7 +2,7 @@ import React, {useRef, useLayoutEffect, memo, useEffect} from "react";
 import Word from "./Word";
 import {useSelector} from "react-redux";
 
-const TestContent = memo(({state}, ref) => {
+const TestContent = ({state}) => {
 	const cursorType = useSelector((state) => state.settings.cursor);
 	const testText = useRef(null);
 	const cursor = useRef(null);
@@ -57,6 +57,6 @@ const TestContent = memo(({state}, ref) => {
 			{state.words.map(renderWord)}
 		</div>
 	);
-});
+};
 
 export default TestContent;

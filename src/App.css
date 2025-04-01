@@ -27,12 +27,7 @@ body {
 	);
 	backdrop-filter: blur(4px);
 	z-index: 10;
-	translate: 0 -100%;
-	transition: translate var(--transition-mid) ease;
-}
-
-.header.show {
-	translate: 0 0;
+	transition: transform var(--transition-mid) ease;
 }
 
 header {
