@@ -6,6 +6,7 @@
 	position: relative;
 	align-self: stretch;
 }
+
 .testBg {
 	border-radius: 1rem;
 	padding: 0.5lh 0.7lh;
@@ -16,7 +17,7 @@
 	max-height: 4.6lh;
 	box-shadow: -1px -1px 0.1rem rgba(255, 255, 255, 0.1),
 		1px 1px 0.1rem rgba(0, 0, 0, 0.1);
-	transition: background var(--transition-fast);
+	background-color: var(--bg-secondary);
 }
 
 .testWindow {
@@ -32,7 +33,7 @@
 }
 
 .test-container .overlay {
-	color: var(--primary-300);
+	color: var(--primary-600);
 	position: absolute;
 	display: flex;
 	flex-direction: column;
@@ -46,27 +47,20 @@
 	font-size: 1.2rem;
 	visibility: visible;
 	opacity: 1;
+	backdrop-filter: blur(3px);
 	border-radius: 1rem;
-	transition: opacity var(--transition-fast) ease;
+	transition: opacity var(--transition-fast) ease var(--transition-mid);
 }
 
 .test-container:focus .overlay {
 	opacity: 0;
 	visibility: hidden;
 }
-.test-container .testWindow {
-	filter: opacity(0.5) blur(4px);
-}
-.test-container:focus .testWindow {
-	opacity: 1;
-	filter: none;
-}
+
 .test-container:focus {
 	outline: none;
 }
-.test-container:focus .testBg {
-	background-color: var(--bg-secondary);
-}
+
 @keyframes appear {
 	0% {
 		opacity: 0;
@@ -85,6 +79,7 @@
 	position: relative;
 	transition: transform var(--transition-fast) ease;
 	column-gap: 1ch;
+	letter-spacing: 0.08rem;
 }
 
 .cursor {
@@ -101,7 +96,7 @@
 }
 .cursor.bar {
 	height: 0.9lh;
-	width: 0.2rem;
+	width: 0.15rem;
 }
 .cursor.block {
 	border-radius: 0;

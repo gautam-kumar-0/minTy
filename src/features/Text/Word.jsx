@@ -5,8 +5,9 @@ const Letter = memo(({letter}) => {
 	const {confidence} = useSelector((state) => state.settings);
 	const {value, isTyped, isCurrent, isValid} = letter;
 	let className = "letter ";
+
 	if (isCurrent) className += " current";
-	else if (isTyped) {
+	if (isTyped) {
 		if (isValid || confidence) {
 			className += " valid";
 		} else className += " invalid";
@@ -25,6 +26,7 @@ const Word = memo(({word, done, typing, pending}) => {
 	LETTERS[LETTERS.length - 1].value = "";
 
 	if (word.original.length < word.typed.length) {
+		const space = LETTERS.pop();
 		Array.from(word.typed.slice(word.original.length)).forEach((letter, i) => {
 			LETTERS.push({
 				value: letter,
@@ -33,6 +35,8 @@ const Word = memo(({word, done, typing, pending}) => {
 				isValid: false,
 			});
 		});
+		space.isCurrent = typing;
+		LETTERS.push(space);
 	}
 
 	return (
