@@ -76,7 +76,7 @@ const Test = ({}) => {
 			}
 			if (e.key != "Backspace") e.stopPropagation();
 		}
-		// if you want to take input in any another element then set it onKeydown stopPropagation
+		if (e.key == " ") e.preventDefault();
 	};
 
 	const handleFocus = () => {

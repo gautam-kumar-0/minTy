@@ -64,13 +64,9 @@ const Header = memo(() => {
 		};
 	}, []);
 
-	const headerStyle = {
-		transform: visible ? "translateY(0)" : "translateY(-100%)",
-	};
-
 	return (
-		<Fadable>
-			<header className={`header`} style={headerStyle}>
+		<Fadable className="headerContainer">
+			<header className={`header ${visible ? "show" : ""}`}>
 				<div>
 					<Logo />
 					<Navigation />

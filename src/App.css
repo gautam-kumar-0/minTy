@@ -14,12 +14,17 @@ body {
 	min-width: 100vw;
 	height: auto;
 }
-
-.header {
-	position: fixed;
-	width: 100vw;
+.headerContainer {
 	top: 0;
 	left: 0;
+	position: fixed;
+}
+.headerContainer:hover .header,
+.header.show {
+	transform: translateY(0);
+}
+.header {
+	width: 100vw;
 	background-color: color-mix(
 		in srgb,
 		var(--primary-background) 70%,
@@ -27,6 +32,7 @@ body {
 	);
 	backdrop-filter: blur(4px);
 	z-index: 10;
+	transform: translateY(-100%);
 	transition: transform var(--transition-mid) ease;
 }
 

@@ -21,9 +21,10 @@
 	align-items: center;
 	min-width: 2lh;
 	min-height: 2lh;
-	padding: 1ch 2ch;
+	padding: 0.8ch 1.6ch;
 	border-radius: 0.8em;
 	transition: all var(--transition-fast);
+	font-size: 0.8rem;
 }
 
 .key:hover {
@@ -57,14 +58,14 @@
 		var(--primary-foreground) 1.5%,
 		var(--primary-background)
 	);
-	padding: 1.2rem 0.8rem;
+	padding: 2ch;
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
 	justify-content: space-around;
-	box-shadow: -1px -2px 0.1rem rgba(255, 255, 255, 0.1),
+	box-shadow: -1px -1px 0.1rem rgba(255, 255, 255, 0.1),
 		1px 1px 0.1rem rgba(0, 0, 0, 0.1);
-	gap: 1.5ch;
+	gap: 1.2ch;
 }
 
 .keyboard.shifted {
@@ -75,7 +76,7 @@
 	display: grid;
 	align-items: center;
 	justify-content: center;
-	gap: 1.5ch;
+	gap: 1.2ch;
 	grid-auto-flow: column;
 }
 
