@@ -22,3 +22,13 @@ export const formatMsConcise = (ms) => {
 
 	return parts.join(" ");
 };
+
+export const throttle = (fn, wait) => {
+	let isExecuted = false;
+	return () => {
+		if (isExecuted) return;
+		isExecuted = true;
+		fn();
+		setTimeout(() => (isExecuted = false), wait);
+	};
+};

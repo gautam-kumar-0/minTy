@@ -8,7 +8,7 @@ import TestStats from "./TestStats.jsx";
 import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 
 import {start, reset, completed} from "../Text/textSlice.js";
-import {generateRandomText} from "../../utils/functions.js";
+import {generateRandomText, throttle} from "../../utils/functions.js";
 import {setTyping, useQuote} from "./testSlice.js";
 import {useLazyGetQuotesQuery} from "../../services/quotes.js";
 import {TiWarning} from "react-icons/ti";
@@ -87,17 +87,7 @@ const Test = ({}) => {
 		}
 	};
 
-	const throttleMouseMove = () => {
-		let isExecuted = false;
-		return () => {
-			if (isExecuted) return;
-			dispatch(setTyping(false));
-			isExecuted = true;
-			setTimeout(() => (isExecuted = false), 2000);
-		};
-	};
-
-	const handleMouseMove = throttleMouseMove();
+	const handleMouseMove = throttle(() => dispatch(setTyping(false)), 2000);
 
 	//When test is loaded
 	useEffect(() => {

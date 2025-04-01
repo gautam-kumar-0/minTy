@@ -11,6 +11,7 @@ import Main from "./pages/Main";
 import Setting from "./pages/Setting";
 import useAppearance from "./hooks/useAppearance";
 import useLocalSetting from "./hooks/useLocalSetting";
+import {throttle} from "./utils/functions";
 
 const Logo = memo(() => (
 	<Link to="/" className="logo">
@@ -35,16 +36,6 @@ const ProjectInfo = memo(() => (
 		</span>
 	</div>
 ));
-
-const throttle = (fn, wait) => {
-	let isExecuted = false;
-	return () => {
-		if (isExecuted) return;
-		isExecuted = true;
-		fn();
-		setTimeout(() => (isExecuted = false), wait);
-	};
-};
 
 const Header = memo(() => {
 	const [visible, setVisible] = useState(true);
