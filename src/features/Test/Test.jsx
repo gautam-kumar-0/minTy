@@ -16,6 +16,7 @@ import NoticeBox from "../../components/NoticeBox/NoticeBox.jsx";
 import {FaArrowRotateRight} from "react-icons/fa6";
 import useSound from "../../hooks/useSound.js";
 import {useNavigate} from "react-router-dom";
+import {ActionButton} from "../../components/ActionButton/ActionButton.jsx";
 
 const Test = ({}) => {
 	const {keyboard, liveStats} = useSelector((state) => state.settings);
@@ -141,14 +142,9 @@ const Test = ({}) => {
 
 				<Text ref={textRef} />
 				<div className="actions">
-					<button
-						tabIndex={1}
-						className="action-button"
-						onClick={() => startTest()}
-						data-action="New Test"
-					>
+					<ActionButton onClick={() => startTest()} action="New Test">
 						<FaArrowRotateRight />
-					</button>
+					</ActionButton>
 				</div>
 
 				{keyboard && (

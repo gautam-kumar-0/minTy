@@ -4,6 +4,7 @@ import {FaChevronRight} from "react-icons/fa";
 import {FaArrowRotateRight} from "react-icons/fa6";
 import TwoYAxisChart from "./TwoYAxisChart.jsx";
 import {formatMsConcise} from "../../utils/functions";
+import {ActionButton} from "../../components/ActionButton/ActionButton.jsx";
 
 const TestResult = ({startTest, resetTest}) => {
 	const state = useSelector((state) => state.text);
@@ -114,20 +115,12 @@ const TestResult = ({startTest, resetTest}) => {
 				<span>Loading</span>
 			)}
 			<div className="actions">
-				<button
-					onClick={startTest}
-					className="action-button"
-					data-action="Next"
-				>
+				<ActionButton onClick={startTest} action="Next">
 					<FaChevronRight />
-				</button>
-				<button
-					onClick={resetTest}
-					className="action-button"
-					data-action="Restart"
-				>
+				</ActionButton>
+				<ActionButton onClick={resetTest} action="Restart">
 					<FaArrowRotateRight />
-				</button>
+				</ActionButton>
 			</div>
 			<div className="shortcuts">
 				<div>
