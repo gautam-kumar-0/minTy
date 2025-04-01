@@ -49,7 +49,7 @@ const Text = React.forwardRef((props, ref) => {
 				ref.current?.focus();
 				setAnimation("appear");
 				setChildren(<TestContent state={textState} />);
-			}, 50);
+			}, 20);
 		} else if (textState.status == "uncomplete")
 			setChildren(<TestContent state={textState} />);
 	}, [textState.status, textState.words]);

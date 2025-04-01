@@ -44,7 +44,7 @@ export const textSlice = createSlice({
 	initialState,
 	reducers: {
 		start: (state, action) => {
-			console.log("Start Test", action.payload);
+			// console.log("Start Test", action.payload);
 			state.words = action.payload.map(convertToWordObject);
 			state.status = Status.READY;
 			state.index = 0;

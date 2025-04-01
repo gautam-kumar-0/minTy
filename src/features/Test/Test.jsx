@@ -32,7 +32,7 @@ const Test = ({}) => {
 	const textRef = useRef(null);
 
 	const startTest = async () => {
-		console.log("startTest Inside", testState.mode, testState.quotes);
+		// console.log("startTest Inside", testState.mode, testState.quotes);
 		let text = [];
 		if (testState.mode.type == "words") {
 			text = generateRandomText(
@@ -57,7 +57,7 @@ const Test = ({}) => {
 	};
 
 	const handleKeyDown = (e) => {
-		console.log("HandleKeyDown, Intercept Shortcuts", e);
+		// console.log("HandleKeyDown, Intercept Shortcuts", e);
 		if (e.repeat) return;
 		playSound();
 		if (e.key === "Escape") {

@@ -57,7 +57,7 @@ const CustomValue = ({label, handleSelect}) => {
 							onSubmit={(e) => {
 								e.preventDefault();
 								setShow(false);
-								console.log("Custom Value", value);
+								// console.log("Custom Value", value);
 								if (value == 0) handleSelect(Infinity);
 								else handleSelect(value);
 							}}
@@ -235,7 +235,7 @@ const TestMode = ({}) => {
 		dispatch(setMode({type: key, value: MODE[key][1].value}));
 	};
 	const handleValueChange = (value) => {
-		console.log("handle value Change", value);
+		// console.log("handle value Change", value);
 		dispatch(setMode({value: value}));
 	};
 
