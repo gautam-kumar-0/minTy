@@ -8,10 +8,11 @@ export const quotesApi = createApi({
 	endpoints: (builder) => ({
 		getQuotes: builder.query({
 			query: (quotes) => `${quotes || "quotes"}`,
+			keepUnusedDataFor: 0,
 		}),
 	}),
 });
 
-// Export hooks for usage in functional components, which are
+// Export hooks for usage in functional features, which are
 // auto-generated based on the defined endpoints
-export const {useGetQuotesQuery} = quotesApi;
+export const {useGetQuotesQuery, useLazyGetQuotesQuery} = quotesApi;

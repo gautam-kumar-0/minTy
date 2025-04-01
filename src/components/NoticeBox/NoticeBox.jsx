@@ -1,7 +1,5 @@
 import React from "react";
-import chroma from "chroma-js";
 import "./NoticeBox.css";
-const DEFAULT_COLOR = "#ccc"; // Define a generic fallback color
 
 const NoticeBox = ({children, color, className, ...rest}) => {
 	const boxStyle = {

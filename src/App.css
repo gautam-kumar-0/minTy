@@ -5,47 +5,107 @@
 }
 
 body {
-	overflow: hidden;
 	background-color: var(--primary-background);
-
 	position: relative;
 }
 
 .app {
 	min-height: 100vh;
 	min-width: 100vw;
+	height: auto;
 }
+.headerContainer {
+	top: 0;
+	left: 0;
+	position: fixed;
+}
+.headerContainer:hover .header,
+.header.show {
+	transform: translateY(0);
+}
+.header {
+	width: 100vw;
+	background-color: color-mix(
+		in srgb,
+		var(--primary-background) 70%,
+		transparent
+	);
+	backdrop-filter: blur(4px);
+	z-index: 10;
+	transform: translateY(-100%);
+	transition: transform var(--transition-mid) ease;
+}
+
 header {
-	font-size: 1.6rem;
 	padding: 1rem 3rem;
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-end;
 }
-header div {
+
+header > div {
 	display: flex;
-	font-size: inherit;
-	align-items: center;
-	gap: 1ch;
-	margin-right: 2rem;
+	align-items: flex-end;
+	gap: 3rem;
 }
+
+header .logo,
+header nav a {
+	display: flex;
+	align-items: flex-end;
+	gap: 1rem;
+}
+header .logo:hover {
+	color: var(--primary-500);
+}
+
 header .logo h1 {
-	font-size: 1.8rem;
+	font-size: 1.4rem;
+	line-height: 1;
 	letter-spacing: 0.1ch;
 	font-weight: bold;
 	background-image: linear-gradient(
 		45deg,
-		var(--tint-20),
-		var(--text-color-subtle)
+		var(--text-muted),
+		var(--text-primary)
 	);
 	-webkit-background-clip: text;
 	background-clip: text;
 	color: transparent;
-	display: inline-block; /* To contain the text size */
+	display: inline-block;
 }
+
 header nav {
 	display: flex;
-	gap: 1rem;
-	color: var(--text-color-subtle);
-	/* border: 1px solid red; */
+	align-items: baseline;
+	gap: 1.5rem;
+	color: var(--text-tertiary);
+	font-size: 1.2rem;
+	transition: color var(--transition-fast);
+	vertical-align: bottom;
+}
+
+header nav:hover {
+	color: var(--primary-500);
+}
+a {
+	text-decoration: none;
+}
+.project-info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	font-size: 0.6rem;
+	color: var(--text-unprocessed);
+	align-items: center;
+}
+
+.project-info a:hover {
+	color: var(--primary-500);
+	text-decoration: underline;
+}
+
+.project-info a {
+	cursor: pointer;
+	color: var(--text-muted);
 }

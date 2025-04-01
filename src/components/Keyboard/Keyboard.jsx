@@ -1,26 +1,24 @@
-import React, {useState, useEffect, memo} from "react";
+import React, {useState, useEffect, memo, useCallback} from "react";
 import "./Keyboard.css";
 import Row from "./Row";
 
 import {convertToKey, keyArray} from "./config";
 
-const Keyboard = () => {
+const Keyboard = memo(() => {
 	const [activeKey, setActiveKey] = useState("");
 	const [shifted, setShifted] = useState(false);
 
+	const handleKeyDown = useCallback((e) => {
+		setActiveKey(convertToKey(e));
+		setShifted(e.shiftKey || e.getModifierState("CapsLock"));
+	}, []);
+
+	const handleKeyUp = useCallback((e) => {
+		setActiveKey("");
+		if (e.key === "Shift") setShifted(false);
+	}, []);
+
 	useEffect(() => {
-		const handleKeyDown = (e) => {
-			console.log("KeyBoard", e);
-			setActiveKey(convertToKey(e));
-			setShifted(e.shiftKey || e.getModifierState("CapsLock"));
-			console.log("activekey", activeKey);
-		};
-
-		const handleKeyUp = (e) => {
-			setActiveKey("");
-			if (e.key == "Shift") setShifted(false);
-		};
-
 		window.addEventListener("keydown", handleKeyDown);
 		window.addEventListener("keyup", handleKeyUp);
 
@@ -28,16 +26,20 @@ const Keyboard = () => {
 			window.removeEventListener("keydown", handleKeyDown);
 			window.removeEventListener("keyup", handleKeyUp);
 		};
-	}, []);
+	}, [handleKeyDown, handleKeyUp]);
 
 	return (
 		<div className={`keyboard ${shifted ? "shifted" : ""}`}>
-			<Row keys={keyArray[0]} className={`row-1`} activeKey={activeKey} />
-			<Row keys={keyArray[1]} className={`row-2`} activeKey={activeKey} />
-			<Row keys={keyArray[2]} className={`row-3`} activeKey={activeKey} />
-			<Row keys={keyArray[3]} className={`row-4`} activeKey={activeKey} />
+			{keyArray.map((row, index) => (
+				<Row
+					key={`row-${index + 1}`}
+					keys={row}
+					className={`row-${index + 1}`}
+					activeKey={activeKey}
+				/>
+			))}
 		</div>
 	);
-};
+});
 
 export default Keyboard;

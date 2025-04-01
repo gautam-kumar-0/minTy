@@ -1,33 +1,77 @@
-import React, {memo} from "react";
+import React, {memo, useEffect, useRef, useState, useCallback} from "react";
 import {RiSettings4Fill} from "react-icons/ri";
-import "./App.css";
-
-import Fadable from "./components/Fadable/Fadable";
-
 import {PiKeyboardLight} from "react-icons/pi";
+import {FaHeart} from "react-icons/fa";
 import {Link, Route, Routes} from "react-router-dom";
+import {Toaster} from "react-hot-toast";
+
+import "./App.css";
+import Fadable from "./components/Fadable/Fadable";
 import Main from "./pages/Main";
 import Setting from "./pages/Setting";
-const Header = memo(() => (
-	<Fadable>
-		<header>
-			<div>
-				<div className="logo">
-					<Link to="/">
-						<h1>minTY</h1>
-					</Link>
-					<PiKeyboardLight />
-				</div>
-				<nav>
-					<RiSettings4Fill />
-				</nav>
-			</div>
-			<div className="">User Profile</div>
-		</header>
-	</Fadable>
+import useAppearance from "./hooks/useAppearance";
+import useLocalSetting from "./hooks/useLocalSetting";
+import {throttle} from "./utils/functions";
+
+const Logo = memo(() => (
+	<Link to="/" className="logo">
+		<h1>minTY</h1>
+		<PiKeyboardLight />
+	</Link>
 ));
 
-function App() {
+const Navigation = memo(() => (
+	<nav>
+		<Link to="/setting">
+			<RiSettings4Fill />
+		</Link>
+	</nav>
+));
+
+const ProjectInfo = memo(() => (
+	<div className="project-info">
+		<a href="https://github.com/gautam-kumar-0/minTy">&lt;View Source/&gt;</a>
+		<span>
+			Made with <FaHeart />
+		</span>
+	</div>
+));
+
+const Header = memo(() => {
+	const [visible, setVisible] = useState(true);
+	const prevScrollRef = useRef(0);
+
+	const handleScroll = throttle(() => {
+		const currentScrollPos = window.pageYOffset;
+		const isVisible = prevScrollRef.current > currentScrollPos;
+		setVisible(isVisible);
+		prevScrollRef.current = currentScrollPos;
+	}, 500);
+
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll);
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
+
+	return (
+		<Fadable className="headerContainer">
+			<header className={`header ${visible ? "show" : ""}`}>
+				<div>
+					<Logo />
+					<Navigation />
+				</div>
+				<ProjectInfo />
+			</header>
+		</Fadable>
+	);
+});
+
+const App = () => {
+	useLocalSetting();
+	useAppearance();
+
 	return (
 		<div className="app">
 			<Header />
@@ -35,8 +79,19 @@ function App() {
 				<Route path="/" element={<Main />} />
 				<Route path="/setting" element={<Setting />} />
 			</Routes>
+			<Toaster
+				position="top-right"
+				toastOptions={{
+					className: "toast",
+					style: {
+						background: "var(--bg-tertiary)",
+						color: "var(--text-color)",
+						border: "2px solid var(--primary-300)",
+					},
+				}}
+			/>
 		</div>
 	);
-}
+};
 
-export default App;
+export default memo(App);

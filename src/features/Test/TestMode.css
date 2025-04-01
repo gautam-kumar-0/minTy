@@ -1,0 +1,161 @@
+/* Container for the mode selection */
+.mode-container {
+	margin-top: 6rem;
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	transition: opacity var(--transition-mid) ease;
+}
+
+/* Ribbon containing the mode types and values */
+.mode-ribbon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
+	gap: 4rem;
+	border-radius: 1rem;
+	background-color: var(--bg-keyboard);
+	border: 2px solid color-mix(in srgb, var(--border-medium) 15%, transparent);
+}
+
+/* Container for mode types */
+.mode-types,
+.mode-values {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+/* Individual mode type and value elements */
+.mode,
+.mode-value {
+	cursor: pointer;
+	padding: 0.6rem 1rem;
+	border-radius: 6px;
+	color: var(--text-tertiary);
+	transition: all var(--transition-fast);
+}
+
+.mode:hover,
+.mode-value:hover {
+	background-color: var(--bg-hover);
+	color: var(--text-processed);
+}
+
+/* Container for mode values */
+.mode-values {
+	display: flex;
+	gap: 1.5rem;
+	cursor: pointer;
+	justify-content: space-around;
+}
+
+/* Active state for selected mode */
+.active {
+	color: var(--primary-500);
+	font-weight: 500;
+}
+
+/* Pop-up modal */
+.pop-up {
+	position: absolute;
+	display: flex;
+	gap: 1.2rem;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--bg-keyboard);
+	color: var(--text-processed);
+	border-radius: 1rem;
+	box-shadow: 0 4px 12px var(--shadow-lg);
+	border: 2px solid color-mix(in srgb, var(--border-medium) 15%, transparent);
+	padding: 1.5rem;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 10;
+}
+
+.pop-overlay {
+	position: absolute;
+	display: inline-block;
+	width: 100vw;
+	height: 100vh;
+	background-color: var(--bg-overlay);
+	backdrop-filter: blur(2px);
+	top: 0;
+	left: 0;
+	z-index: 5;
+}
+
+/* Form inside the pop-up */
+.pop-up form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: stretch;
+	gap: 1rem;
+}
+
+/* Button in the pop-up form */
+.pop-up form button {
+	font-family: inherit;
+	letter-spacing: 0.2ch;
+	padding: 0.8rem 1.5rem;
+	background-color: var(--bg-keyboard);
+	border: 2px solid color-mix(in srgb, var(--primary-500) 40%, transparent);
+	color: var(--primary-500);
+	border-radius: 8px;
+	font-size: 1.2rem;
+	cursor: pointer;
+	transition: all var(--transition-fast);
+	align-self: center;
+}
+
+.pop-up form button:hover {
+	background-color: var(--bg-hover);
+	border-color: var(--primary-500);
+}
+
+/* Close button in the pop-up */
+.pop-up .close-btn {
+	align-self: flex-end;
+	top: 10px;
+	right: 10px;
+	background-color: transparent;
+	border: 2px solid color-mix(in srgb, var(--border-medium) 15%, transparent);
+	border-radius: 8px;
+	aspect-ratio: 1/1;
+	height: 1.2lh;
+	font-size: 1.5rem;
+	cursor: pointer;
+	color: var(--text-tertiary);
+	transition: all var(--transition-fast);
+}
+
+.pop-up .close-btn:hover {
+	color: var(--error);
+	border-color: var(--error);
+}
+
+/* Input field in the pop-up */
+.pop-up input {
+	color: var(--text-processed);
+	font-family: inherit;
+	letter-spacing: 0.2ch;
+	font-size: 1.2rem;
+	padding: 1.2rem;
+	border: 2px solid color-mix(in srgb, var(--border-medium) 15%, transparent);
+	outline: none;
+	background-color: var(--bg-keyboard);
+	width: 12ch;
+	border-radius: 8px;
+	transition: all var(--transition-fast);
+}
+
+.pop-up input:focus {
+	border-color: var(--primary-500);
+	background-color: var(--bg-hover);
+}

@@ -1,10 +1,34 @@
 import {wordList} from "./config";
-export const generateRandomWord = () => {
-	return wordList[Math.floor(Math.random() * 1000)];
+export const generateRandomWord = () =>
+	wordList[Math.floor(Math.random() * 1000)];
+
+export const generateRandomText = (words) =>
+	Array.from({length: parseInt(words)}, generateRandomWord);
+
+export const formatMsConcise = (ms) => {
+	const seconds = Math.floor((ms / 1000) % 60);
+	const minutes = Math.floor((ms / (1000 * 60)) % 60);
+	const hours = Math.floor(ms / (1000 * 60 * 60));
+
+	const parts = [];
+
+	if (hours > 0) {
+		parts.push(`${hours}h`);
+	}
+	if (minutes > 0) {
+		parts.push(`${minutes}m`);
+	}
+	parts.push(`${seconds}s`);
+
+	return parts.join(" ");
 };
 
-export const generateRandomText = (words) => {
-	let arr = Array(parseInt(words)).fill(null).map(generateRandomWord);
-	console.log("generateRandomText(): ", words, arr);
-	return arr.join(" ");
+export const throttle = (fn, wait) => {
+	let isExecuted = false;
+	return () => {
+		if (isExecuted) return;
+		isExecuted = true;
+		fn();
+		setTimeout(() => (isExecuted = false), wait);
+	};
 };

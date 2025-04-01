@@ -1,15 +1,17 @@
-import React from "react";
+import React, {memo} from "react";
+import PropTypes from "prop-types";
 import "./Fadable.css";
 import {useSelector} from "react-redux";
-const Fadable = ({className, children, ...restProps}) => {
+
+const Fadable = memo(({className = "", children, ...restProps}) => {
 	const isTyping = useSelector((state) => state.test.isTyping);
-	const focus = isTyping ? "focus" : " ";
-	console.log("FADABLE", isTyping);
+	const focusClass = isTyping ? "focus" : "";
+
 	return (
-		<div className={`${focus} ${className || ""} fadable`} {...restProps}>
+		<div className={`fadable ${focusClass} ${className}`} {...restProps}>
 			{children}
 		</div>
 	);
-};
+});
 
 export default Fadable;
