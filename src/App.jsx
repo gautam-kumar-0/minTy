@@ -78,7 +78,10 @@ const App = () => {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Main />} />
+				<Route path="/index" element={<Main />} />
+				<Route path="/index.html" element={<Main />} />
 				<Route path="/setting" element={<Setting />} />
+				<Route path="*" element={<Main />} />
 			</Routes>
 			<Toaster
 				position="top-right"
