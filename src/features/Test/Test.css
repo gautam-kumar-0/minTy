@@ -36,10 +36,15 @@
 
 .live-stats {
 	flex: 1 1 100%;
-	display: flex;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, 1fr);
 	justify-content: space-between;
+	justify-items: center;
+	gap: 3rem;
+	grid-auto-flow: column;
 	opacity: 0;
 	transition: opacity 200ms ease;
+	anchor-name: --live-stats;
 }
 
 .live-stats > div {
@@ -221,4 +226,9 @@
 	background-color: var(--bg-tertiary);
 	padding: 2px 4px;
 	border-radius: 2px;
+}
+.anchored {
+	position: absolute;
+	position-anchor: --live-stats;
+	top: anchor(--live-stats top);
 }

@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import TestProgress from "./TestProgress";
-import {debounce} from "lodash";
 import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 import {completed} from "../Text/textSlice";
 
@@ -67,17 +66,24 @@ const TestStats = () => {
 			className="live-stats"
 			ref={liveRef}
 			style={{
-				display: context.status == "uncomplete" ? "flex" : "none",
+				display: context.status == "uncomplete" ? "grid" : "none",
 			}}
 		>
 			<TestProgress
+				isTimed={isTimed}
 				type={mode.type}
 				timeLeft={timeLeft}
 				index={context.index}
 				length={context.words.length}
 				value={mode.value}
 			/>
-
+			{mode.value == Infinity && (
+				<span className="shortcuts anchored">
+					<span>
+						<code>Escape</code> to close test
+					</span>
+				</span>
+			)}
 			{liveStats && (
 				<div className="data">
 					<div className="live-wpm">
