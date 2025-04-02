@@ -62,7 +62,13 @@ const TestStats = () => {
 	}, [mode]);
 
 	return (
-		<div className="live-stats" ref={liveRef}>
+		<div
+			className="live-stats"
+			ref={liveRef}
+			style={{
+				display: context.status == "uncomplete" ? "flex" : "none",
+			}}
+		>
 			<TestProgress
 				type={mode.type}
 				timeLeft={timeLeft}

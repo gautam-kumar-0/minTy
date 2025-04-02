@@ -126,9 +126,7 @@ const Test = ({}) => {
 	} else {
 		display = (
 			<>
-				<div className="stats-box">
-					{liveStats && textState.status == "uncomplete" ? <TestStats /> : ""}
-				</div>
+				<div className="stats-box">{<TestStats />}</div>
 
 				<Text ref={textRef} />
 				<div className="actions">

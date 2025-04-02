@@ -1,4 +1,4 @@
-import React from "react";
+import {memo} from "react";
 import Key from "./Key";
 
 const Row = ({keys, className, activeKey}) => {
@@ -8,11 +8,11 @@ const Row = ({keys, className, activeKey}) => {
 				<Key
 					key={`${key}-${index}`}
 					keyName={key}
-					isActive={key === activeKey}
+					isActive={index === activeKey}
 				/>
 			))}
 		</div>
 	);
 };
 
-export default Row;
+export default memo(Row);

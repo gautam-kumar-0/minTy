@@ -16,7 +16,7 @@ const Letter = ({letter}) => {
 };
 
 // word has only primitive value so it is easier to memoize
-const Word = memo(({word, typing}) => {
+const Word = ({word, typing}) => {
 	const LETTERS = Array.from(word.original + " ").map((letter, i) => ({
 		value: letter,
 		isTyped: i < word.typed.length,
@@ -49,6 +49,6 @@ const Word = memo(({word, typing}) => {
 			</span>
 		</div>
 	);
-});
+};
 
-export default Word;
+export default memo(Word);

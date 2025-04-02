@@ -12,7 +12,7 @@ import Setting from "./pages/Setting";
 import useAppearance from "./hooks/useAppearance";
 import useLocalSetting from "./hooks/useLocalSetting";
 import {throttle} from "./utils/functions";
-
+import {useMemo} from "react";
 const Logo = () => (
 	<Link to="/" className="logo">
 		<h1>minTY</h1>
@@ -54,14 +54,16 @@ const Header = () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
 	}, []);
-	content = useMemo(
-		<header className={`header ${visible ? "show" : ""}`}>
-			<div>
-				<Logo />
-				<Navigation />
-			</div>
-			<ProjectInfo />
-		</header>,
+	const content = useMemo(
+		() => (
+			<header className={`header ${visible ? "show" : ""}`}>
+				<div>
+					<Logo />
+					<Navigation />
+				</div>
+				<ProjectInfo />
+			</header>
+		),
 		[visible]
 	);
 	return <Fadable className="headerContainer">{content}</Fadable>;
