@@ -18,7 +18,8 @@ const TestResult = ({startTest, resetTest}) => {
 		let totalCharacters = 0;
 		let totalTypedCharacters = 0;
 
-		const duration = state.words[state.index]?.end - state.words[0]?.start || 0;
+		const duration =
+			state.words[state.words.length - 1]?.end - state.words[0]?.start || 0;
 
 		const data = state.words.map((word, i) => {
 			totalWpm += word.wpm;

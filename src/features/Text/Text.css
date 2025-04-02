@@ -16,8 +16,9 @@
 	max-height: 4.6lh;
 	box-shadow: -1px -1px 0.1rem rgba(255, 255, 255, 0.1),
 		1px 1px 0.1rem rgba(0, 0, 0, 0.1);
-	background-color: var(--bg-secondary);
+	background: linear-gradient(to right, var(--primary-50), var(--bg-secondary));
 	opacity: 0;
+	border: 1.5px solid var(--primary-100);
 	transition: opacity var(--transition-mid) ease;
 }
 

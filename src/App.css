@@ -34,6 +34,7 @@ body {
 	z-index: 10;
 	transform: translateY(-100%);
 	transition: transform var(--transition-mid) ease;
+	border-bottom: 1.5px solid var(--primary-100);
 }
 
 header {
