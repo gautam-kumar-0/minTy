@@ -29,7 +29,6 @@ const Text = React.forwardRef((props, ref) => {
 				dispatch(backspace({timeStamp: e.timeStamp, freedom}));
 			}
 		} else if (e.key === " ") {
-			console.log("space", e);
 			dispatch(
 				space({
 					timeStamp: e.timeStamp,

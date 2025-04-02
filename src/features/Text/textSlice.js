@@ -29,7 +29,6 @@ function convertToWordObject(word) {
 }
 
 function helperCalculateWPM(state, action) {
-	// console.log("Action", action);
 	state.words[state.index].end = action.payload.timeStamp;
 	if (state.index < state.words.length - 1)
 		state.words[state.index + 1].start = action.payload.timeStamp;
@@ -38,12 +37,6 @@ function helperCalculateWPM(state, action) {
 	const delta = Math.max(currentWord.end - currentWord.start, 20); // keyboard latency
 	state.words[state.index].wpm =
 		((currentWord.typed.length + 0) * 12000) / delta;
-	console.log(
-		"Helper Slice",
-		delta,
-		state.words[state.index].end,
-		state.words[state.index].wpm
-	);
 }
 
 function calculateAccuracy(state) {
