@@ -23,6 +23,7 @@ const testSlice = createSlice({
 			} else {
 				state.shouldFetch = false;
 			}
+
 			state.error = null;
 			state.isTyping = false;
 			state.isLoading = false;
@@ -41,23 +42,29 @@ const testSlice = createSlice({
 		builder.addMatcher(
 			quotesApi.endpoints.getQuotes.matchFulfilled,
 			(state, action) => {
-				state.quotes = action.payload;
-				state.error = null;
-				state.isLoading = false;
+				if (state.mode.type == "quote") {
+					state.quotes = action.payload;
+					state.error = null;
+					state.isLoading = false;
+				}
 			}
 		);
 		builder.addMatcher(quotesApi.endpoints.getQuotes.matchPending, (state) => {
-			state.error = null;
-			state.quotes = [];
-			state.isLoading = true;
+			if (state.mode.type == "quote") {
+				state.error = null;
+				state.quotes = [];
+				state.isLoading = true;
+			}
 		});
 		builder.addMatcher(
 			quotesApi.endpoints.getQuotes.matchRejected,
 			(state, action) => {
-				state.error = "Failed to fetch  quotes.";
-				state.quotes = [];
-				state.isLoading = false;
-				state.message = action.error;
+				if (state.mode.type == "quote") {
+					state.error = "Failed to fetch  quotes.";
+					state.quotes = [];
+					state.isLoading = false;
+					state.message = action.error;
+				}
 			}
 		);
 	},

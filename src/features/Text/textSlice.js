@@ -148,6 +148,9 @@ export const textSlice = createSlice({
 			state.words.length = state.index;
 			state.status = Status.COMPLETE;
 		},
+		notready: (state) => {
+			state.status = Status.NOTREADY;
+		},
 	},
 });
 

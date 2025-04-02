@@ -69,9 +69,11 @@ const Text = React.forwardRef((props, ref) => {
 			ref={ref}
 		>
 			<div className={`testBg ${animation}`}>
-				<div className={`testWindow `} ref={testWindow}>
-					{children}
-				</div>
+				{!testState.isLoading && !testState.error && (
+					<div className={`testWindow `} ref={testWindow}>
+						{children}
+					</div>
+				)}
 				<div className="overlay">
 					<BsCursorFill />
 					<span>Click here or press any key to focus</span>

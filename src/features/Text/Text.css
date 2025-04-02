@@ -9,7 +9,6 @@
 
 .testBg {
 	border-radius: 1rem;
-	padding: 0.5lh 0.7lh;
 	display: flex;
 	flex-direction: column;
 	align-items: start;
@@ -24,10 +23,10 @@
 
 .testWindow {
 	overflow: hidden;
+	margin: 0.5lh 0.7lh;
 	position: relative;
 	transition: opacity var(--transition-mid) ease,
 		translate var(--transition-mid) ease;
-
 	translate: 0 1lh;
 }
 

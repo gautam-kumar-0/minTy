@@ -111,7 +111,7 @@ const Test = ({}) => {
 
 	// Start the test after fetching
 	useEffect(() => {
-		if (!isFetching) startTest();
+		if (!isFetching && modeRef.current.type == "quote") startTest();
 	}, [isFetching]);
 
 	return (
