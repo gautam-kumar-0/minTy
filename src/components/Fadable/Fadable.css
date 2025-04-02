@@ -1,9 +1,0 @@
-.fadable {
-	transition: opacity var(--transition-slow);
-	opacity: 1;
-	visibility: visible;
-}
-.fadable.focus {
-	opacity: 0;
-	visibility: hidden;
-}
