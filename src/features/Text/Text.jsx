@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from "react";
+import React, {useRef, useEffect, useState, useLayoutEffect} from "react";
 import "./Text.css";
 
 import TestContent from "./TestContent.jsx"; // Import the new component
@@ -15,7 +15,7 @@ const Text = React.forwardRef((props, ref) => {
 	const dispatch = useDispatch();
 	const [children, setChildren] = useState(null);
 
-	const [animation, setAnimation] = useState("appear");
+	const [animation, setAnimation] = useState("");
 	const testWindow = useRef(null);
 
 	const handleKeyPress = (e) => {
@@ -29,6 +29,7 @@ const Text = React.forwardRef((props, ref) => {
 				dispatch(backspace({timeStamp: e.timeStamp, freedom}));
 			}
 		} else if (e.key === " ") {
+			console.log("space", e);
 			dispatch(
 				space({
 					timeStamp: e.timeStamp,
@@ -55,8 +56,9 @@ const Text = React.forwardRef((props, ref) => {
 		}
 	}, [textState.status, textState.words]);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		ref.current?.focus();
+		setAnimation("appear");
 	}, []);
 
 	return (

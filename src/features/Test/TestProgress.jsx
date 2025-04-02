@@ -6,7 +6,7 @@ const TestProgress = ({type, timeLeft, index, length, value}) => {
 		<div className="test-progress progress">
 			{type === "time" ? (
 				<div className="time">
-					<span>{format(timeLeft)}</span>
+					<span className="primary">A{format(timeLeft)}</span>
 					<span className="subtle">s</span>
 				</div>
 			) : (

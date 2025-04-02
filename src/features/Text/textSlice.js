@@ -15,7 +15,6 @@ export const initialState = {
 	currentAccuracy: 0,
 	errors: 0,
 	typedCharacters: 0,
-	// todo Improve the calculation of live wpm and average wpm
 };
 
 function convertToWordObject(word) {
@@ -30,11 +29,21 @@ function convertToWordObject(word) {
 }
 
 function helperCalculateWPM(state, action) {
-	state.words[state.index].end = performance.now();
+	// console.log("Action", action);
+	state.words[state.index].end = action.payload.timeStamp;
+	if (state.index < state.words.length - 1)
+		state.words[state.index + 1].start = action.payload.timeStamp;
+
 	const currentWord = state.words[state.index];
 	const delta = Math.max(currentWord.end - currentWord.start, 20); // keyboard latency
 	state.words[state.index].wpm =
-		((currentWord.typed.length + 1) * 12000) / delta;
+		((currentWord.typed.length + 0) * 12000) / delta;
+	console.log(
+		"Helper Slice",
+		delta,
+		state.words[state.index].end,
+		state.words[state.index].wpm
+	);
 }
 
 function calculateAccuracy(state) {
@@ -46,7 +55,6 @@ export const textSlice = createSlice({
 	initialState,
 	reducers: {
 		start: (state, action) => {
-			// console.log("Start Test", action.payload);
 			state.words = action.payload.map(convertToWordObject);
 			state.status = Status.READY;
 			state.index = 0;
@@ -83,7 +91,8 @@ export const textSlice = createSlice({
 			if (temp.typed.length > temp.original.length + 5) return;
 
 			// set start time
-			if (!temp.typed.length) temp.start = performance.now();
+			if (state.index == 0 && temp.typed.length == 0)
+				temp.start = action.payload.timeStamp;
 
 			// check for errors
 			let currentIndex = temp.typed.length;
@@ -106,7 +115,6 @@ export const textSlice = createSlice({
 				textSlice.caseReducers.space(state, action);
 			}
 
-			// calculate accuracy //simple version
 			state.typedCharacters++;
 			state.currentAccuracy = calculateAccuracy(state);
 		},

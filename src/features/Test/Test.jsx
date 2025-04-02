@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import {useRef, useEffect} from "react";
 import Keyboard from "../../components/Keyboard/Keyboard.jsx";
 import Text from "../Text/Text";
@@ -19,21 +19,20 @@ import {useNavigate} from "react-router-dom";
 import {ActionButton} from "../../components/ActionButton/ActionButton.jsx";
 
 const Test = ({}) => {
-	const {keyboard, liveStats} = useSelector((state) => state.settings);
-	const dispatch = useDispatch();
+	const {keyboard} = useSelector((state) => state.settings);
 	const testState = useSelector((state) => state.test);
 	const textState = useSelector((state) => state.text);
+	const dispatch = useDispatch();
 	const playSound = useSound();
-	const modeRef = useRef(testState.mode);
+	const navigate = useNavigate();
+
 	const [fetchQuotes, {isFetching}] = useLazyGetQuotesQuery();
 
-	const navigate = useNavigate();
-	const [text, setText] = useState("");
+	const modeRef = useRef(testState.mode);
 	const containerRef = useRef(null);
 	const textRef = useRef(null);
 
-	const startTest = async () => {
-		// console.log("startTest Inside", testState.mode, testState.quotes);
+	const startTest = useCallback(() => {
 		let text = [];
 		if (testState.mode.type == "words") {
 			text = generateRandomText(
@@ -50,17 +49,15 @@ const Test = ({}) => {
 			}
 		}
 		if (text) {
-			setText(text);
 			dispatch(start(text));
 		}
-	};
+	}, [testState]);
 
-	const resetTest = (e) => {
+	const resetTest = useCallback((e) => {
 		dispatch(reset());
-	};
+	}, []);
 
-	const handleKeyDown = (e) => {
-		// console.log("HandleKeyDown, Intercept Shortcuts", e);
+	const handleKeyDown = useCallback((e) => {
 		if (e.repeat) return;
 		playSound();
 		if (e.key === "Escape") {
@@ -77,15 +74,16 @@ const Test = ({}) => {
 			}
 			if (e.key != "Backspace") e.stopPropagation();
 		}
+		// disable space scrolling
 		if (e.key == " ") e.preventDefault();
-	};
+	}, []);
 
-	const handleFocus = () => {
+	const handleFocus = useCallback(() => {
 		// If element is not focus make it focus
 		if (textRef.current && textRef.current != document.activeElement) {
 			textRef.current.focus();
 		}
-	};
+	}, []);
 
 	const handleMouseMove = throttle(() => dispatch(setTyping(false)), 2000);
 
@@ -116,48 +114,6 @@ const Test = ({}) => {
 		if (!isFetching) startTest();
 	}, [isFetching]);
 
-	let display = null;
-	if (!text) {
-		display = null;
-	} else if (textState.status == "notready") {
-		display = <span>Loading...</span>;
-	} else if (textState.status == "complete") {
-		display = <TestResult startTest={startTest} resetTest={resetTest} />;
-	} else {
-		display = (
-			<>
-				<div className="stats-box">{<TestStats />}</div>
-
-				<Text ref={textRef} />
-				<div className="actions">
-					<ActionButton onClick={() => startTest()} action="New Test">
-						<FaArrowRotateRight />
-					</ActionButton>
-				</div>
-
-				{keyboard && (
-					<div className="keyboard-wrapper">
-						<Keyboard />
-					</div>
-				)}
-				<div className="shortcuts">
-					<div>
-						<span>
-							<code>ctrl</code> + <code>enter</code>
-						</span>
-						<span>New Test</span>
-					</div>
-					<div>
-						<span>
-							<code>ctrl</code> + <code>left</code>
-						</span>
-						<span>Restart</span>
-					</div>
-				</div>
-			</>
-		);
-	}
-
 	return (
 		<div className={`main ${focus ? "focus" : "blur"}`} ref={containerRef}>
 			{testState.error && testState.mode.type == "quote" && (
@@ -183,7 +139,44 @@ const Test = ({}) => {
 				</NoticeBox>
 			)}
 
-			{display}
+			{(textState.status == "uncomplete" || textState.status == "ready") && (
+				<>
+					<div className="stats-box">
+						{textState.status == "uncomplete" ? <TestStats /> : ""}
+					</div>
+					<Text ref={textRef} />
+					<div className="actions">
+						<ActionButton onClick={() => startTest()} action="New Test">
+							<FaArrowRotateRight />
+						</ActionButton>
+					</div>
+
+					{keyboard && (
+						<div className="keyboard-wrapper">
+							<Keyboard />
+						</div>
+					)}
+				</>
+			)}
+
+			{textState.status == "complete" && (
+				<TestResult startTest={startTest} resetTest={resetTest} />
+			)}
+
+			<div className="shortcuts">
+				<div>
+					<span>
+						<code>ctrl</code> + <code>enter</code>
+					</span>
+					<span>New Test</span>
+				</div>
+				<div>
+					<span>
+						<code>ctrl</code> + <code>left</code>
+					</span>
+					<span>Restart</span>
+				</div>
+			</div>
 		</div>
 	);
 };

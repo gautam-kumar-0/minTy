@@ -5,9 +5,11 @@ import {useSelector, useDispatch} from "react-redux"; // Import Redux hooks
 import {completed} from "../Text/textSlice";
 
 const calculateAvgWPM = (state) => {
-	if (state.index == 0 && state.lastTimestamp == 0) return 0;
+	if (state.index == 0) return 0;
 	const timeElapsed = performance.now() - state.words[0].start;
-	return (state.typedCharacters * 12000) / timeElapsed;
+	const average = (state.typedCharacters * 12000) / timeElapsed;
+
+	return average;
 };
 
 const TestStats = () => {
@@ -36,9 +38,9 @@ const TestStats = () => {
 	useEffect(() => {
 		liveRef.current.style.opacity = "1";
 
-		const updateStats = debounce(() => {
-			setAvgWPM((prev) => calculateAvgWPM(stateRef.current));
-		}, 500);
+		const updateStats = () => {
+			setAvgWPM(calculateAvgWPM(stateRef.current));
+		};
 
 		let liveUpdateInterval = null;
 		if (!isTimed && !liveStats) return;
@@ -57,9 +59,8 @@ const TestStats = () => {
 
 		return () => {
 			clearInterval(liveUpdateInterval);
-			updateStats.cancel();
 		};
-	}, [mode]);
+	}, [context.status]);
 
 	return (
 		<div
