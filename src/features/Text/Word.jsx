@@ -1,7 +1,7 @@
 import React, {memo} from "react";
 import {useSelector} from "react-redux";
 
-const Letter = memo(({letter}) => {
+const Letter = ({letter}) => {
 	const {confidence} = useSelector((state) => state.settings);
 	const {value, isTyped, isCurrent, isValid} = letter;
 	let className = "letter ";
@@ -13,9 +13,10 @@ const Letter = memo(({letter}) => {
 		} else className += " invalid";
 	} else className += " unprocessed";
 	return <span className={className}>{value}</span>;
-});
+};
 
-const Word = memo(({word, done, typing, pending}) => {
+// word has only primitive value so it is easier to memoize
+const Word = memo(({word, typing}) => {
 	const LETTERS = Array.from(word.original + " ").map((letter, i) => ({
 		value: letter,
 		isTyped: i < word.typed.length,

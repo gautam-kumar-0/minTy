@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useRef, useState, useCallback} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {RiSettings4Fill} from "react-icons/ri";
 import {PiKeyboardLight} from "react-icons/pi";
 import {FaHeart} from "react-icons/fa";
@@ -13,31 +13,31 @@ import useAppearance from "./hooks/useAppearance";
 import useLocalSetting from "./hooks/useLocalSetting";
 import {throttle} from "./utils/functions";
 
-const Logo = memo(() => (
+const Logo = () => (
 	<Link to="/" className="logo">
 		<h1>minTY</h1>
 		<PiKeyboardLight />
 	</Link>
-));
+);
 
-const Navigation = memo(() => (
+const Navigation = () => (
 	<nav>
 		<Link to="/setting">
 			<RiSettings4Fill />
 		</Link>
 	</nav>
-));
+);
 
-const ProjectInfo = memo(() => (
+const ProjectInfo = () => (
 	<div className="project-info">
 		<a href="https://github.com/gautam-kumar-0/minTy">&lt;View Source/&gt;</a>
 		<span>
 			Made with <FaHeart />
 		</span>
 	</div>
-));
+);
 
-const Header = memo(() => {
+const Header = () => {
 	const [visible, setVisible] = useState(true);
 	const prevScrollRef = useRef(0);
 
@@ -54,19 +54,18 @@ const Header = memo(() => {
 			window.removeEventListener("scroll", handleScroll);
 		};
 	}, []);
-
-	return (
-		<Fadable className="headerContainer">
-			<header className={`header ${visible ? "show" : ""}`}>
-				<div>
-					<Logo />
-					<Navigation />
-				</div>
-				<ProjectInfo />
-			</header>
-		</Fadable>
+	content = useMemo(
+		<header className={`header ${visible ? "show" : ""}`}>
+			<div>
+				<Logo />
+				<Navigation />
+			</div>
+			<ProjectInfo />
+		</header>,
+		[visible]
 	);
-});
+	return <Fadable className="headerContainer">{content}</Fadable>;
+};
 
 const App = () => {
 	useLocalSetting();
@@ -94,4 +93,4 @@ const App = () => {
 	);
 };
 
-export default memo(App);
+export default App;

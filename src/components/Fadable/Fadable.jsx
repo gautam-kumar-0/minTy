@@ -1,5 +1,4 @@
 import React, {memo} from "react";
-import PropTypes from "prop-types";
 import "./Fadable.css";
 import {useSelector} from "react-redux";
 

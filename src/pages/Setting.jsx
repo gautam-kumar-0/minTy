@@ -1,10 +1,8 @@
-import React, {memo} from "react";
 import SettingsPanel from "../features/Setting/SettingsPanel";
-
-const Setting = memo(() => (
+const Setting = () => (
 	<main>
 		<SettingsPanel />
 	</main>
-));
+);
 
 export default Setting;

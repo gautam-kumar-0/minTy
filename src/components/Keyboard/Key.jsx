@@ -1,9 +1,5 @@
 import React, {useRef, useEffect} from "react";
-const config = {
-	theme: {
-		primary: "",
-	},
-};
+
 const Key = ({keyName, isActive}) => {
 	const keyRef = useRef(null);
 
@@ -22,6 +18,7 @@ const Key = ({keyName, isActive}) => {
 			}
 		}
 	}, [isActive]);
+
 	return (
 		<div ref={keyRef} className="key">
 			{keyName}

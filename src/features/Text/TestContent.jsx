@@ -9,15 +9,7 @@ const TestContent = ({state}) => {
 	const offset = useRef(0);
 
 	const renderWord = (word, i) => {
-		return (
-			<Word
-				word={word}
-				key={i}
-				done={state.index > i}
-				typing={state.index === i}
-				pending={state.index < i}
-			/>
-		);
+		return <Word word={word} key={i} typing={state.index === i} />;
 	};
 
 	useEffect(() => {

@@ -4,10 +4,11 @@ import Row from "./Row";
 
 import {convertToKey, keyArray} from "./config";
 
-const Keyboard = memo(() => {
+const Keyboard = () => {
 	const [activeKey, setActiveKey] = useState("");
 	const [shifted, setShifted] = useState(false);
 
+	// useCallback doesn't create the function every re-render
 	const handleKeyDown = useCallback((e) => {
 		setActiveKey(convertToKey(e));
 		setShifted(e.shiftKey || e.getModifierState("CapsLock"));
@@ -27,12 +28,13 @@ const Keyboard = memo(() => {
 			window.removeEventListener("keyup", handleKeyUp);
 		};
 	}, [handleKeyDown, handleKeyUp]);
+	const keyArrayMemoized = keyArray.map((a) => useMemo(a));
 
 	return (
 		<div className={`keyboard ${shifted ? "shifted" : ""}`}>
-			{keyArray.map((row, index) => (
+			{keyArrayMemoized.map((row, index) => (
 				<Row
-					key={`row-${index + 1}`}
+					key={index}
 					keys={row}
 					className={`row-${index + 1}`}
 					activeKey={activeKey}
@@ -40,6 +42,6 @@ const Keyboard = memo(() => {
 			))}
 		</div>
 	);
-});
+};
 
 export default Keyboard;
