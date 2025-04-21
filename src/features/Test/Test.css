@@ -29,7 +29,7 @@
 	justify-self: stretch;
 	justify-content: stretch;
 	align-items: center;
-	color: var(--text-tertiary);
+	color: var(--text-secondary);
 	padding-inline: 1rem;
 	margin-top: 1rem;
 }
@@ -223,8 +223,8 @@
 }
 
 .shortcuts code {
-	background-color: var(--bg-tertiary);
-	padding: 2px 4px;
+	background-color: var(--bg-secondary);
+	padding: 4px 8px;
 	border-radius: 2px;
 }
 .anchored {

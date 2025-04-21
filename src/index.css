@@ -22,69 +22,6 @@
 	--base-white: 255, 255, 255;
 	--base-black: 0, 0, 0;
 
-	/* Text Colors */
-	--text-primary: var(--primary-foreground);
-	--text-secondary: color-mix(
-		in srgb,
-		var(--primary-foreground) 85%,
-		var(--primary-background)
-	);
-	--text-tertiary: color-mix(
-		in srgb,
-		var(--primary-foreground) 70%,
-		var(--primary-background)
-	);
-	--text-muted: color-mix(
-		in srgb,
-		var(--primary-foreground) 50%,
-		var(--primary-background)
-	);
-	--text-inverse: var(--primary-background);
-	--text-unprocessed: color-mix(
-		in srgb,
-		var(--primary-foreground) 30%,
-		var(--primary-background)
-	);
-	--text-processed: color-mix(
-		in srgb,
-		var(--primary-foreground) 90%,
-		var(--primary-background)
-	);
-
-	/* Background Colors */
-	--bg-primary: var(--primary-background);
-	--bg-secondary: color-mix(
-		in srgb,
-		var(--primary-background) 95%,
-		var(--primary-foreground)
-	);
-	--bg-tertiary: color-mix(
-		in srgb,
-		var(--primary-background) 90%,
-		var(--primary-foreground)
-	);
-	--bg-hover: color-mix(
-		in srgb,
-		var(--primary-background) 85%,
-		var(--primary-color)
-	);
-	--bg-active: color-mix(
-		in srgb,
-		var(--primary-background) 80%,
-		var(--primary-foreground)
-	);
-	--bg-overlay: color-mix(
-		in srgb,
-		var(--primary-background),
-		rgba(0, 0, 0, 0.3)
-	);
-	--bg-keyboard: color-mix(
-		in srgb,
-		var(--primary-background) 95%,
-		var(--primary-foreground)
-	);
-
-	/* Primary Color Variants */
 	--primary-50: color-mix(
 		in srgb,
 		var(--primary-color) 10%,
@@ -131,6 +68,63 @@
 		var(--primary-color) 20%,
 		var(--primary-foreground)
 	);
+
+	/* Text Colors */
+	--text-primary: var(--primary-foreground);
+	--text-secondary: var(--primary-500);
+
+	--text-tertiary: color-mix(
+		in srgb,
+		var(--primary-700) 70%,
+		var(--primary-background)
+	);
+	--text-muted: color-mix(
+		in srgb,
+		var(--primary-500) 50%,
+		var(--primary-background)
+	);
+	--text-inverse: var(--primary-background);
+	--text-unprocessed: color-mix(
+		in srgb,
+		var(--primary-color) 40%,
+		var(--primary-background)
+	);
+	--text-processed: var(--primary-800);
+
+	/* Background Colors */
+	--bg-primary: var(--primary-background);
+	--bg-secondary: color-mix(
+		in srgb,
+		var(--primary-background) 95%,
+		var(--primary-foreground)
+	);
+	--bg-tertiary: color-mix(
+		in srgb,
+		var(--primary-background) 90%,
+		var(--primary-foreground)
+	);
+	--bg-hover: color-mix(
+		in srgb,
+		var(--primary-background) 85%,
+		var(--primary-color)
+	);
+	--bg-active: color-mix(
+		in srgb,
+		var(--primary-background) 80%,
+		var(--primary-foreground)
+	);
+	--bg-overlay: color-mix(
+		in srgb,
+		var(--primary-background),
+		rgba(0, 0, 0, 0.3)
+	);
+	--bg-keyboard: color-mix(
+		in srgb,
+		var(--primary-background) 95%,
+		var(--primary-foreground)
+	);
+
+	/* Primary Color Variants */
 
 	/* Border Colors */
 	--border-light: color-mix(

@@ -13,7 +13,7 @@
 			color-mix(in srgb, var(--primary-foreground) 5%, transparent);
 
 	background-color: var(--key-bg-inactive);
-	color: var(--text-processed);
+	color: var(--primary-300);
 	border: none;
 	box-shadow: var(--key-shadow-inactive);
 	display: flex;

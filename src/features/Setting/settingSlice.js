@@ -4,9 +4,9 @@ const settingSlice = createSlice({
 	name: "test",
 	initialState: {
 		theme: {
-			bg: "black",
-			fg: "white",
-			primary: "seagreen",
+			bg: "#000506",
+			fg: "#e0e0e0",
+			primary: "#6c9bb2",
 		},
 		freedom: false,
 		confidence: false,
