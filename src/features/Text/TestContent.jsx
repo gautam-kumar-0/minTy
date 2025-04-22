@@ -1,4 +1,4 @@
-import React, {useRef, useLayoutEffect, memo, useEffect} from "react";
+import React, {useRef, useEffect} from "react";
 import Word from "./Word";
 import {useSelector} from "react-redux";
 
@@ -30,10 +30,13 @@ const TestContent = ({state}) => {
 		if (!next) {
 			return;
 		}
-		if (next.offsetTop < testText.current.offsetHeight - next.offsetHeight) {
+		if (next.offsetTop > next.offsetHeight) {
 			offset.current = next.offsetTop - next.offsetHeight;
 		}
-
+		// else does not work
+		if (next.offsetTop < next.offsetHeight) {
+			offset.current = next.offsetTop;
+		}
 		testText.current.style.transform = `translateY(-${offset.current}px)`;
 
 		const cursorX = next.offsetLeft;
@@ -44,7 +47,7 @@ const TestContent = ({state}) => {
 	}, [state]);
 
 	return (
-		<div className={`testText `} ref={testText}>
+		<div className="testText" ref={testText}>
 			<span className={`cursor ${cursorType}`} ref={cursor}></span>
 			{state.words.map(renderWord)}
 		</div>
