@@ -2,7 +2,6 @@
 
 This is a typing practice app made using react.
 
-App is still under development
 
 Screenshots - 
 ![Screenshot 2025-04-01 145850](https://github.com/user-attachments/assets/a1aca953-3161-4c09-a03b-7eb35cac9235)
